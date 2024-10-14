@@ -1,0 +1,409 @@
+.v-main {
+  min-height: 100vh;
+}
+
+.theme--light {
+  .v-main {
+    //background: $lightbg;
+  }
+
+  .v-card .title {
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+.theme--dark {
+  .v-main {
+    //background-color: $darkbg;
+  }
+
+  .v-card .title {
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+.hover-red {
+  span {
+    color: #111111;
+  }
+  &:hover {
+    background: #FE252E !important;
+    color: #FFFFFF !important;
+    span {
+      color: #FFFFFF !important;
+    }
+    svg {
+      stroke: white !important;
+    }
+  }
+}
+
+.hover-red {
+  span {
+    color: #111111;
+  }
+  &:hover {
+    background: #FE252E !important;
+    color: #FFFFFF !important;
+    span {
+      color: #FFFFFF !important;
+    }
+    svg {
+      stroke: white !important;
+    }
+  }
+}
+
+.line-100 {
+  line-height: 100% !important;
+}
+.font-weight-100 {
+  font-weight: 100 !important;
+}
+
+.font-weight-200 {
+  font-weight: 200 !important;
+}
+
+.font-weight-300 {
+  font-weight: 300 !important;
+}
+
+.font-weight-350 {
+  font-weight: 350 !important;
+}
+
+.font-weight-375 {
+  font-weight: 375 !important;
+}
+
+.font-weight-600 {
+  font-weight: 600 !important;
+}
+
+.font-weight-720 {
+  font-weight: 720 !important;
+}
+
+.font-weight-550 {
+  font-weight: 550 !important;
+}
+
+.font-weight-850 {
+  font-weight: 850 !important;
+}
+
+.mt-120 {
+  margin-top: 120px !important;
+}
+
+.mb-120 {
+  margin-bottom: 120px !important;
+}
+
+.mt-80 {
+  margin-top: 80px !important;
+}
+
+.mt-60 {
+  margin-top: 60px;
+}
+
+.mt-100 {
+  margin-top: 100px;
+}
+.mb-100 {
+  margin-bottom: 100px;
+}
+
+.mb-80 {
+  margin-bottom: 80px !important;
+}
+
+.pt-120 {
+  padding-top: 120px;
+}
+
+.mt-200 {
+  margin-top: 200px;
+}
+
+.pt-80 {
+  padding-top: 80px !important;
+}
+
+.pt-60 {
+  padding-top: 60px !important;
+}
+
+.pb-80 {
+  padding-bottom: 80px !important;
+}
+.pb-100 {
+  padding-bottom: 100px;
+}
+
+.pb-60 {
+  padding-bottom: 60px;
+}
+
+.pb-120 {
+  padding-bottom: 120px !important;
+}
+
+.mr-80 {
+  margin-right: 80px;
+}
+
+.pl-90 {
+  padding-left: 90px !important;
+}
+.mx-112 {
+  margin: 0 112px !important;
+}
+.ml-300 {
+  margin-left: 300px !important;
+}
+
+.font-title {
+  font-family: 'ALS Gorizont', sans-serif !important;
+}
+
+.font-text {
+  font-family: 'ALS Hauss VF', sans-serif !important;
+}
+
+.page-wrapper {
+  width: 1440px !important;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1400px) {
+  .page-wrapper {
+    width: 1000px !important;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .page-wrapper {
+    width: 800px !important;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .page-wrapper {
+    width: 600px !important;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .page-wrapper {
+    width: 500px !important;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .page-wrapper {
+    width: 430px !important;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .page-wrapper {
+    width: 420px !important;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .page-wrapper {
+    width: 390px !important;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .page-wrapper {
+    width: 370px !important;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 345px) {
+  .page-wrapper {
+    width: 345px !important;
+    margin: 0 auto;
+  }
+}
+
+
+.opacity {
+  opacity: 60%;
+}
+
+.opacity-70 {
+  opacity: 70%;
+}
+
+.opacity-50 {
+  opacity: 50%;
+}
+
+.opacity-30 {
+  opacity: 30%;
+}
+.center_block {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
+}
+
+@keyframes rotateClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.circle_block {
+  animation: rotateClockwise 6s linear infinite;
+}
+
+.nav-item-light {
+  position: relative;
+  cursor: pointer;
+  font-weight: 300;
+  display: inline-block;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background-color: #111111;
+    transition: width 0.6s ease;
+    clip-path: polygon(0 0, 0% 100%, 100% 100%, 100% 0);
+  }
+
+  &:hover::before {
+    width: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+}
+
+.nav-item-dark {
+  position: relative;
+  cursor: pointer;
+  font-weight: 300;
+  display: inline-block;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background-color: #FFFFFF;
+    transition: width 0.6s ease;
+    clip-path: polygon(0 0, 0% 100%, 100% 100%, 100% 0);
+  }
+
+  &:hover::before {
+    width: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+}
+
+$sizes: (
+        "display-1": 44px,
+        "display-2": 40px,
+        "display-3": 30px,
+        "h1": 36px,
+        "h2": 30px,
+        "h3": 21px,
+        "h4": 18px,
+        "h5": 16px,
+        "h6": 14px,
+        "text-8": 8px,
+        "text-10": 10px,
+        "text-12": 12px,
+        "text-13": 13px,
+        "text-14": 14px,
+        "text-16": 16px,
+        "text-18": 18px,
+        "text-20": 20px,
+        "text-22": 22px,
+        "text-24": 24px,
+        "text-26": 26px,
+        "text-28": 28px,
+        "text-32": 32px,
+        "text-34": 34px,
+        "text-36": 36px,
+        "text-44": 44px,
+        "text-48": 48px,
+        "text-52": 52px,
+        "text-60": 60px,
+        "text-62": 62px,
+        "text-64": 64px,
+        "text-68": 68px,
+        "text-82": 82px,
+        "text-100": 100px,
+        "body-text-1": 10px,
+);
+
+@each $pixel, $size in $sizes {
+  .#{$pixel} {
+    font-size: $size;
+    line-height: $size + 10;
+  }
+}
+
+.feather-sm {
+  width: 20px;
+  height: 20px;
+  display: unset !important;
+}
+
+.fixed-width {
+  max-width: 1300px;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100vh {
+  height: 100vh;
+}
+
+.gap-2 {
+  gap: 8px;
+}
+
+// border
+.border-right {
+  border-right: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+iframe {
+  display: none;
+}
