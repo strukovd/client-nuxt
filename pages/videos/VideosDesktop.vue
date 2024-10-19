@@ -1,15 +1,15 @@
 <template>
   <div id="top">
-<!--    <script type="application/ld+json">-->
-<!--    {-->
-<!--      "@context": "https://schema.org",-->
-<!--      "@type": "BreadcrumbList",-->
-<!--      "itemListElement": [-->
-<!--        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },-->
-<!--        { "@type": "ListItem", "position": 2, "name": "Видеорепортажи", "item": "https://kipish.kg/videos" }-->
-<!--      ]-->
-<!--    }-->
-<!--    </script>-->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
+        { "@type": "ListItem", "position": 2, "name": "Видеорепортажи", "item": "https://kipish.kg/videos" }
+      ]
+    }
+    </script>
 
     <v-row class="ma-0 pa-0 wrapper reports_desc_container">
       <v-col class="pa-0" cols="12">
@@ -228,7 +228,12 @@ export default {
     },
 
     zoomToTop() {
-      // this.$scrollTo('#top', 500, {easing: 'ease-in-out'});
+      if (process.client) {
+  window.scrollTo({
+    top: document.querySelector('#top').offsetTop,
+    behavior: 'smooth'
+  });
+}
     },
 
     convertDateToFetchFormat(date) {

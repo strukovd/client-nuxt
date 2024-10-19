@@ -1,15 +1,15 @@
 <template>
   <div class="events_block">
-<!--    <script type="application/ld+json">-->
-<!--    {-->
-<!--      "@context": "https://schema.org",-->
-<!--      "@type": "BreadcrumbList",-->
-<!--      "itemListElement": [-->
-<!--        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },-->
-<!--        { "@type": "ListItem", "position": 2, "name": "События", "item": "https://kipish.kg/events" }-->
-<!--      ]-->
-<!--    }-->
-<!--    </script>-->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
+        { "@type": "ListItem", "position": 2, "name": "События", "item": "https://kipish.kg/events" }
+      ]
+    }
+    </script>
 
     <v-row class="ma-0 pa-0  wrapper">
       <v-col class="pa-0" cols="12">

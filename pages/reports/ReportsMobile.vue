@@ -269,7 +269,12 @@ export default {
     },
 
     zoomToTop() {
-      // this.$scrollTo('#top', 500, {easing: 'ease-in-out'});
+      if (process.client) {
+  window.scrollTo({
+    top: document.querySelector('#top').offsetTop,
+    behavior: 'smooth'
+  });
+}
     },
 
     fetchImage(imageId) {

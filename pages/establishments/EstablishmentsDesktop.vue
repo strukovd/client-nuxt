@@ -1,15 +1,15 @@
 <template>
   <div id="top" class="estabs_container">
-<!--    <script type="application/ld+json">-->
-<!--    {-->
-<!--      "@context": "https://schema.org",-->
-<!--      "@type": "BreadcrumbList",-->
-<!--      "itemListElement": [-->
-<!--        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },-->
-<!--        { "@type": "ListItem", "position": 2, "name": "Заведения", "item": "https://kipish.kg/establishments" }-->
-<!--      ]-->
-<!--    }-->
-<!--    </script>-->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
+        { "@type": "ListItem", "position": 2, "name": "Заведения", "item": "https://kipish.kg/establishments" }
+      ]
+    }
+    </script>
 
     <v-row style="width: 1440px !important;" class="ma-0 pa-0 ">
       <v-col class="pa-0" cols="12">
@@ -274,7 +274,12 @@ export default {
     },
 
     zoomToTop() {
-      // this.$scrollTo('#top', 500, {easing: 'ease-in-out'});
+      if (process.client) {
+  window.scrollTo({
+    top: document.querySelector('#top').offsetTop,
+    behavior: 'smooth'
+  });
+}
     },
 
     getMoreEstabs() {

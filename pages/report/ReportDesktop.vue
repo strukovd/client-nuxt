@@ -1,15 +1,15 @@
 <template>
   <div id="top" class="desktop_report_page">
-<!--    <script type="application/ld+json">-->
-<!--    {-->
-<!--      "@context": "https://schema.org",-->
-<!--      "@type": "BreadcrumbList",-->
-<!--      "itemListElement": [-->
-<!--        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },-->
-<!--        { "@type": "ListItem", "position": 2, "name": "Репортажи", "item": "https://kipish.kg/reports" }-->
-<!--      ]-->
-<!--    }-->
-<!--    </script>-->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
+        { "@type": "ListItem", "position": 2, "name": "Репортажи", "item": "https://kipish.kg/reports" }
+      ]
+    }
+    </script>
 
     <v-row style="width: 1440px !important;" class="ma-0 pa-0">
       <v-col class="pa-0" cols="12">
@@ -516,7 +516,12 @@ export default {
     },
 
     zoomToTop() {
-      // this.$scrollTo('#top', 500, {easing: 'ease-in-out'});
+      if (process.client) {
+  window.scrollTo({
+    top: document.querySelector('#top').offsetTop,
+    behavior: 'smooth'
+  });
+}
     },
 
     shareOnFacebook() {

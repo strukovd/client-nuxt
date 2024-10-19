@@ -1,45 +1,45 @@
 <template>
   <v-row style="width: 1440px !important;" class="ma-0 pa-0">
-<!--    <script type="application/ld+json">-->
-<!--    {-->
-<!--      "@context": "https://schema.org",-->
-<!--      "@type": "BreadcrumbList",-->
-<!--      "itemListElement": [-->
-<!--        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },-->
-<!--        { "@type": "ListItem", "position": 2, "name": "События", "item": "https://kipish.kg/events" }-->
-<!--      ]-->
-<!--    }-->
-<!--    </script>-->
-<!--    <script type="application/ld+json">-->
-<!--    {-->
-<!--      "@context": "http://schema.org/",-->
-<!--      "@type": "Event",-->
-<!--      {{ model?.title ? `"name": "${model.title}",` : "" }}-->
-<!--      {{ model?.description ? `"description": "${model.description}",` : "" }}-->
-<!--      {{ model?.files?.length ? `"image": "${`https://files.kipish.kg/${model.files[0].minioBucket}/${model.files[0].minioPath}`}",` : "" }}-->
-<!--      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",-->
-<!--      "eventStatus": "https://schema.org/EventScheduled",-->
-<!--      {{ model?.date ? `"startDate": "${model.date}",` : "" }}-->
-<!--      "location": [-->
-<!--        {-->
-<!--          "@type": "Place",-->
-<!--          {{ model?.establishment?.name ? `"name": "${model.establishment.name}",` : "" }}-->
-<!--          "address": {-->
-<!--            {{ true ? "" : `"streetAddress": "с. Кара Джыгач, Аламудунский район, Чуйская область",` }}-->
-<!--            {{ true ? "" : `"addressLocality": "с. Кара Джыгач",` }}-->
-<!--            "addressRegion": "Chuy",-->
-<!--            "postalCode": "724314",-->
-<!--            "addressCountry": "Kyrgyzstan"-->
-<!--          }-->
-<!--        }-->
-<!--      ],-->
-<!--      "organizer": {-->
-<!--        "@type": "Organization",-->
-<!--        "name": "Kipish",-->
-<!--        "url": "https://kipish.kg/"-->
-<!--      }-->
-<!--    }-->
-<!--    </script>-->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
+        { "@type": "ListItem", "position": 2, "name": "События", "item": "https://kipish.kg/events" }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "http://schema.org/",
+      "@type": "Event",
+      {{ model?.title ? `"name": "${model.title}",` : "" }}
+      {{ model?.description ? `"description": "${model.description}",` : "" }}
+      {{ model?.files?.length ? `"image": "${`https://files.kipish.kg/${model.files[0].minioBucket}/${model.files[0].minioPath}`}",` : "" }}
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      {{ model?.date ? `"startDate": "${model.date}",` : "" }}
+      "location": [
+        {
+          "@type": "Place",
+          {{ model?.establishment?.name ? `"name": "${model.establishment.name}",` : "" }}
+          "address": {
+            {{ true ? "" : `"streetAddress": "с. Кара Джыгач, Аламудунский район, Чуйская область",` }}
+            {{ true ? "" : `"addressLocality": "с. Кара Джыгач",` }}
+            "addressRegion": "Chuy",
+            "postalCode": "724314",
+            "addressCountry": "Kyrgyzstan"
+          }
+        }
+      ],
+      "organizer": {
+        "@type": "Organization",
+        "name": "Kipish",
+        "url": "https://kipish.kg/"
+      }
+    }
+    </script>
 
     <v-col class="pa-0" cols="12">
       <tool-bar/>

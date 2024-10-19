@@ -179,7 +179,12 @@ export default {
   },
   methods: {
     zoomToTop() {
-      // this.$scrollTo('#top', 500, {easing: 'ease-in-out'});
+      if (process.client) {
+  window.scrollTo({
+    top: document.querySelector('#top').offsetTop,
+    behavior: 'smooth'
+  });
+}
     },
     formatDate(dateString) {
       console.log(dateString);
