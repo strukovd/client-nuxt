@@ -1,14 +1,24 @@
 <template>
   <div id="top">
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
-        { "@type": "ListItem", "position": 2, "name": "Видеорепортажи", "item": "https://kipish.kg/videos" }
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://kipish.kg/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Видеорепортажи",
+            "item": "https://kipish.kg/videos"
+          }
+        ]
+      }
     </script>
 
     <v-row class="ma-0 pa-0 wrapper reports_desc_container">
@@ -117,7 +127,7 @@
                       :link="'/video/' + report.id"
                     />
                   </div>
-                  <a-dpc data-aos="fade-left" class="my-15"  v-show="shouldShowDesktopEvents(dayIndex)"/>
+                  <a-dpc data-aos="fade-left" class="my-15" v-show="shouldShowDesktopEvents(dayIndex)"/>
                 </template>
               </template>
             </template>
@@ -198,8 +208,8 @@ export default {
           let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight - 300;
           if (bottomOfWindow) {
             const nextActualDateRaw = this.potentialDays.shift();
-            if(nextActualDateRaw) {
-              const nextActualDate = this.convertDateToFetchFormat( nextActualDateRaw );
+            if (nextActualDateRaw) {
+              const nextActualDate = this.convertDateToFetchFormat(nextActualDateRaw);
               this.visibleDays.push(nextActualDate);
               this.fetchReports(nextActualDate);
             }
@@ -228,12 +238,12 @@ export default {
     },
 
     zoomToTop() {
-      if (process.client) {
-  window.scrollTo({
-    top: document.querySelector('#top').offsetTop,
-    behavior: 'smooth'
-  });
-}
+      // if (process.client) {
+      //   window.scrollTo({
+      //     top: document.querySelector('#top').offsetTop,
+      //     behavior: 'smooth'
+      //   });
+      // }
     },
 
     convertDateToFetchFormat(date) {
@@ -322,8 +332,8 @@ export default {
 
             for (let i = 0; i < 2; i++) {
               const nextActualDateRaw = this.potentialDays.shift();
-              if(nextActualDateRaw) {
-                const nextActualDate = this.convertDateToFetchFormat( nextActualDateRaw );
+              if (nextActualDateRaw) {
+                const nextActualDate = this.convertDateToFetchFormat(nextActualDateRaw);
                 this.visibleDays.push(nextActualDate);
                 this.fetchReports(nextActualDate);
               }
@@ -354,7 +364,7 @@ export default {
             date: requestDate,
             sort: 'report_date,desc',
           };
-          const response = await this.$http2.get(`/reports/video/byDate`, { params });
+          const response = await this.$http2.get(`/reports/video/byDate`, {params});
           console.log(response.data)
           const reportList = response.data?.content || [];
           this.reports = reportList;
@@ -394,7 +404,7 @@ export default {
       const params = {
         city: this.$store.state.currentCity?.id ?? null,
       };
-      return this.$http2.get(`/reports/video/dateMap`, { params })
+      return this.$http2.get(`/reports/video/dateMap`, {params})
         .then(r => {
           this.reportDateMap = r.data;
         });
@@ -409,13 +419,16 @@ export default {
   .v-icon {
     color: black !important;
   }
+
   .v-input input {
     color: black !important;
+
     &::placeholder {
       color: black !important;
     }
   }
 }
+
 .reports_desc_container {
   .v-skeleton-loader__image {
     width: 100% !important;

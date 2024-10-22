@@ -168,20 +168,54 @@ export default {
     // YandexMap, YandexMapControls, YandexMapZoomControl, YandexMapDefaultSchemeLayer, YandexMapListener, YandexMapMarker, YandexMapDefaultFeaturesLayer,
     // VueperSlide, VueperSlides
   },
-  metaInfo() {
+  head() {
     return {
-      title: `${this.model?.name || ''}`.concat( (this.model?.name && this.model?.categories?.length) ? ` — ${this.model?.categories[0].nameRu} в Бишкеке | ` : ``, `Кипиш`),
+      title: `${this.model?.name || ''}`.concat(
+        (this.model?.name && this.model?.categories?.length)
+          ? ` — ${this.model?.categories[0].nameRu} в Бишкеке | `
+          : ``,
+        `Кипиш`
+      ),
       meta: [
-        {name: 'description', content: `${this.model?.categories?.length ? this.model?.categories[0].nameRu : ``}`.concat(` ${this.model?.name || ''} — узнайте больше о лучших заведениях Бишкека. `, `Фотоотчеты, отзывы и информация о заведении на Кипише.`)},
-        {name: 'keywords', content: 'бар, Бишкек, отдых, напитки, развлечения'},
-        {property: 'og:title', content: `${this.model?.name || ''}`.concat( (this.model?.name && this.model?.categories?.length) ? ` — ${this.model?.categories[0].nameRu} в Бишкеке | ` : ``, `Кипиш`)},
-        {property: 'og:description', content: `${this.model?.categories?.length ? this.model?.categories[0].nameRu : ``}`.concat(` ${this.model?.name || ''} — узнайте больше о лучших заведениях Бишкека. `, `Фотоотчеты, отзывы и информация о заведении на Кипише.`)},
-        {property: 'og:type', content: 'website'},
-        {property: 'og:url', content: 'https://kipish.kg'},
+        {
+          name: 'description',
+          content: `${this.model?.categories?.length ? this.model?.categories[0].nameRu : ``}`.concat(
+            ` ${this.model?.name || ''} — узнайте больше о лучших заведениях Бишкека. `,
+            `Фотоотчеты, отзывы и информация о заведении на Кипише.`
+          )
+        },
+        {
+          name: 'keywords',
+          content: 'бар, Бишкек, отдых, напитки, развлечения'
+        },
+        {
+          property: 'og:title',
+          content: `${this.model?.name || ''}`.concat(
+            (this.model?.name && this.model?.categories?.length)
+              ? ` — ${this.model?.categories[0].nameRu} в Бишкеке | `
+              : ``,
+            `Кипиш`
+          )
+        },
+        {
+          property: 'og:description',
+          content: `${this.model?.categories?.length ? this.model?.categories[0].nameRu : ``}`.concat(
+            ` ${this.model?.name || ''} — узнайте больше о лучших заведениях Бишкека. `,
+            `Фотоотчеты, отзывы и информация о заведении на Кипише.`
+          )
+        },
+        {
+          property: 'og:type',
+          content: 'website'
+        },
+        {
+          property: 'og:url',
+          content: 'https://kipish.kg'
+        }
       ],
       link: [
-        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'}
-      ],
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }
+      ]
     };
   },
 

@@ -1,14 +1,24 @@
 <template>
   <div id="top" class="estabs_container">
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
-        { "@type": "ListItem", "position": 2, "name": "Заведения", "item": "https://kipish.kg/establishments" }
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://kipish.kg/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Заведения",
+            "item": "https://kipish.kg/establishments"
+          }
+        ]
+      }
     </script>
 
     <v-row style="width: 1440px !important;" class="ma-0 pa-0 ">
@@ -18,7 +28,8 @@
       <v-col style="min-height: 70vh" class="pa-0 px-16 mb-120" cols="12">
         <v-card elevation="0" color="transparent">
           <!-- BREADCRUMBS -->
-          <BaseBreadcrumbs :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/establishments', title: 'Заведения'}]"/>
+          <BaseBreadcrumbs
+            :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/establishments', title: 'Заведения'}]"/>
 
           <!-- TITLE -->
           <v-card-text class="pa-0">
@@ -65,10 +76,12 @@
               <div v-if="filter" class="d-flex align-center justify-space-between filter-panel">
                 <div style="width: 100%" class="d-flex align-center flex-column">
                   <span class="black--text text-16">Средний чек</span>
-                  <v-slider v-model="filterPanel.price" style="width: 100%" step="500" :max="2500" :tick-labels="dict.ticksLabels" tick-size="5" />
+                  <v-slider v-model="filterPanel.price" style="width: 100%" step="500" :max="2500"
+                            :tick-labels="dict.ticksLabels" tick-size="5"/>
                 </div>
                 <v-autocomplete v-model="filterModel.name" class="mx-6"
-                                clearable style="border-radius: 12px;background: #FFFFFF;width: 100%" outlined hide-details
+                                clearable style="border-radius: 12px;background: #FFFFFF;width: 100%" outlined
+                                hide-details
                                 placeholder="Название" item-text="name" item-value="name" :items="dict.establishments"/>
                 <v-autocomplete v-model="filterModel.categories" item-text="nameRu" item-value="id"
                                 clearable style="border-radius: 12px;background: #FFFFFF;width: 100%;" outlined
@@ -85,7 +98,8 @@
               <CardEstab v-for="estab of visibleItems" :key="estab.id" :item="estab"/>
             </template>
             <template v-else>
-              <div v-for="i of 3" :key="i" style="display:flex;flex-direction:column;overflow:hidden;border-radius:20px;position:relative;">
+              <div v-for="i of 3" :key="i"
+                   style="display:flex;flex-direction:column;overflow:hidden;border-radius:20px;position:relative;">
                 <v-skeleton-loader class="mx-auto" type="image"></v-skeleton-loader>
               </div>
             </template>
@@ -106,7 +120,7 @@ import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
 
 export default {
   name: "EstablishmentsDesktop",
-  components: { Loader, ToolBar, CardEstab, BaseBreadcrumbs},
+  components: {Loader, ToolBar, CardEstab, BaseBreadcrumbs},
   data: () => ({
     visibleItems: [],
     filterModel: {
@@ -161,10 +175,18 @@ export default {
     searchResult: null
   }),
   watch: {
-    'filterModel.city': () => { this.fetchItems(); },
-    'filterModel.name': () => { this.fetchItems(); },
-    'filterModel.avrCheck': () => { this.fetchItems(); },
-    'filterModel.categories': () => { this.fetchItems(); },
+    'filterModel.city': () => {
+      this.fetchItems();
+    },
+    'filterModel.name': () => {
+      this.fetchItems();
+    },
+    'filterModel.avrCheck': () => {
+      this.fetchItems();
+    },
+    'filterModel.categories': () => {
+      this.fetchItems();
+    },
 
     activeTab(newTab) {
       this.filteredEstabs = this.estabs.filter(estab => estab.categories.some(category => category.nameRu === this.activeTab));
@@ -210,8 +232,6 @@ export default {
     },
 
 
-
-
     async filterEstabWithPanel() {
       let filteredEstabs = [];
 
@@ -221,7 +241,7 @@ export default {
       }
 
       try {
-        const response = await this.$http2.get('/establishments', { params });
+        const response = await this.$http2.get('/establishments', {params});
         const priceFilteredEstabs = response.data.content.filter(estab => estab.id === 37 || estab.id === 30 || estab.id === 41);
         // Если есть результат поиска, используем его
         if (this.searchResult) {
@@ -248,7 +268,7 @@ export default {
         const estabsWithAds = [...filteredEstabs];
         let adCounter = Math.floor(estabsWithAds.length / 6);
         for (let i = 1; i <= adCounter; i++) {
-          estabsWithAds.splice(i * 6 + (i - 1), 0, { advert: true });
+          estabsWithAds.splice(i * 6 + (i - 1), 0, {advert: true});
         }
 
         this.filteredEstabs = filteredEstabs;
@@ -274,12 +294,12 @@ export default {
     },
 
     zoomToTop() {
-      if (process.client) {
-  window.scrollTo({
-    top: document.querySelector('#top').offsetTop,
-    behavior: 'smooth'
-  });
-}
+      // if (process.client) {
+      //   window.scrollTo({
+      //     top: document.querySelector('#top').offsetTop,
+      //     behavior: 'smooth'
+      //   });
+      // }
     },
 
     getMoreEstabs() {
@@ -419,19 +439,19 @@ export default {
 
 .estabs_container {
   .cards-container {
-    position:relative;
-    border-radius:20px 0 0 20px;
+    position: relative;
+    border-radius: 20px 0 0 20px;
 
-    &>* {
+    & > * {
       margin-right: 32px !important;
       margin-bottom: 32px !important;
     }
 
-    &>*:nth-child(3n) {
+    & > *:nth-child(3n) {
       margin-right: 0 !important;
     }
 
-    &>*:nth-last-child(-n+3) {
+    & > *:nth-last-child(-n+3) {
       margin-bottom: 0 !important;
     }
   }

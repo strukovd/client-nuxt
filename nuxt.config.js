@@ -35,7 +35,6 @@ export default {
     '~/plugins/http2.js',
     '~/plugins/mediaHttp.js',
     '~/plugins/heroicons.js',
-    // '~/plugins/vueMarqueeSlider.js',
   ],
 
   components: true,
@@ -44,8 +43,7 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
-  modules: [
-  ],
+  modules: [],
 
   vuetify: {
     customVariables: ['~/assets/variables.scss'],

@@ -1,14 +1,24 @@
 <template>
   <div id="top" class="desktop_report_page">
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
-        { "@type": "ListItem", "position": 2, "name": "Репортажи", "item": "https://kipish.kg/reports" }
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://kipish.kg/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Репортажи",
+            "item": "https://kipish.kg/reports"
+          }
+        ]
+      }
     </script>
 
     <v-row style="width: 1440px !important;" class="ma-0 pa-0">
@@ -24,11 +34,14 @@
       <v-col v-else style="min-height: 100vh !important;" class="pa-0 px-16 mb-120" cols="12">
         <v-card elevation="0" color="transparent">
           <!-- BREADCRUMBS -->
-          <BaseBreadcrumbs :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/reports', title: 'Все репортажи'}, {href: '', title: model.name}]"/>
+          <BaseBreadcrumbs
+            :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/reports', title: 'Все репортажи'}, {href: '', title: model.name}]"/>
 
           <v-card-text class="pt-0 px-0 d-flex justify-space-between align-end ">
             <div style="width: 900px" class="mb-n4">
-              <h1 v-if="model.name" class="text-68 black--text font-title font-weight-300 text-uppercase">{{ model.name }} - Фотоотчет</h1>
+              <h1 v-if="model.name" class="text-68 black--text font-title font-weight-300 text-uppercase">{{
+                  model.name
+                }} - Фотоотчет</h1>
             </div>
             <div class="mb-n1">
               <template v-if="model.albumDate">
@@ -124,7 +137,9 @@
               </div>
               <div class="d-flex flex-column justify-space-between px-4 pt-4">
                 <span class="text-20 font-weight-300 opacity-70 dark--text">Фото</span>
-                <span class="text-32 font-title font-weight-100 black--text text-uppercase">{{ !filesLength ? '0' : filesLength }}</span>
+                <span class="text-32 font-title font-weight-100 black--text text-uppercase">{{
+                    !filesLength ? '0' : filesLength
+                  }}</span>
               </div>
             </div>
           </v-card-text>
@@ -272,7 +287,7 @@ import ToolBar from "@/components/AppToolbar.vue";
 import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 import {Stack, StackItem} from 'vue-stack-grid';
-import {MasonryInfiniteGrid, FrameInfiniteGrid} from "@egjs/vue-infinitegrid";
+import {FrameInfiniteGrid, MasonryInfiniteGrid} from "@egjs/vue-infinitegrid";
 import MobileMedia from "@/pages/mediaBlock/MobileMedia.vue";
 import DesktopMedia from "@/pages/mediaBlock/DesktopMedia.vue";
 import {mapGetters} from "vuex";
@@ -285,7 +300,7 @@ export default {
     MobileMedia, StackItem, SwiperSlide, ToolBar, Swiper, Stack, MasonryInfiniteGrid, FrameInfiniteGrid,
     BaseBreadcrumbs
   },
-  metaInfo() {
+  head() {
     return {
       title: this.metaTitle,
       meta: [
@@ -298,8 +313,8 @@ export default {
         { property: 'og:image', content: 'https://www.kipish.kg/image.jpg' }
       ],
       link: [
-        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'}
-      ],
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }
+      ]
     };
   },
   data: () => ({
@@ -364,27 +379,25 @@ export default {
     },
 
     metaTitle() {
-      if(!this.model || !this.model?.name) return '';
+      if (!this.model || !this.model?.name) return '';
 
       // return '';
 
-      if(!this._metaTitle) {
+      if (!this._metaTitle) {
         return this.model.name ? (this.model.establishment?.name ? `${this.model.establishment?.name} — ${this.model.name} | Кипиш` : `${this.model.name} | Кипиш`) : 'Кипиш'
-      }
-      else {
+      } else {
         return this._metaTitle;
       }
     },
 
     metaDescription() {
-      if(!this.model || !this.model?.name) return '';
+      if (!this.model || !this.model?.name) return '';
 
       // return '';
 
-      if(!this._metaDescription) {
+      if (!this._metaDescription) {
         return this.model?.name && this.model?.establishment?.name ? `Фотоотчет с ${this.model.name} в ${this.model.establishment?.name}. Смотрите лучшие фото на Кипише — медиа ресурсе о светской жизни Бишкека.` : 'Смотрите лучшие фото на Кипише — медиа ресурсе о светской жизни Бишкека.'
-      }
-      else {
+      } else {
         return this._metaDescription;
       }
     }
@@ -400,9 +413,9 @@ export default {
       this.$http.get(`/seo/friendly-url/${this.sourceId}/album`)
         .then(res => {
           const urlInfo = res.data;
-          if( urlInfo ) {
-            if( urlInfo.metaTitle ) this._metaTitle = urlInfo.metaTitle;
-            if( urlInfo.metaDescription ) this._metaDescription = urlInfo.metaDescription;
+          if (urlInfo) {
+            if (urlInfo.metaTitle) this._metaTitle = urlInfo.metaTitle;
+            if (urlInfo.metaDescription) this._metaDescription = urlInfo.metaDescription;
           }
         })
     },
@@ -516,12 +529,12 @@ export default {
     },
 
     zoomToTop() {
-      if (process.client) {
-  window.scrollTo({
-    top: document.querySelector('#top').offsetTop,
-    behavior: 'smooth'
-  });
-}
+      // if (process.client) {
+      //   window.scrollTo({
+      //     top: document.querySelector('#top').offsetTop,
+      //     behavior: 'smooth'
+      //   });
+      // }
     },
 
     shareOnFacebook() {
@@ -706,7 +719,7 @@ export default {
       this.loading = true
       this.$http2.get(`/albums/${id}`)
         .then(r => {
-          if( !Array.isArray(r.data.content) || !r.data.content[0] ) this.notFound = true;
+          if (!Array.isArray(r.data.content) || !r.data.content[0]) this.notFound = true;
           else {
             this.model = r.data.content[0];
           }

@@ -1,248 +1,249 @@
 <template>
-    <v-row id="home" class="pa-0 ma-0 pb-120 home-page">
-      <v-col cols="12" class="pa-0">
-        <tool-bar class="wrapper" @scrollToBlock="scrollToBlock"/>
-        <template v-if="$store.state.currentCity">
+  <v-row id="home" class="pa-0 ma-0 pb-120 home-page">
+    <v-col cols="12" class="pa-0">
+      <tool-bar class="wrapper" @scrollToBlock="scrollToBlock"/>
+      <template v-if="$store.state.currentCity">
+        <template v-if="windowWidth > 1400">
+          <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
+            <DesktopMedia/>
+          </div>
+
+          <!--            <v-card elevation="0" color="transparent" class="mt-120">-->
+          <!--              <v-card-text class="pa-0">-->
+          <!--                <div class="marq-block">-->
+          <!--                  <marquee text="Стиль / Люди / События /"/>-->
+          <!--                </div>-->
+          <!--              </v-card-text>-->
+          <!--            </v-card>-->
+
+          <div data-aos="fade-down" data-aos-duration="1500" class="wrapper">
+            <div class="mb-120 px-16 mt-120">
+              <a-dpc :loading="loadingAD"/>
+            </div>
+          </div>
+
+          <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
+            <DesktopReports/>
+          </div>
+
+          <div data-aos="fade-down" data-aos-duration="1500">
+            <DesktopVideo/>
+          </div>
+
+          <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
+            <DesktopEstabs/>
+          </div>
+
+          <!-- <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
+            <DesktopNews/>
+          </div> -->
+
+          <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
+            <div class="mt-120 px-16 mb-120">
+              <a-dpc :loading="loadingAD"/>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <MobileMedia/>
+
+          <!--            <v-card elevation="0" color="transparent">-->
+          <!--              <v-card-text class="pa-0 mt-80">-->
+          <!--                <div class="marq-block-mobile">-->
+          <!--                  <marquee text="Стиль / Люди / События /"/>-->
+          <!--                </div>-->
+          <!--              </v-card-text>-->
+          <!--            </v-card>-->
+
+          <div data-aos="fade-down" data-aos-duration="1500" class="wrapper">
+            <div class="mt-16 px-4">
+              <a-dmob :loading="loadingAD"/>
+            </div>
+          </div>
+
+          <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
+            <MobileReports/>
+          </div>
+
+          <div data-aos="fade-down" data-aos-duration="1500">
+            <div class="wrapper">
+              <MobileVideo/>
+            </div>
+          </div>
+
+          <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
+            <MobileEstabs/>
+          </div>
+
+          <!-- <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
+            <MobileNews/>
+          </div> -->
+
+          <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
+            <div class="mt-80 mb-80 px-4">
+              <a-dmob :loading="loadingAD"/>
+            </div>
+          </div>
+        </template>
+
+        <v-card data-aos="fade-up" data-aos-duration="1500" elevation="0" color="transparent" class="wrapper">
           <template v-if="windowWidth > 1400">
-            <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
-              <DesktopMedia/>
-            </div>
-
-            <v-card elevation="0" color="transparent" class="mt-120">
-              <v-card-text class="pa-0">
-                <div class="marq-block">
-                  <marquee text="Стиль / Люди / События /"/>
-                </div>
-              </v-card-text>
-            </v-card>
-
-            <div data-aos="fade-down" data-aos-duration="1500" class="wrapper">
-              <div class="mb-120 px-16 mt-120">
-                <a-dpc :loading="loadingAD" />
-              </div>
-            </div>
-
-            <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
-              <DesktopReports/>
-            </div>
-
-            <div data-aos="fade-down" data-aos-duration="1500">
-              <DesktopVideo/>
-            </div>
-
-            <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
-              <DesktopEstabs/>
-            </div>
-
-            <!-- <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
-              <DesktopNews/>
-            </div> -->
-
-            <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
-              <div class="mt-120 px-16 mb-120">
-                <a-dpc :loading="loadingAD" />
-              </div>
-            </div>
-          </template>
-          <template v-else>
-            <MobileMedia/>
-
-<!--            <v-card elevation="0" color="transparent">-->
-<!--              <v-card-text class="pa-0 mt-80">-->
-<!--                <div class="marq-block-mobile">-->
-<!--                  <marquee text="Стиль / Люди / События /"/>-->
-<!--                </div>-->
-<!--              </v-card-text>-->
-<!--            </v-card>-->
-
-            <div data-aos="fade-down" data-aos-duration="1500" class="wrapper">
-              <div class="mt-16 px-4">
-                <a-dmob :loading="loadingAD" />
-              </div>
-            </div>
-
-            <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
-              <MobileReports/>
-            </div>
-
-            <div data-aos="fade-down" data-aos-duration="1500">
-              <div class="wrapper">
-                <MobileVideo/>
-              </div>
-            </div>
-
-            <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
-              <MobileEstabs/>
-            </div>
-
-            <!-- <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
-              <MobileNews/>
-            </div> -->
-
-            <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
-              <div class="mt-80 mb-80 px-4">
-                <a-dmob :loading="loadingAD" />
-              </div>
-            </div>
-          </template>
-
-          <v-card data-aos="fade-up" data-aos-duration="1500" elevation="0" color="transparent" class="wrapper">
-            <template v-if="windowWidth > 1400">
-              <v-lazy transition="fade-transition">
-                <div class="info_block_desktop">
-                  <div class="mt-120 pb-60">
-                    <v-card-text ref="aboutUs" @wheel="handleScroll" class="pa-0 ">
-                      <v-row class="px-16 mx-0 my-0">
-                        <v-col class="pa-0 pr-6 d-flex flex-column justify-space-between" cols="5">
-                          <div class="d-flex flex-column justify-space-between">
-                            <div class="d-flex flex-column mt-2">
-                              <div class="d-flex justify-end">
+            <v-lazy transition="fade-transition">
+              <div class="info_block_desktop">
+                <div class="mt-120 pb-60">
+                  <v-card-text ref="aboutUs" @wheel="handleScroll" class="pa-0 ">
+                    <v-row class="px-16 mx-0 my-0">
+                      <v-col class="pa-0 pr-6 d-flex flex-column justify-space-between" cols="5">
+                        <div class="d-flex flex-column justify-space-between">
+                          <div class="d-flex flex-column mt-2">
+                            <div class="d-flex justify-end">
                                 <span
                                   class="font-title font-weight-300 text-82 text-uppercase black--text">Кипишуй</span>
-                              </div>
-                              <span
-                                class="ml-3 font-title font-weight-300 text-82 text-uppercase black--text">с нами</span>
                             </div>
+                            <span
+                              class="ml-3 font-title font-weight-300 text-82 text-uppercase black--text">с нами</span>
                           </div>
-                          <div>
+                        </div>
+                        <div>
                         <span style="line-height: 29px" class="text-24 font-weight-300 opacity-70 black--text">Медиа
                           ресурс о светской, вечерней и ночной жизни города
                           Место, куда заходят чтобы почувствовать и быть в курсе всех событий в культурной жизни
                           столицы</span>
-                          </div>
-                        </v-col>
-                        <v-col class="pa-0" cols="7">
-                          <div style="position: relative;border-radius: 12px; height: 500px; overflow: hidden ">
-                            <div style="width: 100%;height: 100%;position: absolute;z-index: 9999 !important;"
-                                 class="d-flex flex-column justify-space-between px-5 pt-2 pb-12">
-                              <div>
-                                <span class="text-82 font-title white--text text-uppercase">вместе</span>
-                              </div>
-                              <div class="d-flex justify-end">
-                                <div class="mt-2 d-flex align-center">
-                                  <v-img width="44" height="44" @click="customPrev" class="mr-4 cursor-pointer"
-                                         src="/images/icons/ArrowLeft.svg"/>
-                                  <v-img width="44" height="44" @click="customNext" class="cursor-pointer"
-                                         src="/images/icons/ArrowRight.svg"/>
-                                </div>
+                        </div>
+                      </v-col>
+                      <v-col class="pa-0" cols="7">
+                        <div style="position: relative;border-radius: 12px; height: 500px; overflow: hidden ">
+                          <div style="width: 100%;height: 100%;position: absolute;z-index: 9999 !important;"
+                               class="d-flex flex-column justify-space-between px-5 pt-2 pb-12">
+                            <div>
+                              <span class="text-82 font-title white--text text-uppercase">вместе</span>
+                            </div>
+                            <div class="d-flex justify-end">
+                              <div class="mt-2 d-flex align-center">
+                                <v-img width="44" height="44" @click="customPrev" class="mr-4 cursor-pointer"
+                                       src="/images/icons/ArrowLeft.svg"/>
+                                <v-img width="44" height="44" @click="customNext" class="cursor-pointer"
+                                       src="/images/icons/ArrowRight.svg"/>
                               </div>
                             </div>
-                            <v-carousel style="z-index: 99 !important;" prev-icon="" next-icon="" ref="info" cycle
-                                        hide-delimiters>
-                              <v-carousel-item v-for="(slide, i) in infoSlides" :key="i">
-                                <v-img height="100%" :src="slide.url"/>
-                              </v-carousel-item>
-                            </v-carousel>
                           </div>
-                        </v-col>
-                      </v-row>
-                    </v-card-text>
-                    <v-card-text class="pa-0 mt-200 d-flex pl-16">
-                      <div v-for="(counter, index) in counters" :key="index"
-                           :class="[$vuetify.theme.dark ? 'info-item-dark' : 'info-item-light', 'd-flex flex-column justify-space-between pl-7 mr-8 info-item']"
-                           style="height: 338px;width: 416px">
-                        <transition name="slide-in-left">
+                          <v-carousel style="z-index: 99 !important;" prev-icon="" next-icon="" ref="info" cycle
+                                      hide-delimiters>
+                            <v-carousel-item v-for="(slide, i) in infoSlides" :key="i">
+                              <v-img height="100%" :src="slide.url"/>
+                            </v-carousel-item>
+                          </v-carousel>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                  <v-card-text class="pa-0 mt-200 d-flex pl-16">
+                    <div v-for="(counter, index) in counters" :key="index"
+                         :class="[$vuetify.theme.dark ? 'info-item-dark' : 'info-item-light', 'd-flex flex-column justify-space-between pl-7 mr-8 info-item']"
+                         style="height: 338px;width: 416px">
+                      <transition name="slide-in-left">
                       <span v-if="isVisible" class="text-100 black--text font-weight-100 font-title">{{
                           (index === 0 || index === 1) ? counter.currentValue + 'k' : counter.currentValue
                         }}+</span>
-                        </transition>
-                        <transition name="slide-in-left">
-                          <div class="d-flex flex-column" v-if="isVisible">
-                            <span class="text-24 black--text font-weight-300">{{ counter.label }}</span>
-                            <span style="line-height: 29px" class="text-24 black--text font-weight-300">{{
-                                counter.subLabel
-                              }}</span>
-                          </div>
-                        </transition>
-                      </div>
-                    </v-card-text>
-                  </div>
+                      </transition>
+                      <transition name="slide-in-left">
+                        <div class="d-flex flex-column" v-if="isVisible">
+                          <span class="text-24 black--text font-weight-300">{{ counter.label }}</span>
+                          <span style="line-height: 29px" class="text-24 black--text font-weight-300">{{
+                              counter.subLabel
+                            }}</span>
+                        </div>
+                      </transition>
+                    </div>
+                  </v-card-text>
                 </div>
-              </v-lazy>
-            </template>
-            <template v-if="windowWidth <= 1400">
-              <v-lazy transition="scroll-y-transition">
-                <div class="info_block">
-                  <v-card-text ref="aboutUs" @wheel="handleScroll" class="pa-0 px-4">
-                    <p class="text-32 dark--text font-title text-uppercase mb-1">Кипишуй</p>
-                    <div>
-                      <vueper-slides :infinite="true" :arrows="true" autoplay>
-                        <vueper-slide v-for="(slide, index) in infoSlides" :key="index">
-                          <template #content>
-                            <v-img height="100%" :src="slide.url">
-                              <div class="px-7 py-4">
-                                <span class="text-32 white--text font-title text-uppercase">Вместе с нами</span>
-                              </div>
-                            </v-img>
-                          </template>
-                        </vueper-slide>
-                        <template #bullet="{ active, slideIndex, index }">
-                          <v-img :width="windowWidth <= 450 ? '50' : '64'" v-if="active"
-                                 src="/images/slide-active.svg"/>
-                          <v-img :width="windowWidth <= 450 ? '50' : '64'" v-if="!active"
-                                 src="/images/slide-unactive.svg"/>
+              </div>
+            </v-lazy>
+          </template>
+          <template v-if="windowWidth <= 1400">
+            <v-lazy transition="scroll-y-transition">
+              <div class="info_block">
+                <v-card-text ref="aboutUs" @wheel="handleScroll" class="pa-0 px-4">
+                  <p class="text-32 dark--text font-title text-uppercase mb-1">Кипишуй</p>
+                  <div>
+                    <vueper-slides :infinite="true" :arrows="true" autoplay>
+                      <vueper-slide v-for="(slide, index) in infoSlides" :key="index">
+                        <template #content>
+                          <v-img height="100%" :src="slide.url">
+                            <div class="px-7 py-4">
+                              <span class="text-32 white--text font-title text-uppercase">Вместе с нами</span>
+                            </div>
+                          </v-img>
                         </template>
-                      </vueper-slides>
-                      <div class="mb-10 mt-6">
+                      </vueper-slide>
+                      <template #bullet="{ active, slideIndex, index }">
+                        <v-img :width="windowWidth <= 450 ? '50' : '64'" v-if="active"
+                               src="/images/slide-active.svg"/>
+                        <v-img :width="windowWidth <= 450 ? '50' : '64'" v-if="!active"
+                               src="/images/slide-unactive.svg"/>
+                      </template>
+                    </vueper-slides>
+                    <div class="mb-10 mt-6">
                     <span style="line-height: 19px;" class="text-16 font-weight-375 black--text opacity-70">Медиа ресурс о светской, вечерней и
                       ночной жизни города
                       Место, куда заходят чтобы почувствовать и быть в курсе всех событий в культурной жизни
                       столицы</span>
-                      </div>
                     </div>
-                  </v-card-text>
-                  <v-card-text style="height: 380px" class="pa-0 d-flex flex-column">
-                    <div v-for="(counter, index) in counters" :key="index"
-                         :class="[$vuetify.theme.dark ? 'info-item-dark' : 'info-item-light', 'd-flex flex-column justify-space-between ml-4 info-item item_info']">
-                      <div class="d-flex flex-column pb-4" v-if="isVisible">
+                  </div>
+                </v-card-text>
+                <v-card-text style="height: 380px" class="pa-0 d-flex flex-column">
+                  <div v-for="(counter, index) in counters" :key="index"
+                       :class="[$vuetify.theme.dark ? 'info-item-dark' : 'info-item-light', 'd-flex flex-column justify-space-between ml-4 info-item item_info']">
+                    <div class="d-flex flex-column pb-4" v-if="isVisible">
                     <span class="text-32 mb-4 black--text font-weight-100 font-title">{{
                         (index === 0 || index === 1) ? counter.currentValue + 'k' : counter.currentValue
                       }}+</span>
-                        <span class="text-16 font-weight-375 black--text">{{ counter.label }} {{
-                            counter.subLabel
-                          }}</span>
-                      </div>
+                      <span class="text-16 font-weight-375 black--text">{{ counter.label }} {{
+                          counter.subLabel
+                        }}</span>
                     </div>
-                  </v-card-text>
-                </div>
-              </v-lazy>
-            </template>
-          </v-card>
-<!--          <v-card elevation="0" color="transparent">-->
-<!--            <v-card-text v-if="windowWidth > 1400" class="pa-0 mt-15 mb-120">-->
-<!--              <div class="center-block">-->
-<!--                <v-lazy transition="scroll-y-transition" :value="() => import('@/components/imageCarousel/ImageCarouselDesktop.vue')">-->
-<!--                  <image-carousel-desktop/>-->
-<!--                </v-lazy>-->
-<!--              </div>-->
-<!--            </v-card-text>-->
-<!--            <v-card-text v-if="windowWidth <= 1400" class="pa-0 mt-15 mb-9">-->
-<!--              <div class="center-block">-->
-<!--                <v-lazy transition="scroll-y-transition" :value="() => import('@/components/imageCarousel/ImageCarouselMobile.vue')">-->
-<!--                  <image-carousel-mobile/>-->
-<!--                </v-lazy>-->
-<!--              </div>-->
-<!--            </v-card-text>-->
-<!--          </v-card>-->
-        </template>
-        <template v-else>
-          <!-- Город не выбран -->
-          Город не выбран
-        </template>
-      </v-col>
-    </v-row>
+                  </div>
+                </v-card-text>
+              </div>
+            </v-lazy>
+          </template>
+        </v-card>
+        <!--          <v-card elevation="0" color="transparent">-->
+        <!--            <v-card-text v-if="windowWidth > 1400" class="pa-0 mt-15 mb-120">-->
+        <!--              <div class="center-block">-->
+        <!--                <v-lazy transition="scroll-y-transition" :value="() => import('@/components/imageCarousel/ImageCarouselDesktop.vue')">-->
+        <!--                  <image-carousel-desktop/>-->
+        <!--                </v-lazy>-->
+        <!--              </div>-->
+        <!--            </v-card-text>-->
+        <!--            <v-card-text v-if="windowWidth <= 1400" class="pa-0 mt-15 mb-9">-->
+        <!--              <div class="center-block">-->
+        <!--                <v-lazy transition="scroll-y-transition" :value="() => import('@/components/imageCarousel/ImageCarouselMobile.vue')">-->
+        <!--                  <image-carousel-mobile/>-->
+        <!--                </v-lazy>-->
+        <!--              </div>-->
+        <!--            </v-card-text>-->
+        <!--          </v-card>-->
+      </template>
+      <template v-else>
+        <!-- Город не выбран -->
+        Город не выбран
+      </template>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
 import Marquee from "@/components/Marquee.vue";
 
 import AppToolbar from "@/components/AppToolbar.vue";
+import ToolBar from "@/components/AppToolbar.vue";
 
 
 import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 import ImageCarousel from "@/components/imageCarousel/ImageCarouselDesktop.vue";
-import ToolBar from "@/components/AppToolbar.vue";
+import ImageCarouselDesktop from "@/components/imageCarousel/ImageCarouselDesktop.vue";
 import VideoPlayer from "@/components/VideoPlayer.vue";
 import DesktopMedia from "@/pages/mediaBlock/DesktopMedia.vue";
 import DesktopNews from "@/pages/newsBlock/DesktopNews.vue";
@@ -256,26 +257,51 @@ import MobileEstabs from "@/pages/estabsBlock/MobileEstabs.vue";
 import {mapGetters} from "vuex";
 import {VueperSlide, VueperSlides} from "vueperslides";
 import MobileMedia from "@/pages/mediaBlock/MobileMedia.vue";
-import ImageCarouselDesktop from "@/components/imageCarousel/ImageCarouselDesktop.vue";
 import ImageCarouselMobile from "@/components/imageCarousel/ImageCarouselMobile.vue";
 import ADpc from "@/components/ad/ADpc.vue";
 import ADmob from "@/components/ad/ADmob.vue";
 
 export default {
   name: "Home",
-  metaInfo: {
-    title: 'Кипиш — Медиа ресурс о светской и ночной жизни в Бишкеке',
-    meta: [
-      {name: 'description', content: 'Кипиш — ведущий медиа ресурс о светской жизни и лучших заведениях Бишкека. Узнайте всё о последних событиях и новостях города. Присоединяйтесь к Кипишу и будьте в курсе событий!'},
-      {name: 'keywords', content: 'бар, Бишкек, отдых, напитки, развлечения'},
-      {property: 'og:title', content: 'Кипиш — Медиа ресурс о светской и ночной жизни в Бишкеке'},
-      {property: 'og:description', content: 'Кипиш — ведущий медиа ресурс о светской жизни и лучших заведениях Бишкека. Узнайте всё о последних событиях и новостях города. Присоединяйтесь к Кипишу и будьте в курсе событий!'},
-      {property: 'og:type', content: 'website'},
-      {property: 'og:url', content: 'https://kipish.kg/'},
-    ],
-    link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'}
-    ],
+  head() {
+    return {
+      title: 'Кипиш — Медиа ресурс о светской и ночной жизни в Бишкеке',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Кипиш — ведущий медиа ресурс о светской жизни и лучших заведениях Бишкека. Узнайте всё о последних событиях и новостях города. Присоединяйтесь к Кипишу и будьте в курсе событий!'
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: 'бар, Бишкек, отдых, напитки, развлечения'
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: 'Кипиш — Медиа ресурс о светской и ночной жизни в Бишкеке'
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: 'Кипиш — ведущий медиа ресурс о светской жизни и лучших заведениях Бишкека. Узнайте всё о последних событиях и новостях города. Присоединяйтесь к Кипишу и будьте в курсе событий!'
+        },
+        {
+          hid: 'og:type',
+          property: 'og:type',
+          content: 'website'
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: 'https://kipish.kg/'
+        }
+      ],
+      link: [
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'}
+      ]
+    };
   },
   components: {
     MobileNews,
@@ -413,7 +439,7 @@ export default {
       this.handleScrollFunctions();
     },
     handleScroll() {
-      if(this.$refs.aboutUs) {
+      if (this.$refs.aboutUs) {
         const block2Position = this.$refs.aboutUs.getBoundingClientRect().top;
         const triggerPosition = window.innerHeight / 2;
 

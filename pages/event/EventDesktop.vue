@@ -118,35 +118,52 @@ import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
 export default {
   name: "EventDesktop",
   components: { ToolBar, BaseBreadcrumbs },
-  metaInfo() {
+  head() {
     return {
       title: this.model.title ? `${this.model.title} | Кипиш` : 'Кипиш',
       meta: [
-        {name: 'description', content: `` +
-          this.model?.date ? this.model.date : `` +
-          this.model?.establishment?.name ? `в ${this.model.establishment.name} ` : `` +
-          this.model?.eventType?.nameRu ? `состоится ${this.model.eventType.nameRu} — ` : `` +
-          this.model?.title ? `${this.model.title}. ` : `` +
-          `Смотрите фото и видео отчет и подробности мероприятия на Кипише.`
+        {
+          name: 'description',
+          content:
+            (this.model?.date ? this.model.date : '') +
+            (this.model?.establishment?.name ? ` в ${this.model.establishment.name} ` : '') +
+            (this.model?.eventType?.nameRu ? `состоится ${this.model.eventType.nameRu} — ` : '') +
+            (this.model?.title ? `${this.model.title}. ` : '') +
+            `Смотрите фото и видео отчет и подробности мероприятия на Кипише.`
         },
-        // [Дата] в [Место проведения] состоится [Категория события] — [Название события]. Смотрите фото и видео отчет и подробности мероприятия на Кипише.
-        // this.model?.name && this.model?.establishment?.name ? `Фотоотчет с ${this.model.name} в ${this.model.establishment?.name}. Смотрите лучшие фото на Кипише — медиа ресурсе о светской жизни Бишкека.` : 'Смотрите лучшие фото на Кипише — медиа ресурсе о светской жизни Бишкека.'
-        {name: 'keywords', content: 'бар, Бишкек, отдых, напитки, развлечения'},
-        {property: 'og:title', content: this.model.title ? `${this.model.title} | Кипиш` : 'Кипиш'},
-        {property: 'og:description', content:
-          this.model?.date ? this.model.date : `` +
-          this.model?.establishment?.name ? `в ${this.model.establishment.name} ` : `` +
-          this.model?.eventType?.nameRu ? `состоится ${this.model.eventType.nameRu} — ` : `` +
-          this.model?.title ? `${this.model.title}. ` : `` +
-          `Смотрите фото и видео отчет и подробности мероприятия на Кипише.`
+        {
+          name: 'keywords',
+          content: 'бар, Бишкек, отдых, напитки, развлечения'
         },
-        {property: 'og:type', content: 'website'},
-        {property: 'og:url', content: 'https://www.kipish.kg/'},
-        {property: 'og:image', content: 'https://www.kipish.kg/image.jpg'}
+        {
+          property: 'og:title',
+          content: this.model.title ? `${this.model.title} | Кипиш` : 'Кипиш'
+        },
+        {
+          property: 'og:description',
+          content:
+            (this.model?.date ? this.model.date : '') +
+            (this.model?.establishment?.name ? ` в ${this.model.establishment.name} ` : '') +
+            (this.model?.eventType?.nameRu ? `состоится ${this.model.eventType.nameRu} — ` : '') +
+            (this.model?.title ? `${this.model.title}. ` : '') +
+            `Смотрите фото и видео отчет и подробности мероприятия на Кипише.`
+        },
+        {
+          property: 'og:type',
+          content: 'website'
+        },
+        {
+          property: 'og:url',
+          content: 'https://www.kipish.kg/'
+        },
+        {
+          property: 'og:image',
+          content: 'https://www.kipish.kg/image.jpg'
+        }
       ],
       link: [
-        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'}
-      ],
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }
+      ]
     };
   },
   data: () => ({

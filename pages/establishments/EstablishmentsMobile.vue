@@ -1,14 +1,24 @@
 <template>
   <div id="top" class="estabs_mobile">
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
-        { "@type": "ListItem", "position": 2, "name": "Заведения", "item": "https://kipish.kg/establishments" }
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://kipish.kg/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Заведения",
+            "item": "https://kipish.kg/establishments"
+          }
+        ]
+      }
     </script>
 
     <v-row class="ma-0 pa-0 wrapper">
@@ -18,7 +28,8 @@
       <v-col style="min-height: 70vh" class="pa-0 px-4 mb-100" cols="12">
         <v-card elevation="0" color="transparent">
           <!-- BREADCRUMBS -->
-           <BaseBreadcrumbs :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/establishments', title: 'Заведения'}]"/>
+          <BaseBreadcrumbs
+            :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/establishments', title: 'Заведения'}]"/>
 
           <!-- TITLE -->
           <v-card-text class="pa-0">
@@ -55,7 +66,8 @@
               <div v-if="filter" class="d-flex flex-column mt-4 filter_panel">
                 <div style="width: 100%" class="d-flex align-center flex-column">
                   <span class="black--text text-16">Средний чек</span>
-                  <v-slider v-model="filterPanel.price" style="width: 100%" step="500" :max="2500" :tick-labels="ticksLabels" tick-size="5" />
+                  <v-slider v-model="filterPanel.price" style="width: 100%" step="500" :max="2500"
+                            :tick-labels="ticksLabels" tick-size="5"/>
                 </div>
                 <v-autocomplete v-model="filterModel.name" class="mb-4"
                                 clearable style="border-radius: 12px;background: #FFFFFF" outlined hide-details
@@ -83,7 +95,8 @@
               <CardEstabMobile v-for="estab of visibleItems" :key="estab.id" :item="estab"/>
             </template>
             <template v-else>
-              <div v-for="i of 3" :key="i" style="display:flex;flex-direction:column;overflow:hidden;border-radius:20px;position:relative;">
+              <div v-for="i of 3" :key="i"
+                   style="display:flex;flex-direction:column;overflow:hidden;border-radius:20px;position:relative;">
                 <v-skeleton-loader class="mx-auto" type="image"></v-skeleton-loader>
               </div>
             </template>
@@ -137,8 +150,6 @@ export default {
     },
 
 
-
-
     categories: [],
     currentSlide: [],
     scrollPosition: 0,
@@ -162,10 +173,18 @@ export default {
     searchResult: null
   }),
   watch: {
-    'filterModel.city': () => { this.fetchItems(); },
-    'filterModel.name': () => { this.fetchItems(); },
-    'filterModel.avrCheck': () => { this.fetchItems(); },
-    'filterModel.categories': () => { this.fetchItems(); },
+    'filterModel.city': () => {
+      this.fetchItems();
+    },
+    'filterModel.name': () => {
+      this.fetchItems();
+    },
+    'filterModel.avrCheck': () => {
+      this.fetchItems();
+    },
+    'filterModel.categories': () => {
+      this.fetchItems();
+    },
 
     activeTab(newTab) {
       this.filteredEstabs = this.estabs.filter(estab => estab.categories.some(category => category.nameRu === this.activeTab));
@@ -211,8 +230,6 @@ export default {
     },
 
 
-
-
     async filterEstabWithPanel() {
       let filteredEstabs = [];
 
@@ -222,7 +239,7 @@ export default {
       }
 
       try {
-        const response = await this.$http2.get('/establishments', { params });
+        const response = await this.$http2.get('/establishments', {params});
         const priceFilteredEstabs = response.data.content.filter(estab => estab.id === 37 || estab.id === 30 || estab.id === 41);
         // Если есть результат поиска, используем его
         if (this.searchResult) {
@@ -249,7 +266,7 @@ export default {
         const estabsWithAds = [...filteredEstabs];
         let adCounter = Math.floor(estabsWithAds.length / 6);
         for (let i = 1; i <= adCounter; i++) {
-          estabsWithAds.splice(i * 6 + (i - 1), 0, { advert: true });
+          estabsWithAds.splice(i * 6 + (i - 1), 0, {advert: true});
         }
 
         this.filteredEstabs = filteredEstabs;
@@ -275,12 +292,12 @@ export default {
     },
 
     zoomToTop() {
-      if (process.client) {
-  window.scrollTo({
-    top: document.querySelector('#top').offsetTop,
-    behavior: 'smooth'
-  });
-}
+      // if (process.client) {
+      //   window.scrollTo({
+      //     top: document.querySelector('#top').offsetTop,
+      //     behavior: 'smooth'
+      //   });
+      // }
     },
 
     getMoreEstabs() {

@@ -1,14 +1,24 @@
 <template>
   <div id="top" class="videos_mobile mb-100">
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
-        { "@type": "ListItem", "position": 2, "name": "Видеорепортажи", "item": "https://kipish.kg/videos" }
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Главная",
+            "item": "https://kipish.kg/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Видеорепортажи",
+            "item": "https://kipish.kg/videos"
+          }
+        ]
+      }
     </script>
 
     <v-row class="ma-0 pa-0 wrapper">
@@ -66,7 +76,7 @@
             </v-card-text>
 
             <!-- CONTENT -->
-            <template v-if="currentDay" v-for="(curDateItem, dayIndex) of visibleDays" >
+            <template v-if="currentDay" v-for="(curDateItem, dayIndex) of visibleDays">
 
               <v-card-text data-aos="fade-up"
                            data-aos-duration="1000" class="px-0 pt-0 mt-10 pb-0 d-flex justify-space-between"
@@ -109,7 +119,7 @@
                     />
                   </div>
                 </template>
-                <a-dmob data-aos="fade-left"  v-show="shouldShowDesktopEvents(dayIndex)"/>
+                <a-dmob data-aos="fade-left" v-show="shouldShowDesktopEvents(dayIndex)"/>
               </template>
             </template>
           </template>
@@ -134,7 +144,7 @@ export default {
   name: "VideosMobile",
   components: {ADmob, ADpc, Loader, VPlayerMobile, TimeRoulette, ToolBar, BaseBreadcrumbs},
   computed: {
-    ...mapGetters(["videoDomain",'windowWidth']),
+    ...mapGetters(["videoDomain", 'windowWidth']),
   },
   data: () => ({
     closeOnClick: true,
@@ -189,8 +199,8 @@ export default {
           let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight - 300;
           if (bottomOfWindow) {
             const nextActualDateRaw = this.potentialDays.shift();
-            if(nextActualDateRaw) {
-              const nextActualDate = this.convertDateToFetchFormat( nextActualDateRaw );
+            if (nextActualDateRaw) {
+              const nextActualDate = this.convertDateToFetchFormat(nextActualDateRaw);
               this.visibleDays.push(nextActualDate);
               this.fetchReports(nextActualDate);
             }
@@ -219,12 +229,12 @@ export default {
     },
 
     zoomToTop() {
-      if (process.client) {
-  window.scrollTo({
-    top: document.querySelector('#top').offsetTop,
-    behavior: 'smooth'
-  });
-}
+      // if (process.client) {
+      //   window.scrollTo({
+      //     top: document.querySelector('#top').offsetTop,
+      //     behavior: 'smooth'
+      //   });
+      // }
     },
 
     convertDateToFetchFormat(date) {
@@ -314,8 +324,8 @@ export default {
 
             for (let i = 0; i < 2; i++) {
               const nextActualDateRaw = this.potentialDays.shift();
-              if(nextActualDateRaw) {
-                const nextActualDate = this.convertDateToFetchFormat( nextActualDateRaw );
+              if (nextActualDateRaw) {
+                const nextActualDate = this.convertDateToFetchFormat(nextActualDateRaw);
                 this.visibleDays.push(nextActualDate);
                 this.fetchReports(nextActualDate);
               }
@@ -345,7 +355,7 @@ export default {
             date: requestDate,
             sort: 'report_date,desc',
           };
-          const response = await this.$http2.get(`/reports/video/byDate`, { params });
+          const response = await this.$http2.get(`/reports/video/byDate`, {params});
           const reportList = response.data?.content || [];
           this.reports = reportList;
           await this.fetchReportImages(this.reports);
@@ -384,7 +394,7 @@ export default {
       const params = {
         city: this.$store.state.currentCity?.id ?? null,
       };
-      return this.$http2.get(`/reports/video/dateMap`, { params })
+      return this.$http2.get(`/reports/video/dateMap`, {params})
         .then(r => {
           this.reportDateMap = r.data;
         });
@@ -400,13 +410,16 @@ export default {
     .v-icon {
       color: black !important;
     }
+
     .v-input input {
       color: black !important;
+
       &::placeholder {
         color: black !important;
       }
     }
   }
+
   .months_block {
     .v-input__slot {
       i {
