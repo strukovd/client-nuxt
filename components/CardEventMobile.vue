@@ -1,6 +1,6 @@
 <template>
   <div data-aos="fade-up" data-aos-duration="1000"
-    @click="$router.push('/event/' + event.id)"
+       @click="$router.push('/event/' + (!!event?.url?.url ? event.url.url : event.id))"
     class="card_item cursor-pointer" style="width: 100%"
   >
     <v-img

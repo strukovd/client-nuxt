@@ -36,7 +36,9 @@ export default {
     '~/plugins/mediaHttp.js',
     '~/plugins/heroicons.js',
   ],
-
+  router: {
+    middleware: 'redirects'
+  },
   components: true,
 
   buildModules: [

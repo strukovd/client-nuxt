@@ -75,7 +75,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setWindowWidth', 'setGlobalErrorMessage']),
+    ...mapActions(['setWindowWidth', 'setGlobalErrorMessage', 'setRedirects', 'setRedirectsMap']),
     handleResize() {
       this.width = document.body.clientWidth;
 
@@ -107,17 +107,16 @@ export default {
       this.showDrawer = !this.showDrawer
     },
 
-    //TODO refactor
-    // fetchRedirects() {
-    //   this.$http.get('/seo/redirect')
-    //     .then(r => {
-    //       this.$store.state.redirects = r.data.content;
-    //       this.$store.state.redirectsMap = new Map(r.data.content.map(item => [item.from, item.to]));
-    //     })
-    //     .catch(e => {
-    //       console.error(e);
-    //     });
-    // }
+    fetchRedirects() {
+      this.$http.get('/seo/redirect')
+        .then(r => {
+          this.setRedirects(r.data.content)
+          this.setRedirectsMap(new Map(r.data.content.map(item => [item.from, item.to])))
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    }
   },
   beforeMount() {
     // this.getWidth();
@@ -132,7 +131,7 @@ export default {
       window.addEventListener('resize', this.updateWidth);
     }
 
-    // this.fetchRedirects();
+    this.fetchRedirects();
   }
 };
 </script>

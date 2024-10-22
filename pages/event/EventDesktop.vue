@@ -1,44 +1,7 @@
 <template>
   <v-row style="width: 1440px !important;" class="ma-0 pa-0">
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
-        { "@type": "ListItem", "position": 2, "name": "События", "item": "https://kipish.kg/events" }
-      ]
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "http://schema.org/",
-      "@type": "Event",
-      {{ model?.title ? `"name": "${model.title}",` : "" }}
-      {{ model?.description ? `"description": "${model.description}",` : "" }}
-      {{ model?.files?.length ? `"image": "${`https://files.kipish.kg/${model.files[0].minioBucket}/${model.files[0].minioPath}`}",` : "" }}
-      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-      "eventStatus": "https://schema.org/EventScheduled",
-      {{ model?.date ? `"startDate": "${model.date}",` : "" }}
-      "location": [
-        {
-          "@type": "Place",
-          {{ model?.establishment?.name ? `"name": "${model.establishment.name}",` : "" }}
-          "address": {
-            {{ true ? "" : `"streetAddress": "с. Кара Джыгач, Аламудунский район, Чуйская область",` }}
-            {{ true ? "" : `"addressLocality": "с. Кара Джыгач",` }}
-            "addressRegion": "Chuy",
-            "postalCode": "724314",
-            "addressCountry": "Kyrgyzstan"
-          }
-        }
-      ],
-      "organizer": {
-        "@type": "Organization",
-        "name": "Kipish",
-        "url": "https://kipish.kg/"
-      }
-    }
+      {{ structuredData }}
     </script>
 
     <v-col class="pa-0" cols="12">
@@ -113,6 +76,7 @@
 <script>
 import ToolBar from "@/components/AppToolbar.vue";
 import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
+import {mapGetters} from "vuex";
 
 
 export default {
@@ -170,7 +134,39 @@ export default {
     loading: true,
     model: {}
   }),
-  computed: {},
+  computed: {
+    ...mapGetters(['sourceId']),
+    structuredData() {
+      const model = this.model || {};
+      const establishment = model.establishment || {};
+      const files = model.files || [];
+
+      return JSON.stringify({
+        "@context": "http://schema.org",
+        "@type": "Event",
+        name: model.title || '',
+        description: model.description || '',
+        image: files.length ? `https://files.kipish.kg/${files[0].minioBucket}/${files[0].minioPath}` : '',
+        eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+        eventStatus: "https://schema.org/EventScheduled",
+        startDate: model.date || '',
+        location: {
+          "@type": "Place",
+          name: establishment.name || '',
+          address: {
+            addressRegion: "Chuy",
+            postalCode: "724314",
+            addressCountry: "Kyrgyzstan"
+          }
+        },
+        organizer: {
+          "@type": "Organization",
+          name: "Kipish",
+          url: "https://kipish.kg/"
+        }
+      });
+    }
+  },
   methods: {
     formatDateForYear(dateString) {
       if(dateString) {
@@ -213,7 +209,7 @@ export default {
     }
   },
   created() {
-    this.getReport(this.$router.currentRoute.params.id)
+    this.getReport(this.sourceId)
   }
 }
 </script>

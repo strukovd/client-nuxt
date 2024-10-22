@@ -17,6 +17,12 @@ export const state = () => ({
 });
 
 export const mutations = {
+  set_redirects(state, redirects) {
+    state.redirects = redirects;
+  },
+  set_redirects_map(state, redirectsMap) {
+    state.redirectsMap = redirectsMap;
+  },
   set_loading(state, payload) {
     state.loading = payload;
   },
@@ -73,6 +79,13 @@ export const mutations = {
 export const actions = {
   setWindowWidth({ commit }, val) {
     commit('window_width', val);
+  },
+  setRedirects({ commit }, val) {
+    commit('set_redirects', val);
+  },
+  setRedirectsMap({ commit }, val) {
+    console.log(val)
+    commit('set_redirects_map', val);
   },
   setLoading({ commit }, val) {
     commit('set_loading', val);

@@ -1,5 +1,6 @@
 export default async function ({ params, $http, store, redirect }) {
   try {
+    console.log(params.path)
     if (!isNaN(params.path) && !isNaN(parseFloat(params.path))) {
       // Если path — это число
       await store.dispatch('setSourceId', params.path);

@@ -66,7 +66,7 @@
                  class="cursor-pointer"
                  data-aos-duration="1000" style="width: 416px"
                  v-for="(event, index) of filteredEventWithPanel" :key="event.id"
-                 @click="$router.push('/event/' + event.id)"
+                 @click="$router.push('/event/' + (!!event?.url?.url ? event.url.url : event.id))"
                  :class="(index !== 1 || index !== 4 || index !== 7 || index !== 10) ? 'reports_card_first' : 'reports_card_second'">
               <v-img
                 lazy-src="/static/images/cover-2.jpg"
@@ -115,6 +115,7 @@ import ToolBar from "@/components/AppToolbar.vue";
 import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
 import TimeRoulette from "@/components/TimeRoulette.vue";
 import Vue from "vue";
+import {mapGetters} from "vuex";
 
 export default {
   name: "EventsDesktop",
