@@ -121,6 +121,17 @@ import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
 export default {
   name: "EstablishmentsDesktop",
   components: {Loader, ToolBar, CardEstab, BaseBreadcrumbs},
+  head() {
+    return {
+      link: [
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'},
+        {
+          rel: 'canonical',
+          href: 'https://kipish.kg/establishments/'
+        }
+      ],
+    }
+  },
   data: () => ({
     visibleItems: [],
     filterModel: {

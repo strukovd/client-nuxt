@@ -146,6 +146,17 @@ export default {
   computed: {
     ...mapGetters(["videoDomain", 'windowWidth']),
   },
+  head() {
+    return {
+      link: [
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'},
+        {
+          rel: 'canonical',
+          href: 'https://kipish.kg/videos/'
+        }
+      ],
+    }
+  },
   data: () => ({
     closeOnClick: true,
     scrollPosition: 0,

@@ -239,8 +239,12 @@ export default {
         { property: 'og:image', content: 'https://www.kipish.kg/image.jpg' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }
-      ]
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'},
+        {
+          rel: 'canonical',
+          href: 'https://kipish.kg/report'
+        }
+      ],
     };
   },
   data: () => ({
@@ -252,24 +256,6 @@ export default {
     days: [],
     model: {},
     dialog: false,
-    swiperOption: {
-      effect: 'coverflow',
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      initialSlide: 0,
-      // autoplay: {
-      //   delay: 3500,
-      //   disableOnInteraction: true
-      // },
-      coverflowEffect: {
-        rotate: 0,
-        stretch: -33,
-        depth: 150,
-        modifier: 1,
-        slideShadows: true
-      },
-    },
     loading: false,
     loadingContent: false,
     page: 0,

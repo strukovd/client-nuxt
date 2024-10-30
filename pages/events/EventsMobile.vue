@@ -125,6 +125,17 @@ export default {
         );
     }
   },
+  head() {
+    return {
+      link: [
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'},
+        {
+          rel: 'canonical',
+          href: 'https://kipish.kg/event/'
+        }
+      ],
+    }
+  },
   data: () => ({
     closeOnClick: true,
     scrollPosition: 0,

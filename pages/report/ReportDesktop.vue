@@ -313,8 +313,12 @@ export default {
         { property: 'og:image', content: 'https://www.kipish.kg/image.jpg' }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }
-      ]
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'},
+        {
+          rel: 'canonical',
+          href: 'https://kipish.kg/reports/'
+        }
+      ],
     };
   },
   data: () => ({

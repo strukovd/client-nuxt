@@ -2,7 +2,7 @@
   <v-row id="home" class="pa-0 ma-0 pb-120 home-page">
     <v-col cols="12" class="pa-0">
       <tool-bar class="wrapper" @scrollToBlock="scrollToBlock"/>
-      <template v-if="$store.state.currentCity">
+      <template>
         <template v-if="windowWidth > 1400">
           <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
             <DesktopMedia/>
@@ -225,10 +225,10 @@
         <!--            </v-card-text>-->
         <!--          </v-card>-->
       </template>
-      <template v-else>
-        <!-- Город не выбран -->
-        Город не выбран
-      </template>
+<!--      <template v-else>-->
+<!--        &lt;!&ndash; Город не выбран &ndash;&gt;-->
+<!--        Город не выбран-->
+<!--      </template>-->
     </v-col>
   </v-row>
 </template>
@@ -240,8 +240,6 @@ import AppToolbar from "@/components/AppToolbar.vue";
 import ToolBar from "@/components/AppToolbar.vue";
 
 
-import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
-import 'swiper/css/swiper.css'
 import ImageCarousel from "@/components/imageCarousel/ImageCarouselDesktop.vue";
 import ImageCarouselDesktop from "@/components/imageCarousel/ImageCarouselDesktop.vue";
 import VideoPlayer from "@/components/VideoPlayer.vue";
@@ -266,6 +264,51 @@ export default {
   head() {
     return {
       title: 'Кипиш — Медиа ресурс о светской и ночной жизни в Бишкеке',
+      link: [
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'},
+        {
+          rel: 'canonical',
+          href: 'https://kipish.kg'
+        }
+      ],
+      script: [
+        {
+          type: 'application/ld+json',
+          json: {
+            "@context": "http://schema.org/",
+            "@type": "LocalBusiness",
+            "name": "Kipish",
+            "image": "https://kipish.kg/static/images/logo.svg",
+            "telephone": "+996 504 443444",
+            "url": "https://kipish.kg/",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "г. Бишкек, ул. Медерова 163/1",
+              "addressLocality": "Bishkek",
+              "addressRegion": "Chuy",
+              "postalCode": "720005",
+              "addressCountry": "Kyrgyzstan"
+            },
+            "sameAs": [
+              "https://www.instagram.com/kipishkg/",
+              "https://www.youtube.com/channel/UCaHkOh9c7dgps2aC4EbShSA"
+            ]
+          }
+        },
+        {
+          type: 'application/ld+json',
+          json: {
+            "@context": "http://schema.org/",
+            "@type": "WebSite",
+            "url": "https://kipish.kg/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://kipish.kg/?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }
+        }
+      ],
       meta: [
         {
           hid: 'description',
@@ -298,9 +341,6 @@ export default {
           content: 'https://kipish.kg/'
         }
       ],
-      link: [
-        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'}
-      ]
     };
   },
   components: {
@@ -323,30 +363,11 @@ export default {
     ToolBar,
     AppToolbar,
     ImageCarousel,
-    Marquee, Swiper,
-    SwiperSlide,
+    Marquee,
   },
   data: () => ({
     show: false,
     cities: [],
-    swiperOption: {
-      effect: 'coverflow',
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      initialSlide: 1,
-      autoplay: {
-        delay: 3500,
-        disableOnInteraction: true
-      },
-      coverflowEffect: {
-        rotate: 0,
-        stretch: -33,
-        depth: 150,
-        modifier: 1,
-        slideShadows: true
-      },
-    },
     pagination: {
       el: '.swiper-pagination'
     },

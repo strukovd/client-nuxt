@@ -214,8 +214,12 @@ export default {
         }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }
-      ]
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'},
+        {
+          rel: 'canonical',
+          href: 'https://kipish.kg/establishment/'
+        }
+      ],
     };
   },
 

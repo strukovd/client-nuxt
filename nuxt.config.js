@@ -45,8 +45,21 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
-  modules: [],
+  modules: [
+    '@nuxtjs/sitemap'
+  ],
 
+  sitemap: {
+    filter ({ routes }) {
+      return routes.map(route => {
+        route.url = `${route.url}/`
+        return route
+      })
+    }
+  },
+  generate: {
+    fallback: true
+  },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
     theme: {

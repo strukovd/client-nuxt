@@ -193,6 +193,17 @@ import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
 export default {
   name: "ReportsDesktop",
   components: {TimeRoulette, ToolBar, BaseBreadcrumbs},
+  head() {
+    return {
+      link: [
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'},
+        {
+          rel: 'canonical',
+          href: 'https://kipish.kg/reports/'
+        }
+      ],
+    }
+  },
   computed: {
     filteredReports() {
       if (this.filterOptions?.name || this.filterOptions.establishmentName || this.filterOptions.date) {

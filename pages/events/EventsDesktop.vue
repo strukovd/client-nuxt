@@ -120,6 +120,17 @@ import {mapGetters} from "vuex";
 export default {
   name: "EventsDesktop",
   components: {TimeRoulette, ToolBar, BaseBreadcrumbs},
+  head() {
+    return {
+      link: [
+        {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'},
+        {
+          rel: 'canonical',
+          href: 'https://kipish.kg/events/'
+        }
+      ],
+    }
+  },
   data: () => ({
     closeOnClick: true,
     scrollPosition: 0,
