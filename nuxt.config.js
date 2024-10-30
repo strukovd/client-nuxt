@@ -37,7 +37,7 @@ export default {
     '~/plugins/heroicons.js',
   ],
   router: {
-    middleware: 'redirects'
+    // middleware: 'redirects'
   },
   components: true,
 
@@ -48,17 +48,29 @@ export default {
   modules: [
     '@nuxtjs/sitemap'
   ],
-
-  sitemap: {
-    filter ({ routes }) {
-      return routes.map(route => {
-        route.url = `${route.url}/`
-        return route
-      })
-    }
-  },
   generate: {
-    fallback: true
+    fallback: true,
+    routes: [
+      '/',            // Главная страница
+      '/about',       // Страница "О нас"
+      '/contact',     // Страница "Контакты"
+      '/blog/post-1', // Пример статьи блога
+      '/blog/post-2'  // Еще одна статья
+    ]
+  },
+  sitemap: {
+    hostname: 'https://kipish.kg/sitemap.xml',
+    gzip: true,
+    path: '/sitemap.xml',
+    routes: ['/reports', '/report', '/events', '/event', '/videos', '/establishments', '/establishment']
+  },
+  site: {
+    hostname: 'https://kipish.kg/sitemap.xml',
+    gzip: true,
+    routes: ['/reports', '/report', '/events', '/event', '/videos', '/establishments', '/establishment']
+  },
+  robots: {
+    sitemap: 'https://kipish.kg/sitemap.xml', enabled: true, disallowNonIndexableRoutes: true,
   },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],

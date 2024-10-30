@@ -1,16 +1,15 @@
 <template>
   <v-card elevation="0" color="transparent" class="px-16 mt-120 desktop_reports">
     <v-card-text class="pa-0 pr-n2">
-      <div class="d-flex justify-start">
-        <div class="d-flex flex-column align-center">
-          <div class="d-flex align-center">
-            <span class="text-82 font-weight-300 font-title black--text text-uppercase mr-8">Актуальные</span>
-            <div class="mt-3">
-              <span style="line-height: 29px;" class=" text-24 black--text opacity-70 font-weight-200">/ Каждая задача возможность <br> сделать больше и лучше</span>
-            </div>
+      <div class="d-flex ">
+        <div class="d-flex align-items-baseline">
+          <div class="text-82 font-weight-300 font-title black--text text-uppercase mr-2" style="text-align: right; width: 100%">
+            <h1 class="reset-styles">
+              Актуальные <br><span style="margin-right: -100px">фотоотчеты</span>
+            </h1>
           </div>
-          <div>
-            <span class="text-82 font-weight-300 font-title black--text text-uppercase">Репортажи</span>
+          <div style="line-height: 1.2; width: 100%;" class="text-24 black--text opacity-70 font-weight-200 mt-4">
+            / КАЖДАЯ ЗАДАЧА — ВОЗМОЖНОСТЬ <br> СДЕЛАТЬ БОЛЬШЕ И ЛУЧШЕ
           </div>
         </div>
       </div>
@@ -49,7 +48,8 @@
                   style="position: absolute;z-index: 999;width: 100%;height: 100%;background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.60) 100%); "
                   class="px-8 py-6 d-flex flex-column justify-space-between">
                   <div>
-                    <div v-if="card?.establishment?.name" style="background: #FFFFFF33;border-radius: 30px;display: inline-block" class="py-1 px-4">
+                    <div v-if="card?.establishment?.name"
+                         style="background: #FFFFFF33;border-radius: 30px;display: inline-block" class="py-1 px-4">
                       <span class="text-16 white--text">{{ card?.establishment?.name }}</span>
                     </div>
                   </div>
@@ -256,7 +256,7 @@ export default {
       this.topOffset = Math.max(80, 80 - window.scrollY);
     },
     formatDate(dateString) {
-      if(dateString){
+      if (dateString) {
         const months = [
           'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
           'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
@@ -287,6 +287,11 @@ export default {
 </script>
 
 <style lang="scss">
+.reset-styles {
+  all: unset; /* Убирает все стили */
+  display: inherit; /* Сбрасывает display на значение родителя */
+  white-space: nowrap;
+}
 .desktop_reports {
   .image_item {
     .v-image__image {

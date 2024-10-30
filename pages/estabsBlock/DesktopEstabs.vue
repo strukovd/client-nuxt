@@ -1,13 +1,15 @@
 <template>
   <v-card style="background: red" elevation="0" color="transparent" class="mt-120 px-16 desktop_estabs">
     <v-card-text class="pa-0">
-      <div class="d-flex flex-column pb-5">
-        <span class="text-82 font-title font-weight-300 black--text text-uppercase">Рекомендуемые</span>
-        <div class="d-flex align-center">
-          <span class="text-82 font-title font-weight-300 black--text mr-8 text-uppercase">Заведения</span>
-          <div class="mt-3">
-            <span style="line-height: 29px;" class="font-weight-200 black--text text-24 opacity-70">/ Каждый день <br> стратегически важен</span>
-          </div>
+      <div class="d-flex align-items-baseline">
+        <div class="text-82 font-weight-300 font-title black--text text-uppercase mr-2" style="text-align: left; width: 100%">
+          <h1 class="reset-styles">
+            Рекомендуемые <br><span style="margin-right: -100px">Заведения</span>
+          </h1>
+        </div>
+        <div style="line-height: 1.2; width: 100%; margin-left: -265px" class="text-24 black--text opacity-70 font-weight-200 mb-5 d-flex align-end">
+          / КАЖДЫЙ ДЕНЬ <br>
+          СТРАТЕГИЧЕСКИ ВАЖЕН
         </div>
       </div>
       <div style="position: relative;border-radius: 20px 0 0 20px;" class="d-flex flex-wrap mt-10">
