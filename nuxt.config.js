@@ -50,7 +50,6 @@ export default {
   ],
 
   modules: [
-    '@nuxtjs/sitemap'
   ],
   generate: {
     fallback: true,
@@ -61,20 +60,6 @@ export default {
       '/blog/post-1', // Пример статьи блога
       '/blog/post-2'  // Еще одна статья
     ]
-  },
-  sitemap: {
-    hostname: 'https://kipish.kg/sitemap.xml',
-    gzip: true,
-    path: '/sitemap.xml',
-    routes: ['/reports', '/report', '/events', '/event', '/videos', '/establishments', '/establishment']
-  },
-  site: {
-    hostname: 'https://kipish.kg/sitemap.xml',
-    gzip: true,
-    routes: ['/reports', '/report', '/events', '/event', '/videos', '/establishments', '/establishment']
-  },
-  robots: {
-    sitemap: 'https://kipish.kg/sitemap.xml', enabled: true, disallowNonIndexableRoutes: true,
   },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
