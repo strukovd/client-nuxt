@@ -23,7 +23,7 @@
 
     <v-row style="width: 1440px !important;" class="ma-0 pa-0">
       <v-col class="pa-0" cols="12">
-        <tool-bar/>
+        <tool-bar @selectedCity="setSelectedCity"/>
       </v-col>
       <v-col v-if="notFound">
         <div class="d-flex flex-column align-center justify-center mt-16">
@@ -412,6 +412,8 @@ export default {
     this.initOnScrollFetcher();
   },
   methods: {
+    setSelectedCity(city) {
+    },
     fetchSeo() {
       this.$http.get(`/seo/friendly-url/${this.sourceId}/album`)
         .then(res => {

@@ -21,7 +21,7 @@
                   <v-select
                     style="max-width: 200px;z-index: 999999 !important;" :items="cities" item-value="id"
                     item-text="nameRu" return-object @change="onChangeCity"
-                    v-model="$store.state.currentCity" append-icon="" dense hide-details>
+                    v-model="currentCity" append-icon="" dense hide-details>
                     <template v-slot:selection="{ item, selected, select }">
                       <div class="d-flex align-center">
                                     <span class="black--text align-center font-weight-regular">
@@ -106,7 +106,7 @@
                 </nuxt-link>
                 <v-select style="max-width: 150px; z-index: 9999 !important;" :items="cities"
                           item-value="id" item-text="nameRu" return-object @change="onChangeCity"
-                          v-model="$store.state.currentCity"
+                          v-model="currentCity"
                           append-icon="" dense hide-details>
                   <template v-slot:selection="{ item, selected, select }">
                     <div class="d-flex align-center">
@@ -251,7 +251,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["windowWidth"]),
+    ...mapGetters(["windowWidth", 'currentCity']),
     currentRouteName() {
       return this.$route.name;
     }
@@ -282,7 +282,7 @@ export default {
       this.$http.get('/cities')
         .then(r => {
           this.cities = r.data.content;
-          if (this.cities.length > 0 && !this.$store.state?.currentCity) {
+          if (this.cities.length > 0 && !this.currentCity) {
             this.setCity(this.cities[0])
           }
         })
@@ -299,7 +299,6 @@ export default {
 
     onChangeCity() {
       if (process.client) {
-        console.log(123)
         localStorage.setItem('city', JSON.stringify(this.$store.state.currentCity));
       }
     }
