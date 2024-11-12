@@ -31,6 +31,6 @@ cd $DEST_DIR &&
 $NPM_PATH install &&
 $PM2_PATH delete client-nuxt || true &&
 $PM2_PATH start $NPM_PATH --name 'client-nuxt' -- start &&
-$PM2_PATH pm2 save || true
+$PM2_PATH pm2 save
 "
 
