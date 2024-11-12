@@ -19,13 +19,18 @@ tar --exclude='./node_modules' --exclude='./.git' --exclude='./package-lock.json
 # Копируем архив на сервер
 scp /tmp/client_nuxt_ssr.tar.gz "$HOST:/tmp/"
 
+NPM_PATH="/root/.nvm/versions/node/v14.21.3/bin/npm"
+PM2_PATH="/root/.nvm/versions/node/v14.21.3/bin/pm2"
+
 # Подключаемся к серверу, распаковываем архив, устанавливаем зависимости и запускаем через PM2
 ssh "$HOST" "
 rm -rf $DEST_DIR &&
 mkdir -p $DEST_DIR &&
 tar -xzvf /tmp/client_nuxt_ssr.tar.gz -C $DEST_DIR &&
 cd $DEST_DIR &&
-npm install &&
-pm2 delete client-nuxt || true &&
-pm2 start npm --name 'client-nuxt' -- start
+$NPM_PATH install &&
+$PM2_PATH delete client-nuxt || true &&
+$PM2_PATH start $NPM_PATH --name 'client-nuxt' -- start &&
+$PM2_PATH pm2 save || true
 "
+
