@@ -3,7 +3,7 @@
     <v-col cols="12" class="pa-0">
       <tool-bar class="wrapper" @scrollToBlock="scrollToBlock"/>
       <template>
-        <template v-if="windowWidth > 1400">
+        <template v-if="!windowWidth || windowWidth > 1400">
           <div data-aos="fade-up" data-aos-duration="1500" class="wrapper">
             <DesktopMedia/>
           </div>
@@ -87,7 +87,7 @@
         </template>
 
         <v-card data-aos="fade-up" data-aos-duration="1500" elevation="0" color="transparent" class="wrapper">
-          <template v-if="windowWidth > 1400">
+          <template v-if="!windowWidth || windowWidth > 1400">
             <v-lazy transition="fade-transition">
               <div class="info_block_desktop">
                 <div class="mt-120 pb-60">
@@ -209,7 +209,7 @@
           </template>
         </v-card>
         <!--          <v-card elevation="0" color="transparent">-->
-        <!--            <v-card-text v-if="windowWidth > 1400" class="pa-0 mt-15 mb-120">-->
+        <!--            <v-card-text v-if="!windowWidth || windowWidth > 1400" class="pa-0 mt-15 mb-120">-->
         <!--              <div class="center-block">-->
         <!--                <v-lazy transition="scroll-y-transition" :value="() => import('@/components/imageCarousel/ImageCarouselDesktop.vue')">-->
         <!--                  <image-carousel-desktop/>-->

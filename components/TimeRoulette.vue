@@ -4,7 +4,7 @@
       <span class="text-24">Загрузка ленты...</span>
     </v-card-text>
     <v-card-text v-if="!loading" style="position: relative;z-index: 998" class="pa-0 months_block mt-10">
-      <template v-if="windowWidth > 1400">
+      <template v-if="!windowWidth || windowWidth > 1400">
         <div style="position: absolute;left: 0;top: -40px;height: 34px" class="d-flex mb-6">
           <v-autocomplete
               class="mr-8"

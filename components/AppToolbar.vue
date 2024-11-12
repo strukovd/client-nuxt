@@ -2,7 +2,7 @@
   <div>
     <search v-if="searchDialog" @close="(status) => searchDialog = status"/>
     <div v-if="!searchDialog">
-      <div v-if="windowWidth > 1400" style="height: 120px">
+      <div v-if="!windowWidth || windowWidth > 1400" style="height: 120px">
 
         <v-app-bar :style="$vuetify.theme.dark ? 'background-color: #171717' : 'background-color: #f5f5f5'"
                    elevation="0"
@@ -64,7 +64,7 @@
             </v-card-text>
           </v-card>
         </v-app-bar>
-        <div class="mx-10" v-if="windowWidth > 1400"
+        <div class="mx-10" v-if="!windowWidth || windowWidth > 1400"
              :style="$vuetify.theme.dark ? 'border-bottom: 1px solid #FFFFFF1A;' : 'border-bottom: 1px solid #0000001A;' "
              style="padding-top: 110px">
         </div>

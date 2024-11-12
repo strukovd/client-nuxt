@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="windowWidth > 1400">
+    <template v-if="!windowWidth || windowWidth > 1400">
       <EstablishmentDesktop/>
     </template>
     <template v-if="windowWidth <= 1400">

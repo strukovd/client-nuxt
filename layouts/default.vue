@@ -1,11 +1,12 @@
 <template>
   <div id="appRoot" :class="{'dark-theme': $vuetify.theme.dark}" v-on:resize="handleResize">
     <template>
-      <v-app  style="overflow: hidden" id="inspire" class="app">
+      <v-app style="overflow: hidden" id="inspire" class="app">
         <v-main class="pa-0 ma-0">
           <v-row ref="autoScaleElement" class="pa-0 ma-0">
-            <v-col :style="dynamicBackgroundColor" style="min-height: 60vh" cols="12" class="pa-0 d-flex justify-center">
-              <Nuxt />
+            <v-col :style="dynamicBackgroundColor" style="min-height: 60vh" cols="12"
+                   class="pa-0 d-flex justify-center">
+              <Nuxt/>
             </v-col>
             <v-col :style="dynamicBackgroundColorFooter" cols="12" class="pa-0">
               <template v-if="width > 1400 || !width">

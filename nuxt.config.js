@@ -3,6 +3,7 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   target: 'server',
+  mode: 'universal',
   ssr: true,
   server: {
     host: '127.0.0.1',
@@ -69,7 +70,8 @@ export default {
     sitemap: 'https://kipish.kg/sitemap.xml', enabled: true, disallowNonIndexableRoutes: true,
   },
   generate: {
-    fallback: true
+    fallback: true,
+    routes: ['/reports', '/report', '/events', '/event', '/videos', '/establishments', '/establishment']
   },
   vuetify: {
     customVariables: ['~/assets/variables.scss'],

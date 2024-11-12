@@ -4,7 +4,7 @@
       <span class="text-24">Загрузка ленты...</span>
     </v-card-text>
     <v-card-text v-if="!loading" style="" class="roulette-box">
-      <template v-if="windowWidth > 1400">
+      <template v-if="!windowWidth || windowWidth > 1400">
         <!-- ВЫБОР МЕСЯЦА И ГОДА -->
         <!-- <div style="position: absolute;left: 0;top: -40px;height: 34px" class="text-24 d-flex mb-6">
           <v-autocomplete class="curYear mr-8 mt-2" style="width: 5em;" :items="allowedYears" v-model="selectedYear" return-object dense hide-details @change="onYearChange">

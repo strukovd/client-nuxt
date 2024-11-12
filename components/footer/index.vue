@@ -1,6 +1,6 @@
 <template>
   <div>
-    <template v-if="windowWidth > 1400">
+    <template v-if="!windowWidth || windowWidth > 1400">
       <v-lazy transition="fade-transition" :value="() => import('@/components/footer/AppFabDesktop.vue')">
         <app-fab-desktop/>
       </v-lazy>
