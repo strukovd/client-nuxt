@@ -196,7 +196,6 @@
 import ToolBar from "@/components/AppToolbar.vue";
 import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
-import {Stack, StackItem} from 'vue-stack-grid';
 import {mapGetters} from "vuex";
 import {FrameInfiniteGrid, MasonryInfiniteGrid} from "@egjs/vue-infinitegrid";
 import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
@@ -204,7 +203,7 @@ import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
 
 export default {
   name: "ReportMobile",
-  components: {MasonryInfiniteGrid, FrameInfiniteGrid, SwiperSlide, ToolBar, Swiper, StackItem, Stack, BaseBreadcrumbs},
+  components: {MasonryInfiniteGrid, FrameInfiniteGrid, SwiperSlide, ToolBar, Swiper, BaseBreadcrumbs},
   head() {
     return {
       title: this.model.name
@@ -251,7 +250,6 @@ export default {
     shareDialog: false,
     showSharePhoto: false,
     imageIndex: '',
-    windowWidth: window.innerWidth,
     selectedImage: null,
     days: [],
     model: {},
@@ -270,7 +268,7 @@ export default {
     loaded: false
   }),
   computed: {
-    ...mapGetters(['sourceId'])
+    ...mapGetters(['sourceId', 'windowWidth'])
   },
   watch: {
     imageIndex(value) {
@@ -310,7 +308,6 @@ export default {
 
       const imageUrl = `${baseUrl}/${image.id}`;
       let shareUrl;
-      let curUrl = window.location.href;
 
       switch (destination) {
         case 'whatsapp':

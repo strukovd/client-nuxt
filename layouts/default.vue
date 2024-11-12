@@ -129,7 +129,6 @@ export default {
 
     if (process.client) {
       this.updateWidth();
-      window.addEventListener('resize', this.updateWidth);
     }
 
     this.fetchRedirects();

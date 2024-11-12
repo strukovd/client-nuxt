@@ -286,7 +286,6 @@
 import ToolBar from "@/components/AppToolbar.vue";
 import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
-import {Stack, StackItem} from 'vue-stack-grid';
 import {FrameInfiniteGrid, MasonryInfiniteGrid} from "@egjs/vue-infinitegrid";
 import MobileMedia from "@/pages/mediaBlock/MobileMedia.vue";
 import DesktopMedia from "@/pages/mediaBlock/DesktopMedia.vue";
@@ -297,7 +296,7 @@ export default {
   name: "ReportDesktop",
   components: {
     DesktopMedia,
-    MobileMedia, StackItem, SwiperSlide, ToolBar, Swiper, Stack, MasonryInfiniteGrid, FrameInfiniteGrid,
+    MobileMedia, SwiperSlide, ToolBar, Swiper, MasonryInfiniteGrid, FrameInfiniteGrid,
     BaseBreadcrumbs
   },
   head() {
