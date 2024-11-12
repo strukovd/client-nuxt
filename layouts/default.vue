@@ -9,12 +9,12 @@
               <Nuxt/>
             </v-col>
             <v-col :style="dynamicBackgroundColorFooter" cols="12" class="pa-0">
-              <template v-if="width > 1400 || !width">
+              <template v-if="!width || width > 1400 || width === 0">
                 <v-lazy transition="fade-transition" :value="() => import('@/components/footer/AppFabDesktop.vue')">
                   <app-fab-desktop/>
                 </v-lazy>
               </template>
-              <template v-if="width <= 1400">
+              <template v-if="width <= 1400 && width !== 0">
                 <v-lazy transition="fade-transition" :value="() => import('@/components/footer/AppFabMobile.vue')">
                   <app-fab-mobile/>
                 </v-lazy>

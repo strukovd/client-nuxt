@@ -12,9 +12,11 @@
                   elevation="0" class="d-flex align-center pa-0" color="transparent">
             <v-card-text class="d-flex justify-space-between align-center pa-0 wrapper px-16">
               <div class="d-flex align-center py-10 logo">
-                <div @click="$router.push('/')" class="mr-4 cursor-pointer">
-                  <v-img :src="$vuetify.theme.dark ? '/images/logo-light.svg' : '/images/logo.svg'"/>
-                </div>
+                <nuxt-link to="/">
+                  <div class="mr-4 cursor-pointer">
+                    <v-img :src="$vuetify.theme.dark ? '/images/logo-light.svg' : '/images/logo.svg'"/>
+                  </div>
+                </nuxt-link>
                 <div class="d-flex align-center header_block">
                   <v-select
                     style="max-width: 200px;z-index: 999999 !important;" :items="cities" item-value="id"
@@ -22,9 +24,9 @@
                     v-model="$store.state.currentCity" append-icon="" dense hide-details>
                     <template v-slot:selection="{ item, selected, select }">
                       <div class="d-flex align-center">
-                      <span class="black--text align-center font-weight-regular">
-                      {{ item.nameRu }}
-                    </span>
+                                    <span class="black--text align-center font-weight-regular">
+                                    {{ item.nameRu }}
+                                  </span>
                         <v-icon class="mb-2 ml-1">
                           mdi-menu-down
                         </v-icon>
@@ -34,23 +36,41 @@
                 </div>
               </div>
               <div class="d-flex align-center">
-            <span @click="$router.push('/reports')" :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"
-                  class="text-18 mr-10 cursor-pointer font-weight-regular black--text">Фото</span>
-                <span @click="$router.push('/videos')" :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"
-                      class="text-18 mr-10 cursor-pointer font-weight-regular black--text">Видео</span>
-                <span @click="$router.push('/events')" :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"
-                      class="text-18 mr-10 cursor-pointer font-weight-regular black--text">События</span>
-                <span @click="$router.push('/establishments')"
-                      :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"
-                      class="text-18 mr-10 cursor-pointer font-weight-regular black--text">Заведения</span>
-                <!-- <span @click="$router.push('/news')"
+                <nuxt-link to="/reports">
+                  <span
+                    :class="[$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light', 'text-18', 'mr-10', 'cursor-pointer', 'font-weight-regular', 'black--text']">
+                    Фото
+                  </span>
+                </nuxt-link>
+
+                <nuxt-link to="/videos">
+                  <span
+                    :class="[$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light', 'text-18', 'mr-10', 'cursor-pointer', 'font-weight-regular', 'black--text']">
+                    Видео
+                  </span>
+                </nuxt-link>
+
+                <nuxt-link to="/events">
+                  <span
+                    :class="[$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light', 'text-18', 'mr-10', 'cursor-pointer', 'font-weight-regular', 'black--text']">
+                    События
+                  </span>
+                </nuxt-link>
+
+                <nuxt-link to="/establishments">
+                  <span
+                    :class="[$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light', 'text-18', 'mr-10', 'cursor-pointer', 'font-weight-regular', 'black--text']">
+                    Заведения
+                  </span>
+                </nuxt-link>
+                <!-- <span
                       :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"
                       class="text-18 mr-10 cursor-pointer font-weight-regular black--text">Новости</span> -->
                 <!--            <span :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"-->
                 <!--              @click="$emit('scrollToBlock', 'aboutUs')"-->
                 <!--              class="text-18 mr-10 cursor-pointer font-weight-300 black--text">Lifestyle</span>-->
-<!--                <span @click="scrollToContacts" :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"-->
-<!--                      class="text-18 mr-10 cursor-pointer font-weight-regular black&#45;&#45;text">Контакты</span>-->
+                <!--                <span @click="scrollToContacts" :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"-->
+                <!--                      class="text-18 mr-10 cursor-pointer font-weight-regular black&#45;&#45;text">Контакты</span>-->
                 <!--            <span :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"-->
                 <!--              class="text-18 mr-15 cursor-pointer font-weight-300 black--text">Заказать съемку</span>-->
                 <heroicon @click="searchDialog = true" class="cursor-pointer" name="search"
@@ -78,10 +98,12 @@
                   class="d-flex align-center pa-0 " color="transparent">
             <v-card-text class="px-4 d-flex justify-space-between align-center pa-0 wrapper">
               <div class="d-flex align-center header_block">
-                <div @click="$router.push('/')" class="mr-4 cursor-pointer logo">
-                  <v-img width="42" height="40"
-                         :src="$vuetify.theme.dark ? '/images/logo-light.svg' : '/images/logo.svg'"/>
-                </div>
+                <nuxt-link to="/">
+                  <div class="mr-4 cursor-pointer logo">
+                    <v-img width="42" height="40"
+                           :src="$vuetify.theme.dark ? '/images/logo-light.svg' : '/images/logo.svg'"/>
+                  </div>
+                </nuxt-link>
                 <v-select style="max-width: 150px; z-index: 9999 !important;" :items="cities"
                           item-value="id" item-text="nameRu" return-object @change="onChangeCity"
                           v-model="$store.state.currentCity"
@@ -111,10 +133,12 @@
           <v-card elevation="0" color="transparent" height="100%">
             <v-card-text class="pa-0 px-6 pt-5 d-flex align-center justify-space-between">
               <div class="d-flex align-center">
-                <div class="cursor-pointer" @click="$router.push('/')">
-                  <v-img width="37" height="36"
-                         :src="$vuetify.theme.dark ? '/images/logo-light.svg' : '/images/logo.svg'"/>
-                </div>
+                <nuxt-link to="/">
+                  <div class="cursor-pointer">
+                    <v-img width="37" height="36"
+                           :src="$vuetify.theme.dark ? '/images/logo-light.svg' : '/images/logo.svg'"/>
+                  </div>
+                </nuxt-link>
               </div>
               <div class="d-flex align-center">
                 <heroicon @click="searchDialog = true" class="cursor-pointer mr-8" name="search"
@@ -126,15 +150,24 @@
             </v-card-text>
             <v-card-text class="pl-6 pr-0 py-0 mt-10 pb-10">
               <div class="d-flex flex-column">
-              <span @click="$router.push('/reports')"
-                    class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">Фото</span>
-                <span @click="$router.push('/videos')"
-                      class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">Видео</span>
-                <span @click="$router.push('/events')"
-                      class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">События</span>
-                <span @click="$router.push('/establishments')"
-                      class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">Заведения</span>
-                <!-- <span @click="$router.push('/news')"
+                <nuxt-link to="/reports"
+                           class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">
+                  Фото
+                </nuxt-link>
+
+                <nuxt-link to="/videos" class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">
+                  Видео
+                </nuxt-link>
+
+                <nuxt-link to="/events" class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">
+                  События
+                </nuxt-link>
+
+                <nuxt-link to="/establishments"
+                           class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">
+                  Заведения
+                </nuxt-link>
+                <!-- <span
                       class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">Новости</span> -->
                 <!--              <span class="black--text text-18 font-weight-300 mb-8 cursor-pointer">Lifestyle</span>-->
                 <span @click="scrollToContacts"
@@ -234,12 +267,14 @@ export default {
       this.menu = !this.menu
     },
     toggleTheme() {
-      this.rotateAnimation = true;
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-      localStorage.setItem('dark-theme', this.$vuetify.theme.dark);
-      setTimeout(() => {
-        this.rotateAnimation = false;
-      }, 1000);
+      if (process.client) {
+        this.rotateAnimation = true;
+        this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+        localStorage.setItem('dark-theme', this.$vuetify.theme.dark);
+        setTimeout(() => {
+          this.rotateAnimation = false;
+        }, 1000);
+      }
     },
 
     init() {
@@ -263,8 +298,10 @@ export default {
     },
 
     onChangeCity() {
-      localStorage.setItem('city', JSON.stringify(this.$store.state.currentCity));
-      this.$router.go();
+      if (process.client) {
+        localStorage.setItem('city', JSON.stringify(this.$store.state.currentCity));
+        this.$router.go();
+      }
     }
   },
 

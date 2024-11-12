@@ -44,6 +44,7 @@ export default {
     '~/plugins/heroicons.js',
   ],
   router: {
+    base: '/',
     middleware: 'redirects'
   },
   components: true,
