@@ -30,7 +30,6 @@ tar -xzvf /tmp/client_nuxt_ssr.tar.gz -C $DEST_DIR &&
 cd $DEST_DIR &&
 $NPM_PATH install &&
 $PM2_PATH delete client-nuxt || true &&
-$PM2_PATH start $NPM_PATH --name 'client-nuxt' -- start &&
-$PM2_PATH pm2 save
+$PM2_PATH start $NPM_PATH --name 'client-nuxt' -- start
 "
 
