@@ -2,6 +2,10 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  server: {
+    host: '127.0.0.1',
+    port: 3000
+  },
   head: {
     titleTemplate: '%s - kipish',
     title: 'kipish',
