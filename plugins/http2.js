@@ -3,7 +3,7 @@ import axios from 'axios';
 const http2 = axios.create({
   baseURL:
     process.env.NODE_ENV === 'production'
-      ? '/api/v2'
+      ? 'https://kipish.kg/api/v2'
       : 'https://kipish.kg/api/v2',
   headers: {
     Accept: 'application/json',

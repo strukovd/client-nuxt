@@ -3,7 +3,7 @@ import axios from 'axios';
 const mediaHttp = axios.create({
   baseURL:
     process.env.NODE_ENV === 'production'
-      ? '/api/v1'
+      ? 'https://kipish.kg/api/v1'
       : 'https://kipish.kg/api/v1',
   headers: {
     Accept: 'video/mp4',
