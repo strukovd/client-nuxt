@@ -3,9 +3,9 @@
     <template v-if="!windowWidth || windowWidth > 1400">
       <events-desktop/>
     </template>
-<!--    <template v-if="windowWidth <= 1400">-->
-<!--      <events-mobile/>-->
-<!--    </template>-->
+    <template v-else-if="windowWidth <= 1400">
+      <events-mobile/>
+    </template>
   </div>
 </template>
 

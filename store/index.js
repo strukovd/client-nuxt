@@ -6,7 +6,7 @@ export const state = () => ({
   redirects: [],
   redirectsMap: null,
   search: '',
-  currentCity: process.browser ? JSON.parse(localStorage.getItem('city')) || null : null,
+  currentCity: process.browser ? JSON.parse(localStorage.getItem('city')) || {id: 1, name: 'Бишкек'} : {id: 1,  name: 'Бишкек'},
   searchResult: {},
   status: '',
   currentBranch: process.browser ? localStorage.getItem('branch') || '' : '',

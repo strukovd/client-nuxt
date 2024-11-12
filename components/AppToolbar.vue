@@ -277,7 +277,7 @@ export default {
       }
     },
 
-    init() {
+    async init() {
       this.loadCity();
       this.$http.get('/cities')
         .then(r => {
@@ -299,13 +299,13 @@ export default {
 
     onChangeCity() {
       if (process.client) {
+        console.log(123)
         localStorage.setItem('city', JSON.stringify(this.$store.state.currentCity));
-        this.$router.go();
       }
     }
   },
 
-  created() {
+  beforeMount() {
     this.init();
   },
 };

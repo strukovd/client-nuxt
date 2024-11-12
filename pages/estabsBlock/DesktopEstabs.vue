@@ -62,8 +62,6 @@ export default {
         const { data: { content } } = await this.$http2.get('/establishments?top=true')
         // const filteredEstabs = content.filter(estab => estab.id === 37 || estab.id === 30 || estab.id === 41)
         // this.estabs = filteredEstabs.splice(0, 6);
-        console.log(`estabs: `);
-        console.log(content);
         this.estabs = content;
         await this.fetchEstabsImages(this.estabs)
         this.currentSlideEstab = Array(this.estabs.length).fill(1);
