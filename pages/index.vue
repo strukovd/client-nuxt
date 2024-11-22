@@ -208,22 +208,22 @@
             </v-lazy>
           </template>
         </v-card>
-        <!--          <v-card elevation="0" color="transparent">-->
-        <!--            <v-card-text v-if="!windowWidth || windowWidth > 1400" class="pa-0 mt-15 mb-120">-->
-        <!--              <div class="center-block">-->
-        <!--                <v-lazy transition="scroll-y-transition" :value="() => import('@/components/imageCarousel/ImageCarouselDesktop.vue')">-->
-        <!--                  <image-carousel-desktop/>-->
-        <!--                </v-lazy>-->
-        <!--              </div>-->
-        <!--            </v-card-text>-->
-        <!--            <v-card-text v-if="windowWidth <= 1400" class="pa-0 mt-15 mb-9">-->
-        <!--              <div class="center-block">-->
-        <!--                <v-lazy transition="scroll-y-transition" :value="() => import('@/components/imageCarousel/ImageCarouselMobile.vue')">-->
-        <!--                  <image-carousel-mobile/>-->
-        <!--                </v-lazy>-->
-        <!--              </div>-->
-        <!--            </v-card-text>-->
-        <!--          </v-card>-->
+        <v-card elevation="0" color="transparent">
+          <v-card-text v-if="!windowWidth || windowWidth > 1400" class="pa-0 mt-15 mb-120">
+            <div class="center-block">
+              <v-lazy transition="scroll-y-transition" :value="() => import('@/components/imageCarousel/ImageCarouselDesktop.vue')">
+                <image-carousel-desktop/>
+              </v-lazy>
+            </div>
+          </v-card-text>
+          <v-card-text v-if="windowWidth <= 1400" class="pa-0 mt-15 mb-9">
+            <div class="center-block">
+              <v-lazy transition="scroll-y-transition" :value="() => import('@/components/imageCarousel/ImageCarouselMobile.vue')">
+                <image-carousel-mobile/>
+              </v-lazy>
+            </div>
+          </v-card-text>
+        </v-card>
       </template>
 <!--      <template v-else>-->
 <!--        &lt;!&ndash; Город не выбран &ndash;&gt;-->
@@ -240,8 +240,8 @@ import AppToolbar from "@/components/AppToolbar.vue";
 import ToolBar from "@/components/AppToolbar.vue";
 
 
-import ImageCarousel from "@/components/imageCarousel/ImageCarouselDesktop.vue";
-import ImageCarouselDesktop from "@/components/imageCarousel/ImageCarouselDesktop.vue";
+import ImageCarousel from "../components/imageCarousel/ImageCarouselDesktop.vue";
+import ImageCarouselDesktop from "../components/imageCarousel/ImageCarouselDesktop.vue";
 import VideoPlayer from "@/components/VideoPlayer.vue";
 import DesktopMedia from "@/pages/mediaBlock/DesktopMedia.vue";
 import DesktopNews from "@/pages/newsBlock/DesktopNews.vue";
@@ -255,7 +255,7 @@ import MobileEstabs from "@/pages/estabsBlock/MobileEstabs.vue";
 import {mapGetters} from "vuex";
 import {VueperSlide, VueperSlides} from "vueperslides";
 import MobileMedia from "@/pages/mediaBlock/MobileMedia.vue";
-import ImageCarouselMobile from "@/components/imageCarousel/ImageCarouselMobile.vue";
+import ImageCarouselMobile from "../components/imageCarousel/ImageCarouselMobile.vue";
 import ADpc from "@/components/ad/ADpc.vue";
 import ADmob from "@/components/ad/ADmob.vue";
 

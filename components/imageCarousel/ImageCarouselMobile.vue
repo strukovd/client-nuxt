@@ -28,9 +28,11 @@
 </template>
 
 <script>
+import { VueMarqueeSlider } from 'vue-marquee-slider';
 
 export default {
   name: 'ImageCarouselMobile',
+  components: { VueMarqueeSlider },
   props: {
     width: {type: Number, default: 0},
     height: {type: Number, default: 0},
