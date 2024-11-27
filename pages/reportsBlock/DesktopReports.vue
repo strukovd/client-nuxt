@@ -1,15 +1,14 @@
 <template>
   <v-card elevation="0" color="transparent" class="px-16 mt-120 desktop_reports">
     <v-card-text class="pa-0 pr-n2">
-      <div class="d-flex ">
-        <div class="d-flex align-items-baseline">
-          <div class="text-82 font-weight-300 font-title black--text text-uppercase mr-2" style="text-align: right; width: 100%">
-            <h1 class="reset-styles">
-              Актуальные <br><span style="margin-right: -100px">фотоотчеты</span>
+      <div class="d-flex justify-start">
+        <div class="d-flex flex-column align-center">
+          <div class="d-flex align-center">
+            <h1 class="text-82 font-weight-300 font-title black--text text-uppercase mr-8">
+              <span>Актуальные</span>
+              <h2 class="h2-font" style="padding-left:1em;">/ Каждая задача возможность <br> сделать больше и лучше</h2>
+              <span style="padding-left:1em;">фотоотчеты</span>
             </h1>
-          </div>
-          <div style="line-height: 1.2; width: 100%;" class="text-24 black--text opacity-70 font-weight-200 mt-4">
-            / КАЖДАЯ ЗАДАЧА — ВОЗМОЖНОСТЬ <br> СДЕЛАТЬ БОЛЬШЕ И ЛУЧШЕ
           </div>
         </div>
       </div>
@@ -25,31 +24,23 @@
               <v-img
                 @mouseover="zoomIn"
                 @mouseleave="zoomOut"
-                class="image_item cursor-pointer"
-                style="position: relative;border-radius: 20px;overflow: hidden;width: 100%"
+                @click="$router.push('/report/' + (!!card?.url?.url ? card.url.url : card.id))"
+                :src="card.coverImage"
                 lazy-src="/images/cover-2.jpg"
                 height="516px"
-                :src="card.coverImage"
-                @click="$router.push('/report/' + (!!card?.url?.url ? card.url.url : card.id))"
+                class="image_item cursor-pointer"
+                style="position: relative;border-radius: 20px;overflow: hidden;width: 100%"
               >
                 <template v-slot:placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular
-                      indeterminate
-                      color="grey lighten-5"
-                    ></v-progress-circular>
+                  <v-row class="fill-height ma-0" align="center" justify="center">
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                   </v-row>
                 </template>
                 <div
                   style="position: absolute;z-index: 999;width: 100%;height: 100%;background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.60) 100%); "
                   class="px-8 py-6 d-flex flex-column justify-space-between">
                   <div>
-                    <div v-if="card?.establishment?.name"
-                         style="background: #FFFFFF33;border-radius: 30px;display: inline-block" class="py-1 px-4">
+                    <div v-if="card?.establishment?.name" style="background: #FFFFFF33;border-radius: 30px;display: inline-block" class="py-1 px-4">
                       <span class="text-16 white--text">{{ card?.establishment?.name }}</span>
                     </div>
                   </div>
@@ -256,7 +247,7 @@ export default {
       this.topOffset = Math.max(80, 80 - window.scrollY);
     },
     formatDate(dateString) {
-      if (dateString) {
+      if(dateString){
         const months = [
           'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
           'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'

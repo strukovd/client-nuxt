@@ -407,3 +407,58 @@ $sizes: (
 iframe {
   display: none;
 }
+
+
+.h1-mob-font {
+	font-family: 'ALS Gorizont', sans-serif !important;
+	color:#111111;
+	font-size: 32px;
+	line-height:42px;
+	font-weight: 200;
+	text-transform: uppercase;
+	margin-bottom:0;
+}
+
+.h1-font {
+	font-family: 'ALS Gorizont', sans-serif !important;
+	color:#111111;
+	font-size: 82px;
+	line-height:92px;
+	font-weight: 300;
+	text-transform: uppercase;
+	margin-bottom:0;
+}
+
+.h2-mob-font {
+
+}
+
+.h2-font {
+	display:inline-block;
+	font-size:24px;
+	line-height:34px;
+	font-weight:200;
+	opacity:.7;
+	color: #111111;
+	font-family:'ALS Hauss VF', sans-serif !important;
+}
+
+
+.dark-theme {
+
+  .h1-mob-font {
+	color: #FFFFFF;
+  }
+
+  .h1-font {
+	color: #FFFFFF;
+  }
+
+  .h2-mob-font {
+	color: #FFFFFF;
+  }
+
+  .h2-font {
+	color: #FFFFFF;
+  }
+}

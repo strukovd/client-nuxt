@@ -38,7 +38,7 @@
         <div class="d-flex align-center">
           <div class="d-flex flex-column">
             <span class="text-16 whiteSwap--text opacity-70 font-weight-300">Адрес</span>
-            <span class="text-18 whiteSwap--text">{{ item.address ? truncateText(item.address, 20) : 'Уточнаяйте у администратора' }}</span>
+            <span class="text-18 whiteSwap--text">{{ item.address ? truncateText(item.address, 20) : 'Уточняйте у администратора' }}</span>
           </div>
         </div>
       </div>

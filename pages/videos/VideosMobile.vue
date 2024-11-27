@@ -1,24 +1,14 @@
 <template>
   <div id="top" class="videos_mobile mb-100">
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Главная",
-            "item": "https://kipish.kg/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Видеорепортажи",
-            "item": "https://kipish.kg/videos"
-          }
-        ]
-      }
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
+        { "@type": "ListItem", "position": 2, "name": "Видеорепортажи", "item": "https://kipish.kg/videos" }
+      ]
+    }
     </script>
 
     <v-row class="ma-0 pa-0 wrapper">
@@ -32,8 +22,8 @@
 
           <!-- ЗАГОЛОВОК -->
           <v-card-text class="pt-0 px-0 pb-6 d-flex flex-column">
-            <p class="text-32 black--text font-title text-uppercase mb-0">Видео</p>
-            <p class="text-32 black--text font-title text-uppercase mb-0 mt-1">репортажи</p>
+            <h1 class="text-32 black--text font-title font-weight-300 text-uppercase mb-0">Видеоотчеты мероприятий</h1>
+            <h1 class="text-32 black--text font-title font-weight-300 text-uppercase mb-0 mt-1">в Бишкеке</h1>
           </v-card-text>
 
           <div v-if="loading" class="d-flex flex-wrap reports_block">
@@ -119,7 +109,7 @@
                     />
                   </div>
                 </template>
-                <a-dmob data-aos="fade-left" v-show="shouldShowDesktopEvents(dayIndex)"/>
+                <a-dmob data-aos="fade-left" :key="dayIndex" v-show="shouldShowDesktopEvents(dayIndex)"/>
               </template>
             </template>
           </template>
@@ -135,7 +125,7 @@ import {mapGetters} from "vuex";
 import ToolBar from "@/components/AppToolbar.vue";
 import TimeRoulette from "@/components/TimeRouletteNew.vue";
 import Loader from "@/components/Loader.vue";
-import VPlayerMobile from "@/components/vPlayer/VPlayerMobile.vue";
+import VPlayerMobile from "@/components/VPlayer/VPlayerMobile.vue";
 import ADpc from "@/components/ad/ADpc.vue";
 import ADmob from "@/components/ad/ADmob.vue";
 import BaseBreadcrumbs from '@/components/BaseBreadcrumbs.vue';
@@ -210,8 +200,8 @@ export default {
           let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight - 300;
           if (bottomOfWindow) {
             const nextActualDateRaw = this.potentialDays.shift();
-            if (nextActualDateRaw) {
-              const nextActualDate = this.convertDateToFetchFormat(nextActualDateRaw);
+            if(nextActualDateRaw) {
+              const nextActualDate = this.convertDateToFetchFormat( nextActualDateRaw );
               this.visibleDays.push(nextActualDate);
               this.fetchReports(nextActualDate);
             }
@@ -240,12 +230,7 @@ export default {
     },
 
     zoomToTop() {
-      // if (process.client) {
-      //   window.scrollTo({
-      //     top: document.querySelector('#top').offsetTop,
-      //     behavior: 'smooth'
-      //   });
-      // }
+      this.$scrollTo('#top', 500, {easing: 'ease-in-out'});
     },
 
     convertDateToFetchFormat(date) {
@@ -335,8 +320,8 @@ export default {
 
             for (let i = 0; i < 2; i++) {
               const nextActualDateRaw = this.potentialDays.shift();
-              if (nextActualDateRaw) {
-                const nextActualDate = this.convertDateToFetchFormat(nextActualDateRaw);
+              if(nextActualDateRaw) {
+                const nextActualDate = this.convertDateToFetchFormat( nextActualDateRaw );
                 this.visibleDays.push(nextActualDate);
                 this.fetchReports(nextActualDate);
               }
@@ -366,7 +351,7 @@ export default {
             date: requestDate,
             sort: 'report_date,desc',
           };
-          const response = await this.$http2.get(`/reports/video/byDate`, {params});
+          const response = await this.$http2.get(`/reports/video/byDate`, { params });
           const reportList = response.data?.content || [];
           this.reports = reportList;
           await this.fetchReportImages(this.reports);
@@ -405,7 +390,7 @@ export default {
       const params = {
         city: this.$store.state.currentCity?.id ?? null,
       };
-      return this.$http2.get(`/reports/video/dateMap`, {params})
+      return this.$http2.get(`/reports/video/dateMap`, { params })
         .then(r => {
           this.reportDateMap = r.data;
         });
@@ -421,16 +406,13 @@ export default {
     .v-icon {
       color: black !important;
     }
-
     .v-input input {
       color: black !important;
-
       &::placeholder {
         color: black !important;
       }
     }
   }
-
   .months_block {
     .v-input__slot {
       i {

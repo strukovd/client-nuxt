@@ -1,14 +1,13 @@
 <template>
   <v-card style="background: red" elevation="0" color="transparent" class="mt-80 px-4 mobile_estabs">
     <v-card-text class="pa-0">
-      <div class="d-flex flex-column">
-        <p class="font-title text-32 black--text text-uppercase mb-0">Рекомендуемые</p>
-        <p class="font-title text-32 black--text text-uppercase mt-1 mb-0">Заведения</p>
-      </div>
+      <h2 class="d-flex flex-column">
+        <p class="font-title text-32 black--text font-weight-300 text-uppercase mb-0">Лучшие заведения Бишкека</p>
+      </h2>
 
-      <div style="position: relative;border-radius: 12px 0 0 12px;">
+      <div style="position:relative; border-radius:12px 0 0 12px; display:flex; flex-direction:column; gap:1em;">
         <template v-if="!loading">
-          <CardEstabMobile v-for="estab of estabs" :key="estab.id" :item="estab"></CardEstabMobile>
+          <MCardEstab v-for="estab of estabs" :key="estab.id" :item="estab"></MCardEstab>
         </template>
         <template v-else>
           <div v-for="i of 4" :key="i" style="display:flex;flex-direction:column;overflow:hidden;border-radius:20px;position:relative;">
@@ -28,12 +27,12 @@
 </template>
 
 <script>
-import CardEstabMobile from "@/components/CardEstabMobile.vue";
+import MCardEstab from "@/components/MCardEstab.vue";
 import Vue from "vue";
 
 export default {
   name: "MobileEstabs",
-  components: {CardEstabMobile},
+  components: {MCardEstab},
   data: () => ({
     loading: false,
     currentSlideEstab: [],

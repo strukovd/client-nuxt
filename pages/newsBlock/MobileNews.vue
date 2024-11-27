@@ -9,7 +9,7 @@
     <v-card-text  class="pa-0 mt-7">
       <div style="border-top: 1px solid #111111"></div>
 
-      <div class="news-item" v-for="item in data" :key="item" @click="$router.push('/news/' + item.id)">
+      <div class="news-item" v-for="item in data" :key="item.id" @click="$router.push('/news/' + item.id)">
         <section class="image">
           <v-img class="cover-image" :src="item.coverImage"/>
         </section>

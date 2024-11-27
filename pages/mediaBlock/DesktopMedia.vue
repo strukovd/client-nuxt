@@ -2,21 +2,15 @@
   <v-card elevation="0" color="transparent" class="py-0 px-16 mt-13 post_block wrapper">
     <v-card-text class="pa-0">
       <div class="post_title d-flex flex-column">
-        <p class="font-title font-weight-300 text-68 black--text text-uppercase mb-4" style="font-size: 68px">Медиа
-          ресурс о светской</p>
-        <p style="z-index: 999; line-height: 100%"
-           class="font-title font-weight-300 text-68 black--text text-uppercase">жизни</p>
+        <h1 class="h1-font" style="z-index: 999; font-size:68px; line-height:1.2em;"><span>Медиа ресурс о светской</span><br><span>жизни</span></h1>
       </div>
 
       <div class="post_banner" style="position: relative;">
         <v-img style="position: absolute;top: 0;left: 0;z-index: 998;" :src="getCornerImageSrc"/>
 
-        <div v-if="!loading" data-aos="fade-up" data-aos-duration="500"
-             style="position: relative;border-radius: 20px 0 0 20px; height: 500px; overflow: hidden;">
+        <div v-if="!loading" data-aos="fade-up" data-aos-duration="500" style="position: relative;border-radius: 20px 0 0 20px; height: 500px; overflow: hidden;">
           <div v-if="!posters" style="border-radius: 32px;width: 100%;height: 100%;">
-            <v-img lazy-src="/images/cover-2.jpg"
-                   style="z-index: 997 !important;position: absolute; object-fit: cover !important; border-radius: 32px !important;"
-                   height="100%" width="100%"/>
+            <v-img lazy-src="/static/images/cover-2.jpg" style="z-index: 997 !important;position: absolute; object-fit: cover !important; border-radius: 32px !important;" height="100%" width="100%"/>
           </div>
           <div v-else-if="posters && posters.length" style="width: 100%;height: 100%">
             <CustomPosterSlider :posters="posters"/>
@@ -33,32 +27,22 @@ import CustomPosterSlider from "@/components/CustomPosterSlider.vue";
 
 export default {
   name: "DesktopMedia",
-  components: {CustomPosterSlider},
+  components: { CustomPosterSlider },
   props: {},
   data: () => ({
     imagesLoaded: false,
     posters: [],
     postersReserve: [
       {
-        description: '/ Aakha / Скриптонит / Моргенштерн',
-        date: '20 октября / 2023',
+        description: '',
+        date: '',
         imgReserve: true,
         files: [],
         isLogo: false,
         isCover: true,
-        title: 'ALGA FEsT',
+        title: 'Нет активных мероприятий',
         file: '/images/post-bg-img.png'
       },
-      {
-        description: '/ Aakha / Скриптонит / Моргенштерн',
-        date: '20 октября / 2023',
-        imgReserve: true,
-        files: [],
-        isLogo: false,
-        isCover: true,
-        title: 'ALGA FEsT',
-        file: '/images/post-bg-img.png'
-      }
     ],
     loading: false,
   }),
@@ -110,7 +94,7 @@ export default {
         Vue.set(this, 'posters', response.data.content);
         // this.posters = posters;
 
-        if (this.posters?.length) {
+        if(this.posters?.length) {
           // парсим значение поля options
           this.posters.forEach((poster, inx) => {
             if (poster.options) {
@@ -135,8 +119,8 @@ export default {
     async fetchPostersImages(posters) {
       if (!posters) posters = this.posters;
       posters.forEach((poster, inx) => {
-        if (poster.files?.length) {
-          if (!poster.files) poster.files = [];
+        if(poster.files?.length) {
+          if(!poster.files) poster.files = [];
           poster.files.filter(el => !el.isCover).forEach((file, index) => {
             if (file.id) {
               this.fetchImage(file.id)

@@ -4,10 +4,7 @@
       <div class="d-flex justify-start">
         <div class="d-flex flex-column align-center">
           <div class="d-flex flex-column">
-            <p class="text-32 font-title black--text text-uppercase mb-0">Актуальные</p>
-            <p class="ml-15 text-32 font-title black--text text-uppercase mb-0 mt-1">
-              Репортажи
-            </p>
+            <h1 class="h1-mob-font">Актуальные <br><span style="padding-left:1em;">фотоотчеты</span></h1>
           </div>
           <div>
           </div>

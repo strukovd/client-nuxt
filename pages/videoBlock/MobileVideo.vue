@@ -3,10 +3,7 @@
     <v-card-text class="pa-0 px-4">
       <div class="d-flex">
         <div class="d-flex flex-column">
-          <p class="font-title text-32 black--text text-uppercase mb-1">Видеоотчеты</p>
-          <div class="d-flex align-center">
-            <p class="font-title text-32 black--text text-uppercase mb-0">недели</p>
-          </div>
+          <h1 class="h1-mob-font">Видеоотчеты <br> <span style="padding-left:1em;">недели</span></h1>
         </div>
         <span></span>
       </div>

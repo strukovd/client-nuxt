@@ -24,42 +24,33 @@
         </div>
       </v-col>
       <v-col v-else style="min-height: 70vh" class="pa-0 px-4 mb-100" cols="12">
-        <BaseBreadcrumbs
-          :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/events', title: 'События'}, {href: '', title: model.title}]"/>
+        <BaseBreadcrumbs :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/events', title: 'События'}, {href: '', title: model.title}]"/>
         <v-card elevation="0" color="transparent">
           <v-card-text class="pt-0 px-0 pb-10 d-flex flex-column">
             <div>
-              <span class="text-28 black--text font-title text-uppercase">{{ model.title }}</span>
+              <span class="text-28 black--text font-title font-weight-300 text-uppercase">{{ pageTitle }}</span>
             </div>
             <div class="mt-3">
             <span style="border-right: 1px solid #111111"
                   class="text-16 black--text text-uppercase pr-4">{{ formatDate(model.date) }}</span>
-              <span v-if="model.eventType"
-                    class="text-14 dark--text opacity-70 ml-4">{{ model.eventType.nameRu }}</span>
+              <span v-if="model.eventType" class="text-14 dark--text opacity-70 ml-4">{{model.eventType.nameRu}}</span>
             </div>
           </v-card-text>
           <v-card-text class="pa-0">
             <div style="position: relative;border-radius: 12px; overflow: hidden; ">
               <template v-if="model.files?.length">
                 <vueper-slides :infinite="true" :arrows="false">
-                  <vueper-slide v-for="(posterImage,index) in model.files.filter(el => el.isCover)"
-                                :key="posterImage.id"
-                                :content="`https://files.kipish.kg/${model.files[0].minioBucket}/${model.files[0].minioPath}`">
+                  <vueper-slide v-for="(posterImage,index) in model.files.filter(el => el.isCover)" :key="posterImage.id" :content="`https://files.kipish.kg/${model.files[0].minioBucket}/${model.files[0].minioPath}`">
                     <template #content>
-                      <v-img height="100%"
-                             :src="`https://files.kipish.kg/${posterImage.minioBucket}/${posterImage.minioPath}`">
+                      <v-img height="100%" :src="`https://files.kipish.kg/${posterImage.minioBucket}/${posterImage.minioPath}`">
                         <div class="pa-4 d-flex flex-column">
                           <div class="d-flex flex-column align-center">
                             <span class="text-14 font-weight-200 opacity-70 white--text">Место проведения/</span>
-                            <span class="text-uppercase text-16 font-weight-550 white--text mt-3">{{
-                                posterImage.establishment
-                              }}</span>
+                            <span class="text-uppercase text-16 font-weight-550 white--text mt-3">{{ posterImage.establishment }}</span>
                           </div>
                           <div class="d-flex flex-column align-center text-center mt-14">
                             <div style="width: 230px" class="d-flex flex-column">
-                              <span class="text-14 white--text opacity-70 font-weight-200">{{
-                                  formatDate(model.date)
-                                }}</span>
+                            <span class="text-14 white--text opacity-70 font-weight-200">{{ formatDate(model.date) }}</span>
                               <span class="text-28 font-weight-550 white--text mt-1">{{ model.title }}</span>
                               <span v-html="model.description" class="text-12 opacity-70 white--text mt-4"></span>
                             </div>
@@ -77,22 +68,16 @@
             </div>
           </v-card-text>
 
-          <div class="tiles"
-               style="display:flex; gap:1em; flex-wrap:wrap; justify-content:space-between; margin-top:2em;">
+          <div class="tiles" style="display:flex; gap:1em; flex-wrap:wrap; justify-content:space-between; margin-top:2em;">
             <template v-for="tile of [
                     {key: 'Дата проведения' , value: model.date, icon: 'calendar', hidden: model.options?.hideDate},
                     {key: 'Место проведения', value: model.establishment?.name, icon: 'marker', hidden: model.options?.hideEstablishment},
                     {key: 'Событие', value: model.title, icon: 'receipt', hidden: model.options?.hideTitle},
                     {key: 'Контакты', value: model.contacts, icon: 'phone3', hidden: model.options?.hideContacts},
             ]">
-              <div v-if="!tile.hidden" class="tile info-block d-flex align-center"
-                   :style="$vuetify.theme.dark ? 'background: #111111' : 'background: #FFFFFF'" style="flex:auto 1 0"
-                   :key="tile.key">
-                <div :style="$vuetify.theme.dark ? 'background: #FFFFFF' : 'background: #111111'"
-                     style="border-radius:50%; min-width:52px; min-height:52px;"
-                     class="d-flex justify-center align-center mr-4">
-                  <heroicon :name="tile.icon" :stroke="$vuetify.theme.dark ? '#111111' : '#FFFFFF'" stroke-width="1"
-                            fill="none"/>
+              <div v-if="!tile.hidden" class="tile info-block d-flex align-center" :style="$vuetify.theme.dark ? 'background: #111111' : 'background: #FFFFFF'" style="flex:auto 1 0" :key="tile.key">
+                <div :style="$vuetify.theme.dark ? 'background: #FFFFFF' : 'background: #111111'" style="border-radius:50%; min-width:52px; min-height:52px;" class="d-flex justify-center align-center mr-4">
+                  <heroicon :name="tile.icon" :stroke="$vuetify.theme.dark ? '#111111' : '#FFFFFF'" stroke-width="1" fill="none"/>
                 </div>
                 <div class="d-flex flex-column">
                   <span class="black--text opacity-70 text-16 font-weight-300">{{ tile.key }}</span>
@@ -102,12 +87,10 @@
             </template>
           </div>
 
-          <v-card-text :style="$vuetify.theme.dark ? 'background: #111111' : 'background: #FFFFFF'"
-                       class="px-5 py-6 mt-10" style="border-radius: 24px">
+          <v-card-text :style="$vuetify.theme.dark ? 'background: #111111' : 'background: #FFFFFF'" class="px-5 py-6 mt-10" style="border-radius: 24px">
             <div class="d-flex flex-column">
               <span :style="$vuetify.theme.dark ? 'color: #FFFFFF' : 'color: #111111'" class="text-28 font-title">Описание</span>
-              <span v-html="model.description" :style="$vuetify.theme.dark ? 'color: #FFFFFF' : 'color: #111111'"
-                    class="mt-5 text-16 font-weight-300"></span>
+              <span v-html="model.description" :style="$vuetify.theme.dark ? 'color: #FFFFFF' : 'color: #111111'" class="mt-5 text-16 font-weight-300"></span>
             </div>
           </v-card-text>
         </v-card>
@@ -184,6 +167,15 @@ export default {
   }),
   computed: {
     ...mapGetters(['sourceId']),
+    pageTitle() {
+      let title = ``;
+      if (this.model?.eventType?.nameRu) {
+        title += `${this.model.eventType.nameRu} `;
+      }
+      title += `${this.model.title}`;
+
+      return title;
+    },
     breadcrumbListJson() {
       return JSON.stringify({
         "@context": "https://schema.org",
@@ -240,16 +232,11 @@ export default {
   },
   methods: {
     zoomToTop() {
-      // if (process.client) {
-      //   window.scrollTo({
-      //     top: document.querySelector('#top').offsetTop,
-      //     behavior: 'smooth'
-      //   });
-      // }
+      this.$scrollTo('#top', 500, {easing: 'ease-in-out'});
     },
     formatDate(dateString) {
       console.log(dateString);
-      if (!dateString) {
+      if( !dateString ) {
         return 'Неверная дата';
       }
       const months = [
@@ -274,8 +261,8 @@ export default {
     },
     getReport(id) {
       this.loading = true;
-      const params = {id};
-      this.$http2.get(`/posters`, {params})
+      const params = { id };
+      this.$http2.get(`/posters`, { params })
         .then(r => {
           this.model = r.data.content[0];
           this.model.options = JSON.parse(this.model.options);

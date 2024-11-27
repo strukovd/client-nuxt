@@ -20,7 +20,7 @@
         <BaseBreadcrumbs :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/events', title: 'События'}]"/>
 
         <v-card-text class="pa-0">
-          <span class="text-68 black--text font-title font-weight-300 text-uppercase">События</span>
+          <h1 class="text-68 black--text font-title font-weight-300 text-uppercase pb-14">Афиша мероприятий в Бишкеке</h1>
         </v-card-text>
         <!-- <v-card-text class="pa-0 mt-5 mb-16">
           <div class="d-flex flex-wrap">
@@ -35,10 +35,11 @@
             </div>
           </div>
         </v-card-text> -->
+        <TimeRoulette :dateMap="this.eventsDateMap" @setActualDay="selectDay" class="mb-15"/>
         <v-card-text class="px-0 pt-7 pb-0 d-flex align-center justify-space-between">
           <div class="d-flex align-end">
             <span class="text-32 font-weight-300 text-uppercase mr-8 black--text font-title">
-              АКТУАЛЬНЫЕ СОБЫТИЯ
+              {{ selectedDay ? formatDate(selectedDay) : 'АКТУАЛЬНЫЕ СОБЫТИЯ' }}
             </span>
           </div>
           <div>
@@ -62,40 +63,17 @@
         </v-card-text>
         <v-card-text v-if="!loading" class="pa-0 mt-10 d-flex flex-wrap events_block">
           <v-card-text class="pa-0 d-flex flex-wrap reports_block pb-8">
-            <div data-aos="fade-up"
-                 class="cursor-pointer"
-                 data-aos-duration="1000" style="width: 416px"
-                 v-for="(event, index) of filteredEventWithPanel" :key="event.id"
-                 @click="$router.push('/event/' + (!!event?.url?.url ? event.url.url : event.id))"
-                 :class="(index !== 1 || index !== 4 || index !== 7 || index !== 10) ? 'reports_card_first' : 'reports_card_second'">
-              <v-img
-                lazy-src="/static/images/cover-2.jpg"
-                @mouseover="zoomIn"
-                @mouseleave="zoomOut"
-                class="img_item"
-                height="516"
-                style="position: relative;border-radius: 20px;"
-                :src="`https://files.kipish.kg/${event.coverPath}`"
-              >
-                <div
-                  style="position: absolute;z-index: 999;width: 100%;height: 100%;background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.60) 100%); "
-                  class="px-8 py-6 d-flex flex-column justify-space-between">
-                  <div>
-                    <div v-if="event?.eventType.nameRu" style="background: #FFFFFF33;border-radius: 30px;display: inline-block" class="py-1 px-4">
-                      <span class="text-18 white--text">{{ event?.eventType?.nameRu }}</span>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-column">
-                    <span v-if="event.date" class="text-16 opacity-70 white--text">{{ formatDate(event.date) }}</span>
-                    <span class="text-32 font-weight-550 white--text mt-3">{{ event.title }}</span>
-                  </div>
-                </div>
-              </v-img>
+            <div v-if="filteredEventWithPanel.length === 0" style="flex:auto 1 0;">
+              <h1 style="text-align:center; margin-top: 2em;" class="font-weight-300 text-uppercase black--text font-title">События в этот день не найдены</h1>
             </div>
+            <BaseEventCard
+                  :event="event" v-for="(event, index) of filteredEventWithPanel"
+                  :key="event.id"
+                  width="416"
+            />
           </v-card-text>
-
         </v-card-text>
-        <div v-if="loading" class="d-flex flex-wrap">
+        <div v-else class="d-flex flex-wrap">
           <v-skeleton-loader
             class="skeleton_card"
             width="416"
@@ -113,13 +91,13 @@
 <script>
 import ToolBar from "@/components/AppToolbar.vue";
 import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
-import TimeRoulette from "@/components/TimeRoulette.vue";
+import BaseEventCard from "@/components/BaseEventCard.vue";
+import TimeRoulette from "@/components/TimeRouletteNew.vue";
 import Vue from "vue";
-import {mapGetters} from "vuex";
 
 export default {
   name: "EventsDesktop",
-  components: {TimeRoulette, ToolBar, BaseBreadcrumbs},
+  components: {TimeRoulette, ToolBar, BaseBreadcrumbs, BaseEventCard},
   head() {
     return {
       link: [
@@ -132,6 +110,12 @@ export default {
     }
   },
   data: () => ({
+    eventsDateMap: {},
+    selectedDay: null,
+    visibleDays: [],
+    page: 0,
+    size: 15,
+
     closeOnClick: true,
     scrollPosition: 0,
     parallaxMultiplier: 0.5,
@@ -148,7 +132,7 @@ export default {
     filter: false,
     activeTab: 'ALL',
     eventTypes: ['ALL', 'CONCERT', 'EXHIBITION', 'PARTY', 'FESTIVAL', 'SHOW', 'PERFORMANCE'],
-    loading: false,
+    loading: true,
     filterPanel: {
       name: '',
       cata: null
@@ -168,16 +152,84 @@ export default {
       return filteredEvents;
     }
   },
+
   watch: {
     activeTab(newTab) {
       this.filteredEvents = this.events.filter(event => event.categories.some(category => category.nameRu === this.activeTab));
     }
   },
   created() {
-    this.fetchEvents()
-    this.getCategories()
+    this.fetchEvents();
+    this.getCategories();
+    this.fetchDateMap();
   },
   methods: {
+    fetchDateMap() {
+      const params = {
+        city: this.$store.state.currentCity?.id ?? null,
+      };
+      this.$http.get(`/posters/dateMap`, { params })
+        .then(r => {
+          this.eventsDateMap = r.data;
+
+          // if (!this.selectedDay) {
+          //   this.potentialDays = Object.keys(this.eventsDateMap)
+          //     .map( dateStr => new Date(dateStr) )
+          //     .sort( (a, b) => b - a )
+          //     .map( date => date.toLocaleDateString('fr-CA') );
+
+          //   // показываем сразу 2 репортажа
+          //   const dateCount = Math.min(this.potentialDays.length, 2);
+          //   for (let i = 0; i < dateCount; i++) {
+          //     const nextActualDate = this.convertDateToFetchFormat(this.potentialDays.shift());
+          //     this.visibleDays.push(nextActualDate);
+          //     this.fetchEvents(nextActualDate);
+          //   }
+          // }
+        })
+        .catch((error) => {
+          console.error(error);
+          // this.selectDay( this.currentDay );
+          // .. error
+        })
+    },
+
+    fetchEvents(date) {
+      if(!this.$store.state.currentCity) return;
+      this.loading = true;
+      const params = {
+        cityId: this.$store.state.currentCity.id,
+        sort: 'date,asc',
+      };
+      if(date) params.date = date;
+
+      this.$http2.get('/posters', { params })
+          .then(r => {
+            this.events = r.data.content;
+            // this.fetchEventsImages(this.events)
+          })
+          .finally(e => {
+            this.loading = false
+          })
+    },
+
+    selectDay(date) {
+      const formattedDate = this.convertDateToFetchFormat(date);
+      this.selectedDay = formattedDate;
+      this.visibleDays = [this.selectedDay];
+      this.page = 0;
+
+      this.fetchEvents(formattedDate);
+    },
+
+    convertDateToFetchFormat(date) {
+      const d = new Date(date);
+      const year = d.getFullYear();
+      const month = ("0" + (d.getMonth() + 1)).slice(-2);
+      const day = ("0" + d.getDate()).slice(-2);
+      return `${day}-${month}-${year}`;
+    },
+
     zoomIn(event) {
       event.target.closest('.img_item').classList.add('zoomed');
     },
@@ -189,6 +241,8 @@ export default {
           .then(r => this.categoriesPost = r.data)
     },
     formatDate(dateString) {
+      if(!dateString) return;
+
       const months = [
         'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
         'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
@@ -204,58 +258,10 @@ export default {
 
       return `${day} ${month} / ${year}`;
     },
-    getDayOfWeekFormatted(date) {
-      const options = {weekday: 'long'};
-      return new Intl.DateTimeFormat('ru-RU', options).format(date);
-    },
-    formatDateFormatted(date) {
-      const options = {day: 'numeric', month: 'long'};
-      return new Intl.DateTimeFormat('ru-RU', options).format(date);
-    },
-    getCoverFile(files) {
-      const coverFile = files.find(el => el.isCover === true);
-      return coverFile ? 'data:image/png;base64,' + coverFile.file : null;
-    },
     setSelectedCity(city) {
     },
     openFilterPanel() {
       this.filter = !this.filter
-    },
-    fetchEvents() {
-      if(!this.$store.state.currentCity) return;
-      this.loading = true;
-      const params = {
-        cityId: this.$store.state.currentCity.id
-      };
-      this.$http2.get('/posters', { params })
-          .then(r => {
-            this.events = r.data.content;
-            // this.fetchEventsImages(this.events)
-            this.loading = false
-          })
-          .catch(e => {
-            this.loading = false
-          })
-    },
-    async fetchEventsImages(events) {
-      if (!events) events = this.events;
-      events.forEach((event, inx) => {
-        event.files.filter(el => el.isCover).forEach((file, index) => {
-          if (file.id) {
-            this.fetchImage(file.id)
-              .then(image => {
-                Vue.set(events[inx], 'src', image);
-              });
-          }
-        })
-      })
-    },
-    fetchImage(imageId) {
-      return this.$http.get(`/files/${imageId}`)
-        .then(r => {
-          const imageMap = r.data;
-          return imageMap[imageId];
-        });
     },
   },
 }
@@ -269,55 +275,21 @@ export default {
       transition: transform 0.5s ease !important;
     }
   }
-  .reports_card_first {
-    margin-right: 32px;
-    //margin-bottom: 32px;
+
+  .event-card:nth-child(3n-2) {
+    /* к каждому первому (из 3) */
+    margin:32px 32px 0 0;
   }
 
-  .reports_card_first:nth-child(3n) {
-    margin-right: 0;
+  .event-card:nth-child(3n-1) {
+    /* к каждому второму (из 3) */
+    margin:0 32px 0 0;
   }
 
-  .reports_card_first:nth-last-child(-n+3) {
-    margin-bottom: 0 !important;
+  .event-card:nth-child(3n) {
+    /* этот стиль применяется к каждому третьему элементу */
+    margin-top:32px;
   }
-
-  .reports_card_first:not(:nth-child(2)):not(:nth-child(5)):not(:nth-child(8)):not(:nth-child(11)) {
-    margin-top: 32px !important;
-  }
-
-  .reports_card_first:nth-child(2),
-  .reports_card_first:nth-child(5),
-  .reports_card_first:nth-child(8),
-  .reports_card_first:nth-child(11) {
-
-  }
-
-
-  .reports_card_second {
-    margin-right: 32px;
-    //margin-bottom: 32px;
-  }
-
-  .reports_card_second:nth-child(3n) {
-    margin-right: 0;
-  }
-
-  .reports_card_second:nth-last-child(-n+3) {
-    margin-bottom: 0 !important;
-  }
-
-  .reports_card_second:not(:nth-child(2)):not(:nth-child(5)):not(:nth-child(8)):not(:nth-child(11)) {
-    //margin-bottom: -30px !important;
-  }
-
-  .reports_card_second:nth-child(2),
-  .reports_card_second:nth-child(5),
-  .reports_card_second:nth-child(8),
-  .reports_card_second:nth-child(11) {
-    margin-top: 32px !important;
-  }
-
 }
 .v-skeleton-loader__image {
   // width: 416px !important;

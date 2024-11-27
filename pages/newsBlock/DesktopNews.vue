@@ -17,7 +17,7 @@
     </v-card-text>
     <v-card-text class="pa-0 px-15 mt-80">
       <div style="border-top: 1px solid #111111"></div>
-      <div v-for="item in data" :key="item" class="mt-12 news_block__item">
+      <div v-for="item in data" :key="item.id" class="mt-12 news_block__item">
         <v-row class="pa-0 ma-0">
           <v-col cols="4" class="pa-0">
             <div @click="$router.push('/news/' + item.id)" class="news_block__title cursor-pointer">

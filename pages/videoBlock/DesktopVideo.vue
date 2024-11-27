@@ -1,15 +1,10 @@
 <template>
   <v-card elevation="0" color="transparent" class="pa-0 mt-120">
     <v-card-text class="pa-0">
-      <div class="px-16 d-flex wrapper align-items-baseline">
-        <div class="text-82 font-weight-300 font-title black--text text-uppercase mr-2" style="text-align: right; width: 130%">
-          <h1 class="reset-styles">
-            Видеоотчеты <br><span style="margin-right: 200px">недели</span>
-          </h1>
-        </div>
-        <div style="line-height: 1.2; width: 100%; margin-left: -190px" class="text-24 black--text opacity-70 font-weight-200 mb-5 d-flex align-end">
-             / КАЖДЫЙ ОТЧЕТ <br/> НАШЕ ЛИЦО
-        </div>
+      <div class="px-16 d-flex wrapper">
+        <h1 class="h1-font">Видеоотчеты <br><span style="padding-left:1em;">недели</span>
+          <h2 class="h2-font" style="padding-left:1em;">/ Каждый отчет <br> наше лицо</h2>
+        </h1>
       </div>
       <div class="mt-15 d-flex justify-center">
         <swiper style="width: 100% !important;" v-show="videos.length" class="swiper ma-auto" :options="swiperOption"
@@ -36,7 +31,7 @@
                       <span class="text-18 font-weight-300 white--text opacity-70">{{
                           formatDate(video.reportDate)
                         }}</span>
-                      <!--                      <span class="text-32 font-weight-550 white&#45;&#45;text">{{ video?.establishmentDto?.name }}</span>-->
+<!--                      <span class="text-32 font-weight-550 white&#45;&#45;text">{{ video?.establishmentDto?.name }}</span>-->
                       <span class="text-22 white--text">{{ video.title }}</span>
                     </div>
                   </div>
@@ -164,7 +159,7 @@ export default {
         return;
       }
       try {
-        const {data: {content}} = await this.$http2.get(`/reports/video/top?city=${this.$store.state.currentCity.id}`);
+        const { data: { content } } = await this.$http2.get(`/reports/video/top?city=${this.$store.state.currentCity.id}`);
         this.videos = content
           .filter(el => el.top)
           .map(el => ({
@@ -283,7 +278,6 @@ export default {
     overflow: visible !important;
   }
 }
-
 .swiper-wrapper {
   width: 5000px !important;
   overflow: hidden;

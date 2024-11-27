@@ -69,7 +69,6 @@
         </div>
         <div class="ei-wrapper2">
           <div v-if="model.socials && Object.keys(model.socials).length" style="display:flex; gap:.6em; align-items:center;">
-            <div class="info-name">Социальные сети:</div>
             <div v-if="typeof model.socials === 'object'" class="icons" style="display:flex; gap:.6em;">
               <a v-if="model.socials.facebook" :href="model.socials.facebook" target="_blank" class="icon"><svg style="width:13.8px; height:26px;" width="9" height="17" viewBox="0 0 9 17" :fill="$vuetify.theme.dark ? '#f8f8f8' : '#111111'" xmlns="http://www.w3.org/2000/svg"><path d="M5.67256 4.48338V6.73862H8.46241L8.02065 9.77656H5.67256V16.7759C5.20178 16.8411 4.72012 16.8752 4.2312 16.8752C3.66685 16.8752 3.11265 16.8303 2.57296 16.7432V9.77656H0V6.73862H2.57296V3.97923C2.57296 2.2673 3.96063 0.878906 5.67328 0.878906V0.880358C5.67836 0.880358 5.68271 0.878906 5.68779 0.878906H8.46313V3.50628H6.64966C6.11069 3.50628 5.67328 3.94369 5.67328 4.48265L5.67256 4.48338Z"/></svg></a>
               <a v-if="model.socials.instagram" :href="model.socials.instagram" target="_blank" class="icon"><svg width="28" height="26" viewBox="0 0 14 13" :fill="$vuetify.theme.dark ? '#f8f8f8' : '#111111'" xmlns="http://www.w3.org/2000/svg"><path d="M10.3426 0.382812H3.93593C2.16597 0.382812 0.726074 1.82271 0.726074 3.59267V9.45383C0.726074 11.2238 2.16597 12.6637 3.93593 12.6637H10.3426C12.1125 12.6637 13.5524 11.2238 13.5524 9.45383V3.59267C13.5524 1.82271 12.1125 0.382812 10.3426 0.382812ZM1.85841 3.59267C1.85841 2.44727 2.79054 1.51515 3.93593 1.51515H10.3426C11.488 1.51515 12.4201 2.44727 12.4201 3.59267V9.45383C12.4201 10.5992 11.488 11.5313 10.3426 11.5313H3.93593C2.79054 11.5313 1.85841 10.5992 1.85841 9.45383V3.59267Z"/><path d="M7.13903 9.50853C8.78494 9.50853 10.1247 8.16946 10.1247 6.52282C10.1247 4.87618 8.78567 3.53711 7.13903 3.53711C5.49239 3.53711 4.15332 4.87618 4.15332 6.52282C4.15332 8.16946 5.49239 9.50853 7.13903 9.50853ZM7.13903 4.67017C8.16111 4.67017 8.9924 5.50147 8.9924 6.52355C8.9924 7.54562 8.16111 8.37691 7.13903 8.37691C6.11696 8.37691 5.28566 7.54562 5.28566 6.52355C5.28566 5.50147 6.11696 4.67017 7.13903 4.67017Z"/><path d="M10.4016 4.01908C10.8448 4.01908 11.2061 3.65856 11.2061 3.21462C11.2061 2.77068 10.8456 2.41016 10.4016 2.41016C9.95768 2.41016 9.59717 2.77068 9.59717 3.21462C9.59717 3.65856 9.95768 4.01908 10.4016 4.01908Z"/></svg></a>
@@ -97,8 +96,7 @@
         </header>
         <footer>
           <div class="download-as-file">
-            <span style="color:#B7B7B7;"><span href="#">ru</span> | <span href="#">en</span></span>
-            <span style="padding-left:5em;">.pdf</span>
+            <span style="color:#B7B7B7; text-align:center;">Меню в PDF</span>
           </div>
         </footer>
       </section>
@@ -113,8 +111,7 @@
         </header>
         <footer>
           <div class="download-as-file">
-            <span style="color:#B7B7B7;"><span href="#">ru</span> | <span href="#">en</span></span>
-            <span style="padding-left:5em;">.pdf</span>
+            <span style="color:#B7B7B7; text-align:center;">Меню в PDF</span>
           </div>
         </footer>
       </section>
@@ -122,12 +119,12 @@
       <section v-if="model.latitude && model.longitude" class="map">
         <h1 class="ec-h1">Map</h1>
         <div class="map">
-<!--          <YandexMap v-model="map" ref="map" :settings="{ location: { center: [ model.latitude, model.longitude ], zoom: 16, }, }" width="100%" height="270px">-->
-<!--            <YandexMapDefaultSchemeLayer :settings="{ theme: $vuetify.theme.dark ? 'dark' : 'light' }"/>-->
-<!--            <YandexMapDefaultFeaturesLayer/>-->
-<!--            <YandexMapMarker :settings="{ coordinates: [ model.latitude, model.longitude ], }"><MapMark/></YandexMapMarker>-->
-<!--            <YandexMapControls :settings="{ position: 'right' }"><YandexMapZoomControl/></YandexMapControls>-->
-<!--          </YandexMap>-->
+          <!-- <YandexMap v-model="map" ref="map" :settings="{ location: { center: [ model.latitude, model.longitude ], zoom: 16, }, }" width="100%" height="270px">
+            <YandexMapDefaultSchemeLayer :settings="{ theme: $vuetify.theme.dark ? 'dark' : 'light' }"/>
+            <YandexMapDefaultFeaturesLayer/>
+            <YandexMapMarker :settings="{ coordinates: [ model.latitude, model.longitude ], }"><MapMark/></YandexMapMarker>
+            <YandexMapControls :settings="{ position: 'right' }"><YandexMapZoomControl/></YandexMapControls>
+          </YandexMap> -->
         </div>
         <section class="map-points">
           <a :href="`/establishment/${establishment.id}`" v-for="establishment of establishmentsNearby" :key="establishment.id" class="map-point">
@@ -166,7 +163,7 @@ export default {
     BaseBreadcrumbs,
     MapMark,
     // YandexMap, YandexMapControls, YandexMapZoomControl, YandexMapDefaultSchemeLayer, YandexMapListener, YandexMapMarker, YandexMapDefaultFeaturesLayer,
-    // VueperSlide, VueperSlides
+    VueperSlide, VueperSlides
   },
   head() {
     return {
@@ -324,10 +321,16 @@ export default {
   }
   .m-page-content {
     color:#111111;
-    padding:0 2.5em;
-    // padding:0 8em;
+    padding: 0 8em;
     // width: 1440px !important;
     margin: 0 auto;
+
+    @media (max-width: 800px) {
+      padding: 0 5em;
+    }
+    @media (max-width: 550px) {
+      padding: 0 2em;
+    }
 
     .glass-badge {
       line-height:1.4em;
@@ -348,6 +351,12 @@ export default {
       font-size:24px;
       padding:1em 1.4em;
       display: flex;
+      cursor:pointer;
+      transition:background-color .2s;
+
+      &:hover {
+        background-color:rgb(255 255 255 / 10%);
+      }
 
       >:first-child {
         flex: auto 1 0;

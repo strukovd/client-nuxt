@@ -1,20 +1,14 @@
 <template>
   <v-card style="background: red" elevation="0" color="transparent" class="mt-120 px-16 desktop_estabs">
     <v-card-text class="pa-0">
-      <div class="d-flex align-items-baseline">
-        <div class="text-82 font-weight-300 font-title black--text text-uppercase mr-2" style="text-align: left; width: 100%">
-          <h1 class="reset-styles">
-            Рекомендуемые <br><span style="margin-right: -100px">Заведения</span>
-          </h1>
-        </div>
-        <div style="line-height: 1.2; width: 100%; margin-left: -265px" class="text-24 black--text opacity-70 font-weight-200 mb-5 d-flex align-end">
-          / КАЖДЫЙ ДЕНЬ <br>
-          СТРАТЕГИЧЕСКИ ВАЖЕН
-        </div>
+      <div class="d-flex flex-column pb-5">
+        <h1 class="text-82 font-title font-weight-300 black--text text-uppercase">Лучшие заведения Бишкека
+          <h2 style="line-height: 29px;" class="h2-font d-inline-block font-weight-200 black--text text-24 opacity-70">/ Каждый день <br> стратегически важен</h2>
+        </h1>
       </div>
-      <div style="position: relative;border-radius: 20px 0 0 20px;" class="d-flex flex-wrap mt-10">
+      <div style="position: relative;border-radius: 20px 0 0 20px; gap:2em;" class="d-flex flex-wrap">
         <template v-if="!loading">
-          <CardEstab v-for="estab of estabs" :key="estab.id" :item="estab" ></CardEstab>
+          <BaseEstabCard v-for="estab of estabs" :key="estab.id" :item="estab"></BaseEstabCard>
         </template>
         <template v-else>
           <div v-for="i of 4" :key="i" style="display:flex;flex-direction:column;overflow:hidden;border-radius:20px;position:relative;">
@@ -36,10 +30,11 @@
 <script>
 import Vue from "vue";
 import CardEstab from "@/components/CardEstab.vue";
+import BaseEstabCard from "@/components/BaseEstabCard.vue";
 
 export default {
   name: "DesktopEstabs",
-  components: {CardEstab},
+  components: {CardEstab, BaseEstabCard},
   data: () => ({
     loading: false,
     currentSlideEstab: [],

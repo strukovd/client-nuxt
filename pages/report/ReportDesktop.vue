@@ -1,24 +1,14 @@
 <template>
   <div id="top" class="desktop_report_page">
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Главная",
-            "item": "https://kipish.kg/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Репортажи",
-            "item": "https://kipish.kg/reports"
-          }
-        ]
-      }
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
+        { "@type": "ListItem", "position": 2, "name": "Репортажи", "item": "https://kipish.kg/reports" }
+      ]
+    }
     </script>
 
     <v-row style="width: 1440px !important;" class="ma-0 pa-0">
@@ -34,14 +24,11 @@
       <v-col v-else style="min-height: 100vh !important;" class="pa-0 px-16 mb-120" cols="12">
         <v-card elevation="0" color="transparent">
           <!-- BREADCRUMBS -->
-          <BaseBreadcrumbs
-            :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/reports', title: 'Все репортажи'}, {href: '', title: model.name}]"/>
+          <BaseBreadcrumbs :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/reports', title: 'Все репортажи'}, {href: '', title: model.name}]"/>
 
           <v-card-text class="pt-0 px-0 d-flex justify-space-between align-end ">
             <div style="width: 900px" class="mb-n4">
-              <h1 v-if="model.name" class="text-68 black--text font-title font-weight-300 text-uppercase">{{
-                  model.name
-                }} - Фотоотчет</h1>
+              <h1 v-if="model.name" class="text-68 black--text font-title font-weight-300 text-uppercase">{{ model.name }} - Фотоотчет</h1>
             </div>
             <div class="mb-n1">
               <template v-if="model.albumDate">
@@ -137,9 +124,7 @@
               </div>
               <div class="d-flex flex-column justify-space-between px-4 pt-4">
                 <span class="text-20 font-weight-300 opacity-70 dark--text">Фото</span>
-                <span class="text-32 font-title font-weight-100 black--text text-uppercase">{{
-                    !filesLength ? '0' : filesLength
-                  }}</span>
+                <span class="text-32 font-title font-weight-100 black--text text-uppercase">{{ !totalFilesCounter ? '0' : totalFilesCounter }}</span>
               </div>
             </div>
           </v-card-text>
@@ -158,6 +143,7 @@
                     :data-grid-groupkey="file.groupKey"
                   >
                     <img
+                      loading="lazy"
                       class="image-watermark-image"
                       @load="getImageSize(file)"
                       data-aos="fade-up"
@@ -167,7 +153,6 @@
                       @click="openImageDialog(file.id)"
                       alt=""
                       style="border-radius: 16px"
-                      lazy-src="/static/images/cover-2.jpg"
                       :src="`https://files.kipish.kg/${file.minioBucket}/min-${file.minioPath}`"/>
                   </div>
                   <template v-if="loadingMore">
@@ -227,12 +212,11 @@
                     </div>
 
                     <img alt=""
-                         class="image-watermark-image"
-                         :class="file.orientation === 'vertical' ? 'vertical' : 'horizontal'"
-                         :key="file.id"
-                         lazy-src="/static/images/cover-2.jpg"
-                         :src="`https://files.kipish.kg/${file.minioBucket}/min-${file.minioPath}`"
-                         style="border-radius: 24px !important;"/>
+                        class="image-watermark-image"
+                        :class="file.orientation === 'vertical' ? 'vertical' : 'horizontal'"
+                        :key="file.id"
+                        :src="`https://files.kipish.kg/${file.minioBucket}/min-${file.minioPath}`"
+                        style="border-radius: 24px !important;"/>
                     <div class="button-container">
                       <v-btn depressed style="border-radius: 50% !important" fab class="pa-5 hover-red" color="#FE252E"
                              @click="dialog = false">
@@ -285,8 +269,10 @@
 <script>
 import ToolBar from "@/components/AppToolbar.vue";
 import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
+import Vue from 'vue'
 import 'swiper/css/swiper.css'
-import {FrameInfiniteGrid, MasonryInfiniteGrid} from "@egjs/vue-infinitegrid";
+import {Stack, StackItem} from 'vue-stack-grid';
+import {MasonryInfiniteGrid, FrameInfiniteGrid} from "@egjs/vue-infinitegrid";
 import MobileMedia from "@/pages/mediaBlock/MobileMedia.vue";
 import DesktopMedia from "@/pages/mediaBlock/DesktopMedia.vue";
 import {mapGetters} from "vuex";
@@ -296,7 +282,7 @@ export default {
   name: "ReportDesktop",
   components: {
     DesktopMedia,
-    MobileMedia, SwiperSlide, ToolBar, Swiper, MasonryInfiniteGrid, FrameInfiniteGrid,
+    MobileMedia, StackItem, SwiperSlide, ToolBar, Swiper, Stack, MasonryInfiniteGrid, FrameInfiniteGrid,
     BaseBreadcrumbs
   },
   head() {
@@ -313,10 +299,7 @@ export default {
       ],
       link: [
         {rel: 'icon', type: 'image/x-icon', href: '/favicon.svg'},
-        {
-          rel: 'canonical',
-          href: 'https://kipish.kg/reports/'
-        }
+        {rel: 'canonical', href: 'https://kipish.kg/reports/'}
       ],
     };
   },
@@ -341,7 +324,7 @@ export default {
     fileLoading: false,
     imageLoaded: false,
     showIcons: false,
-    filesLength: 0,
+    totalFilesCounter: 0,
     typeImage: '',
     viewedImageId: 0,
     shareDialog: false,
@@ -382,25 +365,27 @@ export default {
     },
 
     metaTitle() {
-      if (!this.model || !this.model?.name) return '';
+      if(!this.model || !this.model?.name) return '';
 
       // return '';
 
-      if (!this._metaTitle) {
+      if(!this._metaTitle) {
         return this.model.name ? (this.model.establishment?.name ? `${this.model.establishment?.name} — ${this.model.name} | Кипиш` : `${this.model.name} | Кипиш`) : 'Кипиш'
-      } else {
+      }
+      else {
         return this._metaTitle;
       }
     },
 
     metaDescription() {
-      if (!this.model || !this.model?.name) return '';
+      if(!this.model || !this.model?.name) return '';
 
       // return '';
 
-      if (!this._metaDescription) {
+      if(!this._metaDescription) {
         return this.model?.name && this.model?.establishment?.name ? `Фотоотчет с ${this.model.name} в ${this.model.establishment?.name}. Смотрите лучшие фото на Кипише — медиа ресурсе о светской жизни Бишкека.` : 'Смотрите лучшие фото на Кипише — медиа ресурсе о светской жизни Бишкека.'
-      } else {
+      }
+      else {
         return this._metaDescription;
       }
     }
@@ -418,9 +403,9 @@ export default {
       this.$http.get(`/seo/friendly-url/${this.sourceId}/album`)
         .then(res => {
           const urlInfo = res.data;
-          if (urlInfo) {
-            if (urlInfo.metaTitle) this._metaTitle = urlInfo.metaTitle;
-            if (urlInfo.metaDescription) this._metaDescription = urlInfo.metaDescription;
+          if( urlInfo ) {
+            if( urlInfo.metaTitle ) this._metaTitle = urlInfo.metaTitle;
+            if( urlInfo.metaDescription ) this._metaDescription = urlInfo.metaDescription;
           }
         })
     },
@@ -587,59 +572,27 @@ export default {
 
     async loadMore() {
       this.loadingMore = true;
-      try {
-        const params = {
-          page: this.page,
-          size: this.size,
-          isCover: false,
-          sort: 'file_order,asc'
-        };
-        const response = await this.$http2.get(`/albums/${this.sourceId}/files`, {params});
-        if (response.data.totalPages - 1 === this.page) this.pagesIsOver = true;
-        if (!response.data.content.length) return;
+      const params = {
+        page: this.page,
+        size: this.size,
+        isCover: false,
+        sort: 'file_order,asc'
+      };
 
-        this.filesLength = response.data.totalElements
-        this.page++;
-        const newData = await this.setFilesForReport(response.data.content);
-        this.files = this.files.concat(newData);
-        this.loadingContent = false;
-        this.loading = false;
-        this.loadingMore = false;
-      } catch (error) {
-        console.error('Ошибка при загрузке данных:', error);
-        this.loadingContent = false;
-      } finally {
-        this.loadingMore = false
-      }
-    },
-    async setFilesForReport(files) {
-      const newData = files.filter(newItem => !this.files.some(item => item.id === newItem.id) && !newItem.isCover);
-      const newImages = await this.fetchImages(newData);
-      return newImages;
-    },
-    async fetchImages(files) {
-      if (!files) files = this.files;
-      const images = [];
-      for (const file of files) {
-        if (file.id) {
-          this.fetchImage(file.id)
-            .then(image => {
-              file.file = image;
-            });
-        }
-        images.push(file);
-      }
-      // await this.checkOrientationPhoto(images);
+      this.$http2.get(`/albums/${this.sourceId}/files`, {params})
+        .then(r => {
+          if (r.data.totalPages - 1 === this.page) this.pagesIsOver = true;
+          if (!r.data.content.length) return;
 
-      return images;
+          this.totalFilesCounter = r.data.totalElements;
+          this.page++;
+          this.files = this.files.concat(r.data.content);
+        })
+        .finally(() => {
+          this.loadingMore = false;
+        });
     },
-    async fetchImage(imageId) {
-      // return this.$http.get(`/files/${imageId}`)
-      //   .then(r => {
-      //     const imageMap = r.data;
-      //     return imageMap[imageId];
-      //   });
-    },
+
     downloadZip() {
       this.fileLoading = true
       this.$fileHttp.get('/albums/download/zip', {
@@ -724,7 +677,7 @@ export default {
       this.loading = true
       this.$http2.get(`/albums/${id}`)
         .then(r => {
-          if (!Array.isArray(r.data.content) || !r.data.content[0]) this.notFound = true;
+          if( !Array.isArray(r.data.content) || !r.data.content[0] ) this.notFound = true;
           else {
             this.model = r.data.content[0];
           }

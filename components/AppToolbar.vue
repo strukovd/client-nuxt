@@ -2,12 +2,12 @@
   <div>
     <search v-if="searchDialog" @close="(status) => searchDialog = status"/>
     <div v-if="!searchDialog">
-      <div v-if="!windowWidth || windowWidth > 1400" style="height: 120px">
+      <div v-if="windowWidth > 1400" style="height: 120px">
 
         <v-app-bar :style="$vuetify.theme.dark ? 'background-color: #171717' : 'background-color: #f5f5f5'"
                    elevation="0"
                    height="110"
-                   style="z-index: 999999 !important;" fixed class="container d-flex align-center justify-center">
+                   style="z-index: 999999 !important; padding:0 !important" fixed class="d-flex align-center justify-center">
           <v-card style="border-radius: unset !important; z-index: 999 !important;border-bottom: 1px solid #0000001A"
                   elevation="0" class="d-flex align-center pa-0" color="transparent">
             <v-card-text class="d-flex justify-space-between align-center pa-0 wrapper px-16">
@@ -24,9 +24,9 @@
                     v-model="currentCity" append-icon="" dense hide-details>
                     <template v-slot:selection="{ item, selected, select }">
                       <div class="d-flex align-center">
-                                    <span class="black--text align-center font-weight-regular">
-                                    {{ item.nameRu }}
-                                  </span>
+                      <span class="black--text align-center font-weight-regular">
+                      {{ item.nameRu }}
+                    </span>
                         <v-icon class="mb-2 ml-1">
                           mdi-menu-down
                         </v-icon>
@@ -36,45 +36,29 @@
                 </div>
               </div>
               <div class="d-flex align-center">
-                <nuxt-link to="/reports">
-                  <span
-                    :class="[$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light', 'text-18', 'mr-10', 'cursor-pointer', 'font-weight-regular', 'black--text']">
-                    Фото
+                <template v-for="link of [
+                    {href: '/reports',                title: 'Фото',              icon: 'mdi-camera'},
+                    {href: '/videos',                 title: 'Видео',             icon: 'mdi-video'},
+                    {href: '/events',                 title: 'События',           icon: 'mdi-calendar'},
+                    {href: '/establishments',         title: 'Заведения',         icon: 'mdi-glass-wine'},
+                    {onClick: scrollToContacts,       title: 'Контакты',          icon: 'mdi-phone-message'},
+                    {href: '/feedback',               title: 'Заказать съемку',   icon: 'mdi-video-marker'},
+                    // {href: '/news',                                  title: 'Новости',           icon: 'mdi-camera'},
+                  ]">
+                  <span :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"
+                        class="text-18 mr-8 cursor-pointer font-weight-regular black--text"
+                        style="user-select:none;">
+                        <!-- <v-icon class="mr-1">{{ link.icon }}</v-icon> -->
+                        <router-link v-if="link.href"
+                              :to="link.href"
+                              style="text-decoration:none; color:inherit;"
+                        >{{ link.title }}</router-link>
+                        <span v-else
+                              @click="link.onClick"
+                        >{{ link.title }}</span>
                   </span>
-                </nuxt-link>
-
-                <nuxt-link to="/videos">
-                  <span
-                    :class="[$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light', 'text-18', 'mr-10', 'cursor-pointer', 'font-weight-regular', 'black--text']">
-                    Видео
-                  </span>
-                </nuxt-link>
-
-                <nuxt-link to="/events">
-                  <span
-                    :class="[$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light', 'text-18', 'mr-10', 'cursor-pointer', 'font-weight-regular', 'black--text']">
-                    События
-                  </span>
-                </nuxt-link>
-
-                <nuxt-link to="/establishments">
-                  <span
-                    :class="[$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light', 'text-18', 'mr-10', 'cursor-pointer', 'font-weight-regular', 'black--text']">
-                    Заведения
-                  </span>
-                </nuxt-link>
-                <!-- <span
-                      :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"
-                      class="text-18 mr-10 cursor-pointer font-weight-regular black--text">Новости</span> -->
-                <!--            <span :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"-->
-                <!--              @click="$emit('scrollToBlock', 'aboutUs')"-->
-                <!--              class="text-18 mr-10 cursor-pointer font-weight-300 black--text">Lifestyle</span>-->
-                <!--                <span @click="scrollToContacts" :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"-->
-                <!--                      class="text-18 mr-10 cursor-pointer font-weight-regular black&#45;&#45;text">Контакты</span>-->
-                <!--            <span :class="$vuetify.theme.dark ? 'nav-item-dark' : 'nav-item-light'"-->
-                <!--              class="text-18 mr-15 cursor-pointer font-weight-300 black--text">Заказать съемку</span>-->
-                <heroicon @click="searchDialog = true" class="cursor-pointer" name="search"
-                          :fill="$vuetify.theme.dark ? '#FFFFFF' : '#111111'"/>
+                </template>
+                <heroicon @click="searchDialog = true" class="cursor-pointer" name="search" :fill="$vuetify.theme.dark ? '#FFFFFF' : '#111111'"/>
                 <div @click="toggleTheme" class="cursor-pointer ml-8">
                   <v-img width="32" height="32"
                          src="/images/mode.svg"
@@ -127,8 +111,7 @@
             </v-card-text>
           </v-card>
         </v-app-bar>
-        <v-navigation-drawer style="border-radius: 8px 0 0 8px; z-index: 999 !important; max-width:350px;" app
-                             width="75%" fixed
+        <v-navigation-drawer style="border-radius: 8px 0 0 8px; z-index: 999 !important; max-width:350px;" app width="75%" fixed
                              v-model="menu" right>
           <v-card elevation="0" color="transparent" height="100%">
             <v-card-text class="pa-0 px-6 pt-5 d-flex align-center justify-space-between">
@@ -150,29 +133,26 @@
             </v-card-text>
             <v-card-text class="pl-6 pr-0 py-0 mt-10 pb-10">
               <div class="d-flex flex-column">
-                <nuxt-link to="/reports"
-                           class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">
-                  Фото
-                </nuxt-link>
-
-                <nuxt-link to="/videos" class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">
-                  Видео
-                </nuxt-link>
-
-                <nuxt-link to="/events" class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">
-                  События
-                </nuxt-link>
-
-                <nuxt-link to="/establishments"
-                           class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">
-                  Заведения
-                </nuxt-link>
-                <!-- <span
-                      class="black--text text-18 font-weight-regular mb-6 cursor-pointer select-none">Новости</span> -->
-                <!--              <span class="black--text text-18 font-weight-300 mb-8 cursor-pointer">Lifestyle</span>-->
-                <span @click="scrollToContacts"
-                      class="black--text text-18 font-weight-regular cursor-pointer select-none">Контакты</span>
-                <!--              <span class="black--text text-18 font-weight-300 cursor-pointer">Заказать съемку </span>-->
+                <template v-for="link of [
+                    {href: '/reports',                title: 'Фото',              icon: 'mdi-camera'},
+                    {href: '/videos',                 title: 'Видео',             icon: 'mdi-video'},
+                    {href: '/events',                 title: 'События',           icon: 'mdi-calendar'},
+                    {href: '/establishments',         title: 'Заведения',         icon: 'mdi-glass-wine'},
+                    {onClick: scrollToContacts,       title: 'Контакты',          icon: 'mdi-phone-message'},
+                    {href: '/feedback',               title: 'Заказать съемку',   icon: 'mdi-video-marker'},
+                    // {href: '/news',                                  title: 'Новости',           icon: 'mdi-camera'},
+                  ]">
+                  <span class="black--text text-18 font-weight-regular mb-6 mr-8 cursor-pointer select-none">
+                        <!-- <v-icon class="mr-3">{{ link.icon }}</v-icon> -->
+                        <router-link v-if="link.href"
+                              :to="link.href"
+                              style="text-decoration:none; color:inherit;"
+                        >{{ link.title }}</router-link>
+                        <span v-else
+                              @click="link.onClick"
+                        >{{ link.title }}</span>
+                  </span>
+                </template>
               </div>
               <v-divider style="color: #0000001A !important;" class="mt-10"/>
               <div class="mt-5">
@@ -334,12 +314,6 @@ export default {
     background: rgba(255, 255, 255, 0.5) !important;
     backdrop-filter: blur(30px);
     height: 70px !important;
-
-    .logo {
-      .v-image__image {
-        background-image: url('/images/logo-light.svg') !important;
-      }
-    }
   }
 }
 
@@ -428,12 +402,6 @@ export default {
       background: rgba(255, 255, 255, 0.5) !important;
       backdrop-filter: blur(30px);
       height: 50px !important;
-
-      .logo {
-        .v-image__image {
-          background-image: url('/images/logo-light.svg') !important;
-        }
-      }
     }
   }
 }

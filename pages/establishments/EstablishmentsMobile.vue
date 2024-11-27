@@ -1,24 +1,14 @@
 <template>
   <div id="top" class="estabs_mobile">
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Главная",
-            "item": "https://kipish.kg/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Заведения",
-            "item": "https://kipish.kg/establishments"
-          }
-        ]
-      }
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
+        { "@type": "ListItem", "position": 2, "name": "Заведения", "item": "https://kipish.kg/establishments" }
+      ]
+    }
     </script>
 
     <v-row class="ma-0 pa-0 wrapper">
@@ -28,12 +18,11 @@
       <v-col style="min-height: 70vh" class="pa-0 px-4 mb-100" cols="12">
         <v-card elevation="0" color="transparent">
           <!-- BREADCRUMBS -->
-          <BaseBreadcrumbs
-            :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/establishments', title: 'Заведения'}]"/>
+           <BaseBreadcrumbs :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/establishments', title: 'Заведения'}]"/>
 
           <!-- TITLE -->
           <v-card-text class="pa-0">
-            <span class="text-32 black--text font-title text-uppercase">Заведения</span>
+            <h1 class="h1-mob-font text-32">Лучшие заведения в Бишкеке</h1>
           </v-card-text>
           <v-card-text class="pa-0">
             <div class="d-flex flex-column">
@@ -66,8 +55,7 @@
               <div v-if="filter" class="d-flex flex-column mt-4 filter_panel">
                 <div style="width: 100%" class="d-flex align-center flex-column">
                   <span class="black--text text-16">Средний чек</span>
-                  <v-slider v-model="filterPanel.price" style="width: 100%" step="500" :max="2500"
-                            :tick-labels="ticksLabels" tick-size="5"/>
+                  <v-slider v-model="filterPanel.price" style="width: 100%" step="500" :max="2500" :tick-labels="ticksLabels" tick-size="5" />
                 </div>
                 <v-autocomplete v-model="filterModel.name" class="mb-4"
                                 clearable style="border-radius: 12px;background: #FFFFFF" outlined hide-details
@@ -90,13 +78,12 @@
           </v-card-text>
 
           <!-- Карточки заведений -->
-          <div class="cards-container d-flex flex-wrap mt-10">
+          <div class="cards-container d-flex flex-column flex-nowrap mt-10" style="gap:1em;">
             <template v-if="!loading">
-              <CardEstabMobile v-for="estab of visibleItems" :key="estab.id" :item="estab"/>
+              <MCardEstab v-for="estab of visibleItems" :key="estab.id" :item="estab"/>
             </template>
             <template v-else>
-              <div v-for="i of 3" :key="i"
-                   style="display:flex;flex-direction:column;overflow:hidden;border-radius:20px;position:relative;">
+              <div v-for="i of 3" :key="i" style="display:flex;flex-direction:column;overflow:hidden;border-radius:20px;position:relative;">
                 <v-skeleton-loader class="mx-auto" type="image"></v-skeleton-loader>
               </div>
             </template>
@@ -112,8 +99,8 @@
 import ToolBar from "@/components/AppToolbar.vue";
 import Vue from "vue";
 import ADmob from "@/components/ad/ADmob.vue";
-import CardEstabMobile from "@/components/CardEstabMobile.vue";
 import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
+import MCardEstab from "@/components/MCardEstab.vue";
 
 export default {
   name: "EstablishmentsMobile",
@@ -161,6 +148,8 @@ export default {
     },
 
 
+
+
     categories: [],
     currentSlide: [],
     scrollPosition: 0,
@@ -184,18 +173,10 @@ export default {
     searchResult: null
   }),
   watch: {
-    'filterModel.city': () => {
-      this.fetchItems();
-    },
-    'filterModel.name': () => {
-      this.fetchItems();
-    },
-    'filterModel.avrCheck': () => {
-      this.fetchItems();
-    },
-    'filterModel.categories': () => {
-      this.fetchItems();
-    },
+    'filterModel.city': () => { this.fetchItems(); },
+    'filterModel.name': () => { this.fetchItems(); },
+    'filterModel.avrCheck': () => { this.fetchItems(); },
+    'filterModel.categories': () => { this.fetchItems(); },
 
     activeTab(newTab) {
       this.filteredEstabs = this.estabs.filter(estab => estab.categories.some(category => category.nameRu === this.activeTab));
@@ -229,7 +210,11 @@ export default {
       };
       this.$http2.get(`/establishments`, {params})
         .then(r => {
-          this.visibleItems = r.data.content;
+          const payload = r.data.content;
+          if(payload?.paysways) payload.paysways = JSON.parse(payload.paysways); else payload.paysways = {};
+          if(payload?.socials) payload.socials = JSON.parse(payload.socials); else payload.socials = {};
+
+          this.visibleItems = payload;
           this.fetchEstabsImages(this.visibleItems);
           // this.totalPages = r.data.totalPages;
           // this.totalItems = r.data.totalElements;
@@ -241,6 +226,8 @@ export default {
     },
 
 
+
+
     async filterEstabWithPanel() {
       let filteredEstabs = [];
 
@@ -250,7 +237,7 @@ export default {
       }
 
       try {
-        const response = await this.$http2.get('/establishments', {params});
+        const response = await this.$http2.get('/establishments', { params });
         const priceFilteredEstabs = response.data.content.filter(estab => estab.id === 37 || estab.id === 30 || estab.id === 41);
         // Если есть результат поиска, используем его
         if (this.searchResult) {
@@ -277,7 +264,7 @@ export default {
         const estabsWithAds = [...filteredEstabs];
         let adCounter = Math.floor(estabsWithAds.length / 6);
         for (let i = 1; i <= adCounter; i++) {
-          estabsWithAds.splice(i * 6 + (i - 1), 0, {advert: true});
+          estabsWithAds.splice(i * 6 + (i - 1), 0, { advert: true });
         }
 
         this.filteredEstabs = filteredEstabs;
@@ -303,12 +290,7 @@ export default {
     },
 
     zoomToTop() {
-      // if (process.client) {
-      //   window.scrollTo({
-      //     top: document.querySelector('#top').offsetTop,
-      //     behavior: 'smooth'
-      //   });
-      // }
+      this.$scrollTo('#top', 500, {easing: 'ease-in-out'});
     },
 
     getMoreEstabs() {
@@ -392,16 +374,20 @@ export default {
 
       this.loadingContent = true
       this.$http2.get(`/establishments?city=${this.city.id}&page=${this.page}&size=${this.size}`)
-        .then(response => {
-          if (response.data.content.length === 0) {
+        .then(r => {
+          const payload = r.data.content;
+          if (payload.length === 0) {
+            if(payload?.paysways) payload.paysways = JSON.parse(payload.paysways); else payload.paysways = {};
+            if(payload?.socials) payload.socials = JSON.parse(payload.socials); else payload.socials = {};
+
             console.log("Содержимое пустое. Больше нет данных для загрузки.");
             this.loadingMore = false;
             this.hasMoreData = false;
             return;
           }
           this.page++
-          const filteredEstabs = response.data.content.filter(estab => estab.id === 37 || estab.id === 30 || estab.id === 41)
-          this.estabs = this.estabs.concat(response.data.content);
+          const filteredEstabs = r.data.content.filter(estab => estab.id === 37 || estab.id === 30 || estab.id === 41)
+          this.estabs = this.estabs.concat(r.data.content);
           this.fetchEstabsImages(this.estabs)
           this.loadingContent = false
           this.loadingMore = false;

@@ -2,7 +2,7 @@
 
 DEST_DIR=/var/www/ssr-new           # Директория на сервере для деплоя
 HOST=root@188.225.80.100             # Хост для SSH
-PROJECT_DIR=/Users/alizhan_nh/Documents/work/kipish/client-nuxt  # Папка с вашим проектом на локальной машине
+PROJECT_DIR=./  # Папка с вашим проектом на локальной машине
 
 echo "Начало деплоя..."
 

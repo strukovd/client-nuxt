@@ -13,7 +13,7 @@
 
     <v-row class="ma-0 pa-0  wrapper">
       <v-col class="pa-0" cols="12">
-        <tool-bar @selectedCity="setSelectedCity"/>
+        <tool-bar @selectedCity="()=>{}"/>
       </v-col>
       <v-col style="min-height: 70vh" class="pa-0 px-4 mb-100" cols="12">
         <v-card elevation="0" color="transparent">
@@ -21,9 +21,9 @@
           <BaseBreadcrumbs :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/events', title: 'События'}]"/>
 
           <v-card-text class="pa-0">
-            <span class="text-32 black--text font-title text-uppercase">События</span>
+            <h1 class="text-32 black--text font-title font-weight-300 text-uppercase pb-8">Афиша мероприятий в Бишкеке</h1>
           </v-card-text>
-          <v-card-text class="pa-0 mb-6">
+          <!-- <v-card-text class="pa-0 mb-6">
             <div class="d-flex flex-column">
               <div class="d-flex flex-wrap">
                 <div @click="activeTab = 'ALL'" :class="activeTab === 'ALL' ? 'active-tab' : 'tab'" class="mr-4">
@@ -35,7 +35,7 @@
                 </div>
               </div>
             </div>
-          </v-card-text>
+          </v-card-text> -->
           <v-card-text class="pa-0 d-flex flex-column">
             <div class="filter-panel d-flex flex-column">
               <v-btn depressed @click="filterPanel"
@@ -53,13 +53,17 @@
                 </div>
               </transition>
             </div>
+            <TimeRoulette :dateMap="this.eventsDateMap" @setActualDay="selectDay" class="mb-15"/>
             <div class="d-flex align-end">
               <span class="mt-10 mb-6 text-20 font-weight-300 text-uppercase black--text font-title">
-                АКТУАЛЬНЫЕ СОБЫТИЯ
+                {{ selectedDay ? formatDate(selectedDay) : 'АКТУАЛЬНЫЕ СОБЫТИЯ' }}
               </span>
             </div>
           </v-card-text>
           <v-card-text v-if="!loading" class="pa-0 d-flex flex-wrap reports_block">
+            <div v-if="filteredEvents.length === 0" style="line-height:2em;">
+              <h1 style="text-align:center; margin-top: 2em; font-size:1.7em;" class="font-weight-300 text-uppercase black--text font-title">События в этот день не найдены</h1>
+            </div>
             <CardEventMobile v-for="(event, index) of filteredEvents" :key="event.id" :event="event"/>
 
             <!-- <div data-aos="fade-up" data-aos-duration="1000"
@@ -107,7 +111,7 @@
 import ToolBar from "@/components/AppToolbar.vue";
 import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
 import CardEventMobile from "@/components/CardEventMobile.vue";
-import TimeRoulette from "@/components/TimeRoulette.vue";
+import TimeRoulette from "@/components/TimeRouletteNew.vue";
 import Vue from "vue";
 
 export default {
@@ -137,6 +141,12 @@ export default {
     }
   },
   data: () => ({
+    eventsDateMap: {},
+    selectedDay: null,
+    visibleDays: [],
+    page: 0,
+    size: 15,
+
     closeOnClick: true,
     scrollPosition: 0,
     parallaxMultiplier: 0.5,
@@ -162,15 +172,67 @@ export default {
     }
   },
   created() {
-    this.fetchEvents()
-    this.getCategories()
+    this.fetchEvents();
+    this.getCategories();
+    this.fetchDateMap();
   },
   methods: {
+    fetchDateMap() {
+      const params = {
+        city: this.$store.state.currentCity?.id ?? null,
+      };
+      this.$http.get(`/posters/dateMap`, { params })
+        .then(r => {
+          this.eventsDateMap = r.data;
+
+          // if (!this.selectedDay) {
+          //   this.potentialDays = Object.keys(this.eventsDateMap)
+          //     .map( dateStr => new Date(dateStr) )
+          //     .sort( (a, b) => b - a )
+          //     .map( date => date.toLocaleDateString('fr-CA') );
+
+          //   // показываем сразу 2 репортажа
+          //   const dateCount = Math.min(this.potentialDays.length, 2);
+          //   for (let i = 0; i < dateCount; i++) {
+          //     const nextActualDate = this.convertDateToFetchFormat(this.potentialDays.shift());
+          //     this.visibleDays.push(nextActualDate);
+          //     this.fetchEvents(nextActualDate);
+          //   }
+          // }
+        })
+        .catch((error) => {
+          console.error(error);
+          // this.selectDay( this.currentDay );
+          // .. error
+        })
+    },
+
+    fetchEvents(date) {
+      if(!this.$store.state.currentCity) return;
+      this.loading = true;
+      const params = {
+        cityId: this.$store.state.currentCity.id,
+        sort: 'date,asc',
+      };
+      if(date) params.date = date;
+
+      this.$http2.get('/posters', { params })
+          .then(r => {
+            this.events = r.data.content;
+            // this.fetchEventsImages(this.events)
+          })
+          .finally(e => {
+            this.loading = false
+          })
+    },
+
     getCategories() {
       this.$http.get('/dicts/categories', {params: {type: 'POSTER'}})
         .then(r => this.categoriesPost = r.data)
     },
     formatDate(dateString) {
+      if(!dateString) return;
+
       const months = [
         'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
         'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
@@ -186,72 +248,30 @@ export default {
 
       return `${day} ${month} / ${year}`;
     },
-    getDayOfWeekFormatted(date) {
-      const options = {weekday: 'long'};
-      return new Intl.DateTimeFormat('ru-RU', options).format(date);
+
+    selectDay(date) {
+      const formattedDate = this.convertDateToFetchFormat(date);
+      this.selectedDay = formattedDate;
+      this.visibleDays = [this.selectedDay];
+      this.page = 0;
+
+      this.fetchEvents(formattedDate);
     },
-    formatDateFormatted(date) {
-      const options = {day: 'numeric', month: 'long'};
-      return new Intl.DateTimeFormat('ru-RU', options).format(date);
+
+    convertDateToFetchFormat(date) {
+      const d = new Date(date);
+      const year = d.getFullYear();
+      const month = ("0" + (d.getMonth() + 1)).slice(-2);
+      const day = ("0" + d.getDate()).slice(-2);
+      return `${day}-${month}-${year}`;
     },
+
     setActualDay(day) {
       this.albumsOnDay.albums = day.albums
       this.albumsOnDay.date = day.date
     },
-    getCoverFile(files) {
-      const coverFile = files.find(el => el.isCover === true);
-      return coverFile ? 'data:image/png;base64,' + coverFile.file : null;
-    },
-    setSelectedCity(city) {
-      this.getReports(city)
-    },
-    handleScroll() {
-      this.scrollPosition = this.$refs.reportsBlock.scrollTop;
-    },
     filterPanel() {
       this.filter = !this.filter
-    },
-    getReports(city) {
-      this.$http.get(`/albums?city=${city.id}`)
-        .then(r => {
-          this.reports = r.data.content
-        })
-    },
-    fetchEvents() {
-      if(!this.$store.state.currentCity) return;
-      this.loading = true;
-      const params = {
-        cityId: this.$store.state.currentCity.id
-      };
-      this.$http2.get('/posters', { params })
-        .then(r => {
-          this.events = r.data.content;
-          // this.fetchEventsImages(this.events)
-          this.loading = false
-        })
-        .catch(e => {
-          this.loading = false
-        })
-    },
-    async fetchEventsImages(events) {
-      if (!events) events = this.events;
-      events.forEach((event, inx) => {
-        event.files.filter(el => el.isCover).forEach((file, index) => {
-          if (file.id) {
-            this.fetchImage(file.id)
-              .then(image => {
-                Vue.set(events[inx], 'src', image);
-              });
-          }
-        })
-      })
-    },
-    fetchImage(imageId) {
-      return this.$http.get(`/files/${imageId}`)
-        .then(r => {
-          const imageMap = r.data;
-          return imageMap[imageId];
-        });
     },
   },
 }

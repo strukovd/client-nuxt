@@ -1,24 +1,14 @@
 <template>
   <div id="top">
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Главная",
-            "item": "https://kipish.kg/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Видеорепортажи",
-            "item": "https://kipish.kg/videos"
-          }
-        ]
-      }
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
+        { "@type": "ListItem", "position": 2, "name": "Видеорепортажи", "item": "https://kipish.kg/videos" }
+      ]
+    }
     </script>
 
     <v-row class="ma-0 pa-0 wrapper reports_desc_container">
@@ -32,7 +22,7 @@
 
           <!-- ЗАГОЛОВОК -->
           <v-card-text class="pt-0 px-0 pb-14">
-            <span class="text-68 black--text font-title text-uppercase font-weight-300">Видео репортажи</span>
+            <h1 class="text-68 black--text font-title text-uppercase font-weight-300">Видеоотчеты мероприятий в Бишкеке</h1>
           </v-card-text>
 
           <div v-if="loading" class="d-flex flex-wrap reports_block">
@@ -121,13 +111,13 @@
                       :title="report.title"
                       :subTitle="formatDate(report.reportDate)"
                       :label="report?.establishment?.name"
-                      :coverImage="report.coverImage"
+                      :coverImage="report.coverPath ? `https://files.kipish.kg/${report.coverPath}` : ''"
                       :coverId="report.coverImageId"
                       :src="videoDomain + report.id"
                       :link="'/video/' + report.id"
                     />
                   </div>
-                  <a-dpc data-aos="fade-left" class="my-15" v-show="shouldShowDesktopEvents(dayIndex)"/>
+                  <a-dpc data-aos="fade-left" class="my-15" :key="dayIndex" v-if="shouldShowDesktopEvents(dayIndex)"/>
                 </template>
               </template>
             </template>
@@ -144,7 +134,7 @@ import {mapGetters} from "vuex";
 import ToolBar from "@/components/AppToolbar.vue";
 import TimeRoulette from "@/components/TimeRouletteNew.vue";
 import VideoPlayer from "@/components/VideoPlayer.vue";
-import VPlayer from "@/components/vPlayer/VPlayer.vue";
+import VPlayer from "@/components/VPlayer/VPlayer.vue";
 import EventDesktop from "@/pages/event/EventDesktop.vue";
 import ADpc from "@/components/ad/ADpc.vue";
 import BaseBreadcrumbs from '@/components/BaseBreadcrumbs.vue';
@@ -219,7 +209,7 @@ export default {
           let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight - 300;
           if (bottomOfWindow) {
             const nextActualDateRaw = this.potentialDays.shift();
-            if (nextActualDateRaw) {
+            if(nextActualDateRaw) {
               const nextActualDate = this.convertDateToFetchFormat(nextActualDateRaw);
               this.visibleDays.push(nextActualDate);
               this.fetchReports(nextActualDate);
@@ -233,14 +223,6 @@ export default {
       Vue.set(video, 'play', true);
     },
 
-    fetchImage(imageId) {
-      return this.$http.get(`/files/${imageId}`)
-        .then(r => {
-          const imageMap = r.data;
-          return imageMap[imageId];
-        });
-    },
-
     fetchBulkImage(imageIdsArray) {
       return this.$http.post(`/files/getBulkFiles`, imageIdsArray)
         .then(r => {
@@ -249,12 +231,7 @@ export default {
     },
 
     zoomToTop() {
-      // if (process.client) {
-      //   window.scrollTo({
-      //     top: document.querySelector('#top').offsetTop,
-      //     behavior: 'smooth'
-      //   });
-      // }
+      this.$scrollTo('#top', 500, {easing: 'ease-in-out'});
     },
 
     convertDateToFetchFormat(date) {
@@ -343,7 +320,7 @@ export default {
 
             for (let i = 0; i < 2; i++) {
               const nextActualDateRaw = this.potentialDays.shift();
-              if (nextActualDateRaw) {
+              if(nextActualDateRaw) {
                 const nextActualDate = this.convertDateToFetchFormat(nextActualDateRaw);
                 this.visibleDays.push(nextActualDate);
                 this.fetchReports(nextActualDate);
@@ -375,11 +352,10 @@ export default {
             date: requestDate,
             sort: 'report_date,desc',
           };
-          const response = await this.$http2.get(`/reports/video/byDate`, {params});
+          const response = await this.$http2.get(`/reports/video/byDate`, { params });
           console.log(response.data)
           const reportList = response.data?.content || [];
           this.reports = reportList;
-          await this.fetchReportImages(this.reports);
           Vue.set(this.reportsCacheMap, requestDate, reportList);
         }
       } catch (error) {
@@ -388,34 +364,12 @@ export default {
         this.loadingContent = false;
       }
     },
-    async fetchReportImages(reports) {
-      if (!reports) reports = this.reports;
-
-      //   const coverImageIdsArray = reports.map(report => report.coverImageId);
-      //   return this.fetchBulkImage(coverImageIdsArray)
-      //     .then( imageMap => {
-      //       for (const report of reports) {
-      //         report.coverImage = imageMap[report.coverImageId];
-      //       }
-      //     });
-
-      // Загрузка по одной картинке
-      for (const report of reports) {
-        if (report.coverImageId) {
-          this.fetchImage(report.coverImageId)
-            .then(image => {
-              Vue.set(report, 'coverImage', image);
-              // report.coverImage = image;
-            });
-        }
-      }
-    },
 
     fetchReportsDateMap() {
       const params = {
         city: this.$store.state.currentCity?.id ?? null,
       };
-      return this.$http2.get(`/reports/video/dateMap`, {params})
+      return this.$http2.get(`/reports/video/dateMap`, { params })
         .then(r => {
           this.reportDateMap = r.data;
         });
@@ -430,16 +384,13 @@ export default {
   .v-icon {
     color: black !important;
   }
-
   .v-input input {
     color: black !important;
-
     &::placeholder {
       color: black !important;
     }
   }
 }
-
 .reports_desc_container {
   .v-skeleton-loader__image {
     width: 100% !important;

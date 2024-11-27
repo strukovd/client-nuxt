@@ -1,24 +1,14 @@
 <template>
   <div id="top" class="report_mob_block mb-100">
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Главная",
-            "item": "https://kipish.kg/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Репортажи",
-            "item": "https://kipish.kg/reports"
-          }
-        ]
-      }
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://kipish.kg/" },
+        { "@type": "ListItem", "position": 2, "name": "Репортажи", "item": "https://kipish.kg/reports" }
+      ]
+    }
     </script>
 
     <v-row class="ma-0 pa-0 wrapper">
@@ -28,13 +18,11 @@
       <v-col style="min-height: 70vh" class="pa-0 px-4" cols="12">
         <v-card elevation="0" color="transparent">
           <!-- BREADCRUMBS -->
-          <BaseBreadcrumbs
-            :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/reports', title: 'Все репортажи'}, {href: '', title: model.name}]"/>
+          <BaseBreadcrumbs :breadcrumbs="[{href: '/', title: 'Главная'}, {href: '/reports', title: 'Все репортажи'}, {href: '', title: model.name}]"/>
 
           <v-card-text class="pt-0 px-0 d-flex justify-space-between align-end ">
             <div style="width: 900px" class="mb-n4">
-              <h1 class="text-28 black--text font-title font-weight-300 text-uppercase">{{ model.name }} -
-                Фотоотчет</h1>
+              <h1 class="text-28 black--text font-title font-weight-300 text-uppercase">{{ model.name }} - Фотоотчет</h1>
             </div>
           </v-card-text>
           <v-card-text class="pa-0 mt-6 d-flex flex-column">
@@ -42,23 +30,18 @@
               <div class="d-flex flex-column pt-2 mb-3">
                 <span class="text-16 font-weight-300 opacity-70 dark--text">Фотограф</span>
                 <template v-if="model?.photographers">
-                  <span class="text-20 font-weight-300 black--text text-uppercase mt-2">{{
-                      model?.photographers[0]?.fullName
-                    }}</span>
+                  <span class="text-20 font-weight-300 black--text text-uppercase mt-2">{{ model?.photographers[0]?.fullName }}</span>
                 </template>
               </div>
               <div :style="$vuetify.theme.dark ? 'borderTop: 1px solid white' : 'borderTop: 1px solid black;'"
-                   class="d-flex flex-column justify-space-between pt-3 pb-3">
+                class="d-flex flex-column justify-space-between pt-3 pb-3">
                 <span class="text-16 font-weight-300 opacity-70 dark--text">Просмотров</span>
-                <span
-                  class="text-20 font-title font-weight-100 black--text text-uppercase mt-2">{{ model.views }}</span>
+                <span class="text-20 font-title font-weight-100 black--text text-uppercase mt-2">{{model.views}}</span>
               </div>
               <div :style="$vuetify.theme.dark ? 'borderTop: 1px solid white' : 'borderTop: 1px solid black;'"
                    class="d-flex flex-column justify-space-between pt-3">
                 <span class="text-16 font-weight-300 opacity-70 dark--text">Фото</span>
-                <span class="text-20 font-title font-weight-100 black--text text-uppercase mt-2">{{
-                    !filesLength ? '0' : filesLength - 1
-                  }}</span>
+                <span class="text-20 font-title font-weight-100 black--text text-uppercase mt-2">{{ !totalFilesCounter ? '0' : totalFilesCounter - 1 }}</span>
               </div>
             </div>
             <div class="d-flex flex-column mt-3">
@@ -100,6 +83,7 @@
         </v-card>
 
 
+
         <!-- PREVIEW MODAL -->
         <template>
           <v-dialog dark style="overflow: visible !important;" v-model="dialog" max-width="600">
@@ -107,7 +91,7 @@
               <div style="position: relative" class="pt-5">
 
                 <div v-if="showSharePhoto" class=" d-flex"
-                     style="display:flex;justify-content:center; position:absolute;left:0;right:0;bottom:1em;z-index:9999;"
+                      style="display:flex;justify-content:center; position:absolute;left:0;right:0;bottom:1em;z-index:9999;"
                 >
                   <div style="background-color:#FFFFFF55; border-radius:8px; padding:.3em;">
                     <v-btn @click="shareImage(`whatsapp`)" class="mx-2" dark fab bottom color="green" small>
@@ -163,16 +147,14 @@
                  class="mt-4 d-flex justify-center">
               <div style="width: 400px" class="d-flex justify-center">
                 <div style="width: 100%" class="d-flex mr-4">
-                  <v-btn depressed @click="downloadImage(selectedImage.id)"
-                         style="border-radius: 16px !important;width: 100%"
+                  <v-btn depressed @click="downloadImage(selectedImage.id)" style="border-radius: 16px !important;width: 100%"
                          color="#FFFFFF4D"
                          class="py-8 px-15 hover-red">
                     <span class="text-20 white--text opacity-70">Скачать</span>
                   </v-btn>
                 </div>
                 <div class="d-flex">
-                  <v-btn depressed @click="showSharePhoto = !showSharePhoto"
-                         style="width:auto; border-radius: 16px !important;" color="#FFFFFF4D" class="py-8 hover-red">
+                  <v-btn depressed @click="showSharePhoto = !showSharePhoto" style="width:auto; border-radius: 16px !important;" color="#FFFFFF4D" class="py-8 hover-red">
                     <heroicon name="share" stroke="#DFCDDD" fill="transparent"/>
                   </v-btn>
                 </div>
@@ -196,14 +178,15 @@
 import ToolBar from "@/components/AppToolbar.vue";
 import {Swiper, SwiperSlide} from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
+import {Stack, StackItem} from 'vue-stack-grid';
 import {mapGetters} from "vuex";
-import {FrameInfiniteGrid, MasonryInfiniteGrid} from "@egjs/vue-infinitegrid";
+import {MasonryInfiniteGrid, FrameInfiniteGrid} from "@egjs/vue-infinitegrid";
 import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
 
 
 export default {
   name: "ReportMobile",
-  components: {MasonryInfiniteGrid, FrameInfiniteGrid, SwiperSlide, ToolBar, Swiper, BaseBreadcrumbs},
+  components: {MasonryInfiniteGrid, FrameInfiniteGrid, SwiperSlide, ToolBar, Swiper, StackItem, Stack, BaseBreadcrumbs},
   head() {
     return {
       title: this.model.name
@@ -250,6 +233,7 @@ export default {
     shareDialog: false,
     showSharePhoto: false,
     imageIndex: '',
+    // windowWidth: window.innerWidth,
     selectedImage: null,
     days: [],
     model: {},
@@ -258,10 +242,11 @@ export default {
     loadingContent: false,
     page: 0,
     size: 4,
+    pagesIsOver: false,
     files: [],
     processedFiles: [],
     fileLoading: false,
-    filesLength: 0,
+    totalFilesCounter: 0,
     loadingMore: false,
     imageSrc: '/static/images/watermark.png',
     watermark: null,
@@ -468,24 +453,25 @@ export default {
 
     async loadMore() {
       this.loadingMore = true;
-      try {
-        const params = {
-          page: this.page,
-          size: this.size,
-          isCover: false,
-          sort: 'file_order,asc'
-        };
-        const response = await this.$http2.get(`/albums/${this.sourceId}/files`, {params});
-        if (!response.data.content.length) return;
+      const params = {
+        page: this.page,
+        size: this.size,
+        isCover: false,
+        sort: 'file_order,asc'
+      };
 
-        this.filesLength = response.data.totalElements
-        this.page++;
-        this.files = this.files.concat(response.data.content);
-        this.loadingMore = false;
-      } catch (error) {
-        console.error('Ошибка при загрузке данных:', error);
-        this.loadingMore = false;
-      }
+      this.$http2.get(`/albums/${this.sourceId}/files`, { params })
+        .then(r => {
+          if (r.data.totalPages - 1 === this.page) this.pagesIsOver = true;
+          if (!r.data.content.length) return;
+
+          this.totalFilesCounter = r.data.totalElements;
+          this.page++;
+          this.files = this.files.concat(r.data.content);
+        })
+        .finally(() => {
+          this.loadingMore = false;
+        });
     },
   },
   created() {

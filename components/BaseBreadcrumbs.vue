@@ -1,7 +1,7 @@
 <template>
   <nav id="breadcrumbs">
     <div class="nav-item" v-for="(item, index) of breadcrumbs" :key="index">
-      <span @click="$router.push(item.href)" :class="[`mr-2`, `text-14`, `dark--text`, {'opacity-70': index !== breadcrumbs.length - 1}, `cursor-pointer`]">{{ item.title }}</span>
+      <router-link :to="item.href" style="color:inherit; text-decoration:none;" :class="[`mr-2`, `text-14`, `dark--text`, {'opacity-70': index !== breadcrumbs.length - 1}, `cursor-pointer`]">{{ item.title }}</router-link>
       <heroicon v-if="index !== breadcrumbs.length - 1" class="mr-n3 mb-n4" name="smallArrowRight" :stroke="$vuetify.theme.dark ? '#FFFFFF' : '#000000'" fill="transparent"/>
     </div>
   </nav>

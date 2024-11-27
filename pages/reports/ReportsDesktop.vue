@@ -43,7 +43,7 @@
 
           <!-- ЗАГОЛОВОК -->
           <v-card-text class="pt-0 px-0 pb-14">
-            <span class="text-68 black--text font-title text-uppercase font-weight-300">Все репортажи</span>
+            <h1 class="text-68 black--text font-title text-uppercase font-weight-300">Фотоотчеты с мероприятий в Бишкеке</h1>
           </v-card-text>
 
           <div v-if="loading" class="d-flex flex-wrap reports_block">
@@ -95,7 +95,7 @@
             </v-card-text>
 
             <!-- CONTENT -->
-            <template v-if="currentDay" v-for="(curDateItem, dayIndex) of visibleDays" >
+            <template v-if="currentDay" v-for="(curDateItem, dayIndex) of visibleDays">
               <v-card-text
                 data-aos="fade-up"
                 data-aos-duration="1000"
@@ -143,12 +143,11 @@
 
               <!-- Вставляем карточки рекламы среди карточек репортажей -->
               <div v-else class="pa-0 mt-10 d-flex flex-wrap reports_block pb-8">
-                <div data-aos="fade-up"
-                     data-aos-duration="1000" v-if="filteredReports[curDateItem].length > 0" style="width: 416px"
+                <BaseReportCard :report="report" v-if="filteredReports[curDateItem].length > 0" width="416"
                      v-for="(report, index) of filteredReports[curDateItem]" :key="report.id"
                      :class="(index !== 1 || index !== 4 || index !== 7 || index !== 10) && (dayIndex + 1) % 2 === 0 ? 'reports_card_first' : 'reports_card_second'"
-                     class="reports_container">
-                  <v-img
+                >
+                  <!-- <v-img
                     lazy-src="/static/images/cover-2.jpg"
                     @click="$router.push('/report/' + (!!report?.url?.url ? report.url.url : report.id))"
                     @mouseover="zoomIn"
@@ -171,8 +170,8 @@
                         <span class="text-32 font-weight-550 white--text mt-3">{{ report.name }}</span>
                       </div>
                     </div>
-                  </v-img>
-                </div>
+                  </v-img> -->
+                </BaseReportCard>
               </div>
             </template>
 
@@ -189,6 +188,7 @@ import Vue from 'vue';
 import ToolBar from "@/components/AppToolbar.vue";
 import TimeRoulette from "@/components/TimeRouletteNew.vue";
 import BaseBreadcrumbs from "@/components/BaseBreadcrumbs.vue";
+import BaseReportCard from '@/components/BaseReportCard.vue';
 
 export default {
   name: "ReportsDesktop",
